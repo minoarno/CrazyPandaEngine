@@ -12,6 +12,23 @@ dae::GameObject::GameObject()
 	m_pTransform = AddComponent(new Transform{});
 }
 
+dae::GameObject::~GameObject()
+{
+	for (BaseComponent* baseComponent : m_pBaseComponents)
+	{
+		delete baseComponent;
+		baseComponent = nullptr;
+	}
+	m_pBaseComponents.clear();
+
+	for (GameObject* child : m_pChildren)
+	{
+		delete child;
+		child = nullptr;
+	}
+	m_pChildren.clear();
+}
+
 void dae::GameObject::Initialize()
 {
 	if (m_IsInitialized) return;
