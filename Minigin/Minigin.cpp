@@ -95,6 +95,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		const double elapsed = std::chrono::duration_cast<duration<double>>(currentTime - lastTime).count();
 
 		Time::GetInstance().SetElapsedSeconds(elapsed);
+		Time::GetInstance().AddToTotalSeconds(elapsed);
+
 		double elapsedFromTime = Time::GetInstance().GetElapsedSeconds();
 		lastTime = currentTime;
 		lag += elapsedFromTime;

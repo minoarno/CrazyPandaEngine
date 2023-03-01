@@ -6,6 +6,10 @@
 
 void dae::FpsComponent::Update()
 {
-	float fps = 1.f / float(Time::GetInstance().GetElapsedSeconds());
-	m_pGameObject->GetComponent<TextComponent>()->SetText(std::to_string(fps) + " FPS");
+	if (startTime + cooldown < Time::GetInstance().GetTotalSeconds())
+	{
+		int fps = static_cast<int>(round(1.f / float(Time::GetInstance().GetElapsedSeconds())));
+		m_pGameObject->GetComponent<TextComponent>()->SetText(std::to_string(fps) + " FPS");
+		startTime = Time::GetInstance().GetTotalSeconds();
+	}
 }

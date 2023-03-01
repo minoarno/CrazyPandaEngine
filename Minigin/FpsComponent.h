@@ -4,7 +4,7 @@
 namespace dae
 {
 	class TextComponent;
-	class FpsComponent : public dae::BaseComponent
+	class FpsComponent final : public dae::BaseComponent
 	{
 	public:
 		FpsComponent() = default;
@@ -15,6 +15,10 @@ namespace dae
 		virtual ~FpsComponent() = default;
 	protected:
 		virtual void Update() override;
+
+	private:
+		double startTime = 0.f;
+		double cooldown = 1.f;
 	};
 
 }
