@@ -56,12 +56,11 @@ void dae::TextComponent::Render() const
 {
 	if (m_Text != "")
 	{
-		auto pos = m_pGameObject->GetPosition();
+		const glm::vec3 pos = m_pGameObject->GetComponent<dae::Transform>()->GetWorldPosition();
 		if (m_pGameObject->GetComponent<TextureComponent>() != nullptr)
 		{
 			dae::Renderer::GetInstance().RenderTexture(
-				*m_pGameObject->GetComponent<TextureComponent>()->GetTexture(),
-				pos.x, pos.y);
+				m_pGameObject->GetComponent<TextureComponent>(), pos.x, pos.y);
 		}
 	}
 }

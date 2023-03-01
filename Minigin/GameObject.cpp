@@ -57,7 +57,7 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::SetPosition(float x, float y, float z)
 {
-	m_pTransform->SetPosition(x, y, z);
+	m_pTransform->SetLocalPosition(x, y, z);
 }
 
 void dae::GameObject::SetPosition(const Vector2f& pos)
@@ -65,11 +65,9 @@ void dae::GameObject::SetPosition(const Vector2f& pos)
 	SetPosition(float(pos.x), float(pos.y), 0.f);
 }
 
-Vector2f dae::GameObject::GetPosition() const
+float dae::GameObject::GetRotation() const
 {
-	auto pos = m_pTransform->GetPosition();
-
-	return Vector2f(pos.x,pos.y);
+	return GetTransform()->GetRotation();
 }
 
 void dae::GameObject::AddComponent_(BaseComponent* newComponent)
@@ -77,4 +75,46 @@ void dae::GameObject::AddComponent_(BaseComponent* newComponent)
 	m_pBaseComponents.emplace_back(newComponent);
 	newComponent->SetGameObject(this);
 	newComponent->BaseInitialize();
+}
+
+void dae::GameObject::SetParent(GameObject* newParentObject)
+{
+	if (this->m_pParent != nullptr)
+	{
+		//Detach it
+		std::cout << "The object already has a parent\n";
+		return;
+	}
+
+	if (this == newParentObject)
+	{
+		//LOGGER
+		std::cout << "The gameobject and the child are the same!\n";
+		return;
+	}
+
+	m_pParent = newParentObject;
+}
+
+void dae::GameObject::RemoveChild(GameObject* childObject)
+{
+	for (int i = int(m_pChildren.size()) - 1; i >= 0; i--)
+	{
+		if (m_pChildren[i] == childObject)
+		{
+			delete m_pChildren[i];
+			m_pChildren[i] = nullptr;
+			m_pChildren.erase(m_pChildren.begin() + i);
+		}
+	}
+}
+
+dae::GameObject* dae::GameObject::GetChild(int index)
+{
+	if (index >= int(m_pChildren.size()))
+	{
+		return nullptr;
+	}
+
+	return m_pChildren[index];
 }

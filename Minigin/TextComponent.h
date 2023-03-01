@@ -7,7 +7,7 @@ namespace dae
 	class Font;
 	class Texture2D;
 
-	class TextComponent : public BaseComponent
+	class TextComponent : public dae::BaseComponent
 	{
 	public:
 		TextComponent(dae::Font* font, const std::string& text = "Text");
@@ -26,5 +26,5 @@ namespace dae
 		std::string m_Text;
 		dae::Font* m_Font;
 	};
-}
 
+}

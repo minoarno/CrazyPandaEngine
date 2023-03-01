@@ -1,12 +1,13 @@
-#pragma once
 #include "MiniginPCH.h"
 #include "Texture2D.h"
 #include "TextureComponent.h"
 #include "ResourceManager.h"
 #include "GameObject.h"
+#include "Renderer.h"
 
 dae::TextureComponent::TextureComponent(const std::string& filepath, int amountOfCols, int amountOfRows)
-	: dae::BaseComponent{}
+	: BaseComponent{}
+	, m_pTexture{nullptr}
 	, m_AmountOfCols{amountOfCols}
 	, m_AmountOfRows{amountOfRows}
 	, m_IsInChargeOfDeletion{ false }
@@ -15,13 +16,22 @@ dae::TextureComponent::TextureComponent(const std::string& filepath, int amountO
 }
 
 dae::TextureComponent::TextureComponent(SDL_Texture* pTexture, int amountOfCols, int amountOfRows)
-	: dae::BaseComponent{}
-	, m_pTexture{ std::make_shared<dae::Texture2D>(pTexture) }
+	: BaseComponent{}
+	, m_pTexture{ new dae::Texture2D{pTexture} }
 	, m_IsInChargeOfDeletion{ true }
 	, m_AmountOfCols{ amountOfCols }
 	, m_AmountOfRows{ amountOfRows }
 {
 	CalculateDimension();
+}
+
+dae::TextureComponent::~TextureComponent()
+{
+	if (m_IsInChargeOfDeletion)
+	{
+		delete m_pTexture;
+		m_pTexture = nullptr;
+	}
 }
 
 void dae::TextureComponent::SetTexture(const std::string& filename)
@@ -39,7 +49,7 @@ void dae::TextureComponent::SetDestinationRectDimensions(const Vector2f& dst)
 
 Rectf dae::TextureComponent::GetDestinationRect() const
 {
-	auto pos = m_pGameObject->GetPosition();
+	auto pos = m_pGameObject->GetComponent<dae::Transform>()->GetWorldPosition();
 	return Rectf{ pos.x,pos.y ,m_DestinationRect.w,m_DestinationRect.h };
 }
 
@@ -69,14 +79,36 @@ void dae::TextureComponent::CalculateSourceRect(int col, int row)
 	m_SourceRect = Rectf{ col * widthPart,row * heightPart,widthPart,heightPart };
 }
 
+void dae::TextureComponent::Render() const
+{
+	Transform* transform = m_pGameObject->GetTransform();
+	const glm::vec3 pos = transform->GetWorldPosition();
+
+	Rectf dstRect = GetDestinationRect();
+	Rectf srcRect = GetSourceRect();
+
+	SDL_Rect dst = { int(pos.x), int(pos.y), int(dstRect.w), int(dstRect.h) };
+	SDL_Rect src = { int(srcRect.x),int(srcRect.y),int(srcRect.w),int(srcRect.h) };
+	if (src.w != 0 && src.h != 0)
+	{
+		if (dst.w != 0 && dst.h != 0)
+		{
+			Renderer::GetInstance().RenderTexture(this, src, dst);
+		}
+		else
+		{
+			Renderer::GetInstance().RenderTexture(this, src, dst.x, dst.y);
+		}
+	}
+	else
+	{
+		Renderer::GetInstance().RenderTexture(this,static_cast<const float>(dst.x),static_cast<const float>(dst.y));
+	}
+}
+
 void dae::TextureComponent::UpdateTexture()
 {
 	CalculateDimension();
-}
-
-void dae::TextureComponent::Render() const
-{
-
 }
 
 void dae::TextureComponent::CalculateDimension()

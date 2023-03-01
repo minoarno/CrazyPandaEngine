@@ -1,11 +1,12 @@
 #pragma once
 #include "BaseComponent.h"
+#include "HelperStructs.h"
 
 struct SDL_Texture;
 namespace dae
 {
 	class Texture2D;
-	class TextureComponent final: public BaseComponent
+	class TextureComponent : public BaseComponent
 	{
 	public:
 		TextureComponent(const std::string& filepath, int amountOfCols = 1, int amountOfRows = 1);
@@ -15,12 +16,12 @@ namespace dae
 		TextureComponent& operator=(const TextureComponent&) = delete;
 		TextureComponent(TextureComponent&&) = delete;
 		TextureComponent& operator=(TextureComponent&&) = delete;
-		~TextureComponent() = default;
+		~TextureComponent();
 
 		void SetIsFlipped(bool value) { m_IsFlipped = value; }
 		bool GetIsFlipped()const { return m_IsFlipped; }
 
-		std::shared_ptr<Texture2D> GetTexture()const { return m_pTexture; }
+		dae::Texture2D* GetTexture()const { return m_pTexture; }
 		void SetTexture(const std::string& filename);
 
 		void SetDestinationRectDimensions(const Vector2f& dst);
@@ -37,11 +38,11 @@ namespace dae
 		int GetImagePartWidth()const { return m_Width / m_AmountOfCols; };
 		int GetImagePartHeight()const { return m_Height / m_AmountOfRows; };
 
+		void Render() const override;
+
 		void UpdateTexture();
-	protected:
-		virtual void Render() const override;
 	private:
-		std::shared_ptr<Texture2D> m_pTexture;
+		dae::Texture2D* m_pTexture;
 		Rectf m_DestinationRect{};
 		Rectf m_SourceRect{};
 
@@ -56,6 +57,5 @@ namespace dae
 
 		void CalculateDimension();
 	};
+
 }
-
-
