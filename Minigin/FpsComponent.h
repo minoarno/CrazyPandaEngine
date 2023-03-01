@@ -14,11 +14,14 @@ namespace dae
 		FpsComponent& operator=(FpsComponent&& other) = default;
 		virtual ~FpsComponent() = default;
 	protected:
-		virtual void Update() override;
+		void Initialize() override;
+		void Update() override;
 
 	private:
 		double startTime = 0.f;
 		double cooldown = 1.f;
+
+		TextComponent* m_pTextComponent;
 	};
 
 }

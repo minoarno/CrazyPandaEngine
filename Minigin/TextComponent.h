@@ -21,10 +21,12 @@ namespace dae
 		virtual void Render() const override;
 
 		void SetText(const std::string& text);
+		void SetColor(const Colorf color);
 	protected:
 		bool m_NeedsUpdate;
 		std::string m_Text;
 		dae::Font* m_Font;
+		SDL_Color m_Color = { 255,255,255 };
 	};
 
 }
