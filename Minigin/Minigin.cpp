@@ -120,4 +120,5 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 void dae::Minigin::CleanUp()
 {
+	SceneManager::GetInstance().CleanUp();
 }

@@ -81,6 +81,8 @@ void dae::TextureComponent::CalculateSourceRect(int col, int row)
 
 void dae::TextureComponent::Render() const
 {
+	if (m_pGameObject == nullptr)return;
+
 	Transform* transform = m_pGameObject->GetTransform();
 	const glm::vec3 pos = transform->GetWorldPosition();
 

@@ -7,8 +7,9 @@
 
 
 dae::GameObject::GameObject()
-	:m_pTransform{ new Transform{} }
+	:m_pTransform{ nullptr }
 {
+	m_pTransform = AddComponent(new Transform{});
 }
 
 void dae::GameObject::Initialize()
