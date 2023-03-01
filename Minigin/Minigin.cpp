@@ -1,14 +1,15 @@
-#include <stdexcept>
-#define WIN32_LEAN_AND_MEAN 
-#include <windows.h>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+#include "MiniginPCH.h"
 #include "Minigin.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include <chrono>
+#include <thread>
+#include "EngineTime.h"
+
+using namespace std;
+using namespace std::chrono;
 
 SDL_Window* g_window{};
 
@@ -83,12 +84,40 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
+	double lag = 0.0f;
+
+	time_point<high_resolution_clock> lastTime = high_resolution_clock::now();
+
 	bool doContinue = true;
 	while (doContinue)
 	{
+		const time_point<high_resolution_clock> currentTime = high_resolution_clock::now();
+		const double elapsed = std::chrono::duration_cast<duration<double>>(currentTime - lastTime).count();
+
+		Time::GetInstance().SetElapsedSeconds(elapsed);
+		double elapsedFromTime = Time::GetInstance().GetElapsedSeconds();
+		lastTime = currentTime;
+		lag += elapsedFromTime;
+
 		doContinue = input.ProcessInput();
+
+		while (lag >= MsPerFrame)
+		{
+			sceneManager.FixedUpdate();
+			lag -= MsPerFrame;
+		}
 		sceneManager.Update();
+		sceneManager.LateUpdate();
+
 		renderer.Render();
+
+		auto sleepTime = duration_cast<duration<double>>(currentTime + milliseconds(MsPerFrame) - high_resolution_clock::now());
+		this_thread::sleep_for(sleepTime);
 	}
+
+	CleanUp();
+}
+
+void dae::Minigin::CleanUp()
+{
 }

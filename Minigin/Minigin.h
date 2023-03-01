@@ -15,5 +15,9 @@ namespace dae
 		Minigin(Minigin&& other) = delete;
 		Minigin& operator=(const Minigin& other) = delete;
 		Minigin& operator=(Minigin&& other) = delete;
+
+		void CleanUp();
+	private:
+		static const int MsPerFrame = 16;
 	};
 }

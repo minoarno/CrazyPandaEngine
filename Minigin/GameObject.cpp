@@ -1,24 +1,80 @@
+#include "MiniginPCH.h"
 #include <string>
 #include "GameObject.h"
+#include "BaseComponent.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
 
-dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(){}
+dae::GameObject::GameObject()
+	:m_pTransform{ new Transform{} }
+{
+}
+
+void dae::GameObject::Initialize()
+{
+	if (m_IsInitialized) return;
+
+	for (size_t i = 0; i < m_pBaseComponents.size(); i++)
+	{
+		m_pBaseComponents[i]->BaseInitialize();
+	}
+
+	m_IsInitialized = true;
+}
+
+void dae::GameObject::FixedUpdate()
+{
+	for (size_t i = 0; i < m_pBaseComponents.size(); i++)
+	{
+		m_pBaseComponents[i]->FixedUpdate();
+	}
+}
+
+void dae::GameObject::Update()
+{
+	for (size_t i = 0; i < m_pBaseComponents.size(); i++)
+	{
+		m_pBaseComponents[i]->Update();
+	}
+}
+
+void dae::GameObject::LateUpdate()
+{
+	for (size_t i = 0; i < m_pBaseComponents.size(); i++)
+	{
+		m_pBaseComponents[i]->LateUpdate();
+	}
+}
 
 void dae::GameObject::Render() const
 {
-	const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	for (size_t i = 0; i < m_pBaseComponents.size(); i++)
+	{
+		m_pBaseComponents[i]->Render();
+	}
 }
 
-void dae::GameObject::SetTexture(const std::string& filename)
+void dae::GameObject::SetPosition(float x, float y, float z)
 {
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
+	m_pTransform->SetPosition(x, y, z);
 }
 
-void dae::GameObject::SetPosition(float x, float y)
+void dae::GameObject::SetPosition(const Vector2f& pos)
 {
-	m_transform.SetPosition(x, y, 0.0f);
+	SetPosition(float(pos.x), float(pos.y), 0.f);
+}
+
+Vector2f dae::GameObject::GetPosition() const
+{
+	auto pos = m_pTransform->GetPosition();
+
+	return Vector2f(pos.x,pos.y);
+}
+
+void dae::GameObject::AddComponent_(BaseComponent* newComponent)
+{
+	m_pBaseComponents.emplace_back(newComponent);
+	newComponent->SetGameObject(this);
+	newComponent->BaseInitialize();
 }

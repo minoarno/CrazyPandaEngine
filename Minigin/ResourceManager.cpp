@@ -1,3 +1,4 @@
+#include "MiniginPCH.h"
 #include <stdexcept>
 #include <SDL_image.h>
 #include <SDL_ttf.h>

@@ -1,3 +1,4 @@
+#include "MiniginPCH.h"
 #include <stdexcept>
 #include "Renderer.h"
 #include "SceneManager.h"

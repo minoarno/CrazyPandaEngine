@@ -1,3 +1,4 @@
+#include "MiniginPCH.h"
 #include "Scene.h"
 #include "GameObject.h"
 
@@ -29,6 +30,22 @@ void Scene::Update()
 	for(auto& object : m_objects)
 	{
 		object->Update();
+	}
+}
+
+void dae::Scene::FixedUpdate()
+{
+	for (auto& object : m_objects)
+	{
+		object->FixedUpdate();
+	}
+}
+
+void dae::Scene::LateUpdate()
+{
+	for (auto& object : m_objects)
+	{
+		object->LateUpdate();
 	}
 }
 

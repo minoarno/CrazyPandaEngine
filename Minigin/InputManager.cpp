@@ -1,3 +1,4 @@
+#include "MiniginPCH.h"
 #include <SDL.h>
 #include "InputManager.h"
 
