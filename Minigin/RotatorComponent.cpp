@@ -13,7 +13,10 @@ dae::RotatorComponent::RotatorComponent(float rotationSpeed, float distanceFromM
 
 void dae::RotatorComponent::Update()
 {
-    m_Angle += m_RotationSpeed * Time::GetInstance().GetElapsedSeconds();
-    float angle = m_Angle * M_PI / 180;
-    m_pGameObject->GetTransform()->SetLocalPosition(cos(angle)*m_DistanceFromMiddle,sin(angle)*m_DistanceFromMiddle,0);
+    m_Angle += m_RotationSpeed * static_cast<float>(Time::GetInstance().GetElapsedSeconds());
+    const float angle = m_Angle * static_cast<float>(M_PI) / 180.f;
+    m_pGameObject->GetTransform()->SetLocalPosition(
+        cos(angle) * m_DistanceFromMiddle,
+        sin(angle) * m_DistanceFromMiddle,
+        0);
 }

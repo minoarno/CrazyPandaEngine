@@ -29,14 +29,9 @@ namespace dae
 			return newComponent;
 		}
 
-		template<typename T>
-		std::enable_if_t<std::is_base_of_v<GameObject, T>, T*> AddChild(T* newChild)
-		{
-			AddChild_(newChild);
-			return newChild;
-		}
-
-		void SetParent(GameObject* newParentObject);
+		GameObject* AddChild(GameObject* child);
+		
+		bool SetParent(GameObject* newParentObject);
 		void RemoveChild(GameObject* childObject);
 
 		template<typename T>
@@ -48,7 +43,7 @@ namespace dae
 		void SetComponent(std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> value);
 
 		[[nodiscard]] GameObject* GetParent() const { return m_pParent; };
-		GameObject* GetChild(int index);
+		GameObject* GetChild(int index) const;
 		[[nodiscard]] const std::vector<GameObject*>& GetChildren()const { return m_pChildren; };
 
 		void SetActive(bool value) { m_IsActive = value; }
@@ -91,7 +86,7 @@ namespace dae
 	template<typename T>
 	std::enable_if_t<std::is_base_of_v<BaseComponent, T>, std::vector<T*>> GameObject::GetComponentsInChildren() const
 	{
-		std::vector<T*> componentsInChildren = new std::vector<T*>(); 
+		std::vector<T*> componentsInChildren = std::vector<T*>(); 
 
 		for(GameObject* child : m_pChildren)
 		{
