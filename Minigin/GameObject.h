@@ -13,7 +13,7 @@ namespace dae
 	public:
 		void SetPosition(float x, float y, float z = 0.0f);
 		void SetPosition(const Vector2f& pos);
-		float GetRotation()const;
+		[[nodiscard]] float GetRotation()const;
 
 		GameObject();
 		~GameObject();
@@ -40,20 +40,21 @@ namespace dae
 		void RemoveChild(GameObject* childObject);
 
 		template<typename T>
-		std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> GetComponent() const;
+		[[nodiscard]] std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> GetComponent() const;
+		template<typename T>
+		[[nodiscard]] std::enable_if_t<std::is_base_of_v<BaseComponent, T>, std::vector<T*>> GetComponentsInChildren() const;
 
 		template<typename T>
 		void SetComponent(std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> value);
 
-		GameObject* GetParent() { return m_pParent; };
+		[[nodiscard]] GameObject* GetParent() const { return m_pParent; };
 		GameObject* GetChild(int index);
-		const std::vector<GameObject*>& GetChildren()const { return m_pChildren; };
-
+		[[nodiscard]] const std::vector<GameObject*>& GetChildren()const { return m_pChildren; };
 
 		void SetActive(bool value) { m_IsActive = value; }
-		bool GetActive()const { return m_IsActive; }
+		[[nodiscard]] bool GetActive()const { return m_IsActive; }
 
-		Transform* GetTransform()const { return m_pTransform; }
+		[[nodiscard]] Transform* GetTransform()const { return m_pTransform; }
 	private:
 		bool m_IsActive{ true };
 		bool m_IsInitialized{ false };
@@ -75,7 +76,7 @@ namespace dae
 	};
 
 	template<typename T>
-	inline std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> GameObject::GetComponent() const
+	std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> GameObject::GetComponent() const
 	{
 		for (BaseComponent* c : m_pBaseComponents)
 		{
@@ -88,7 +89,26 @@ namespace dae
 	}
 
 	template<typename T>
-	inline void GameObject::SetComponent(std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> value)
+	std::enable_if_t<std::is_base_of_v<BaseComponent, T>, std::vector<T*>> GameObject::GetComponentsInChildren() const
+	{
+		std::vector<T*> componentsInChildren = new std::vector<T*>(); 
+
+		for(GameObject* child : m_pChildren)
+		{
+			T* component = child->GetComponent<T>();
+			if (component == nullptr)continue;
+
+			componentsInChildren.emplace_back(component);
+
+			auto childOfChildren = child->GetComponentsInChildren<T>();
+			componentsInChildren.insert(componentsInChildren.end(),childOfChildren.begin(),childOfChildren.end());
+		}
+
+		return componentsInChildren;
+	}
+
+	template<typename T>
+	void GameObject::SetComponent(std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> value)
 	{
 		for (BaseComponent*& c : m_pBaseComponents)
 		{

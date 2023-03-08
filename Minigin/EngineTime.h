@@ -10,15 +10,15 @@ public:
 	Time(Time&& other) = delete;
 	Time& operator=(Time&& other) = delete;
 
-	inline double GetTimeScale()const { return m_TimeScale; }
-	inline double GetElapsedSeconds()const { return m_ElapsedSeconds * m_TimeScale; }
-	inline double GetFixedElapsedSeconds()const { return m_FixedElapsedSeconds * m_TimeScale; }
-	inline double GetTotalSeconds()const { return m_TotalSeconds; }
+	[[nodiscard]] double GetTimeScale()const { return m_TimeScale; }
+	[[nodiscard]] double GetElapsedSeconds()const { return m_ElapsedSeconds * m_TimeScale; }
+	[[nodiscard]] double GetFixedElapsedSeconds()const { return m_FixedElapsedSeconds * m_TimeScale; }
+	[[nodiscard]] double GetTotalSeconds()const { return m_TotalSeconds; }
 
-	inline void SetTimeScale(const double value) { m_TimeScale = value; }
-	inline void SetElapsedSeconds(const double value) { m_ElapsedSeconds = value; }
-	inline void AddToTotalSeconds(const double value) { m_TotalSeconds += value; }
-	inline void SetFixedElapsedSeconds(const double value) { m_FixedElapsedSeconds = value; }
+	void SetTimeScale(const double value) { m_TimeScale = value; }
+	void SetElapsedSeconds(const double value) { m_ElapsedSeconds = value; }
+	void AddToTotalSeconds(const double value) { m_TotalSeconds += value; }
+	void SetFixedElapsedSeconds(const double value) { m_FixedElapsedSeconds = value; }
 private:
 	friend class Singleton<Time>;
 	Time() = default;

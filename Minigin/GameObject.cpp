@@ -1,27 +1,25 @@
 #include "MiniginPCH.h"
-#include <string>
 #include "GameObject.h"
 #include "BaseComponent.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
 
 
-dae::GameObject::GameObject()
-	:m_pTransform{ nullptr }
+dae::GameObject::GameObject() : m_pTransform{ nullptr }
 {
 	m_pTransform = AddComponent(new Transform{});
 }
 
 dae::GameObject::~GameObject()
 {
-	for (BaseComponent* baseComponent : m_pBaseComponents)
+	for (const BaseComponent* baseComponent : m_pBaseComponents)
 	{
 		delete baseComponent;
 		baseComponent = nullptr;
 	}
 	m_pBaseComponents.clear();
 
-	for (GameObject* child : m_pChildren)
+	for (const GameObject* child : m_pChildren)
 	{
 		delete child;
 		child = nullptr;

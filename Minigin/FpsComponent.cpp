@@ -11,10 +11,10 @@ void dae::FpsComponent::Initialize()
 
 void dae::FpsComponent::Update()
 {
-	if (startTime + cooldown < Time::GetInstance().GetTotalSeconds())
+	if (m_StartTime + m_Cooldown < Time::GetInstance().GetTotalSeconds())
 	{
-		int fps = static_cast<int>(round(1.f / float(Time::GetInstance().GetElapsedSeconds())));
+		const int fps = static_cast<int>(round(1.f / static_cast<float>(Time::GetInstance().GetElapsedSeconds())));
 		m_pTextComponent->SetText(std::to_string(fps) + " FPS");
-		startTime = Time::GetInstance().GetTotalSeconds();
+		m_StartTime = Time::GetInstance().GetTotalSeconds();
 	}
 }

@@ -12,16 +12,16 @@ namespace dae
 		FpsComponent& operator=(const FpsComponent& other) = default;
 		FpsComponent(FpsComponent&& other) = default;
 		FpsComponent& operator=(FpsComponent&& other) = default;
-		virtual ~FpsComponent() = default;
+		~FpsComponent() override = default;
 	protected:
 		void Initialize() override;
 		void Update() override;
 
 	private:
-		double startTime = 0.f;
-		double cooldown = 1.f;
+		double m_StartTime = 0.f;
+		double m_Cooldown = 1.f;
 
-		TextComponent* m_pTextComponent;
+		TextComponent* m_pTextComponent{};
 	};
 
 }

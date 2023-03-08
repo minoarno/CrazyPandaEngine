@@ -5,20 +5,20 @@
 dae::Transform::Transform(const glm::vec3& pos)
 	: BaseComponent{}
 	, m_LocalPosition{pos}
-	, m_Angle{0}
+	, m_WorldPosition{}
 {
 }
 
-glm::vec3 dae::Transform::GetWorldPosition() const
+glm::vec3 dae::Transform::GetWorldPosition()const
 {
-	glm::vec3 pos{};
-	pos += m_LocalPosition;
-	if (m_pGameObject->GetParent() != nullptr)
+	const GameObject* parent = m_pGameObject->GetParent();
+	if (parent != nullptr && m_NeedUpdate)
 	{
-		glm::vec3 parentPos{ m_pGameObject->GetParent()->GetTransform()->GetWorldPosition() };
-		pos += parentPos;
+		m_WorldPosition = parent->GetTransform()->GetWorldPosition();
+		m_NeedUpdate = false;
 	}
-	return pos;
+
+	return m_LocalPosition + m_WorldPosition;
 }
 
 void dae::Transform::SetLocalPosition(const float x, const float y, const float z)
@@ -26,6 +26,14 @@ void dae::Transform::SetLocalPosition(const float x, const float y, const float 
 	m_LocalPosition.x = x;
 	m_LocalPosition.y = y;
 	m_LocalPosition.z = z;
+
+	m_NeedUpdate = true;
+
+	const auto childTransforms = m_pGameObject->GetComponentsInChildren<Transform>();
+	for (const auto child_transform : childTransforms)
+	{
+		child_transform->m_NeedUpdate = true;
+	}
 }
 
 void dae::Transform::SetRotation(float angle)

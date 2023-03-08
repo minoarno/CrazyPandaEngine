@@ -8,19 +8,18 @@
 dae::TextureComponent::TextureComponent(const std::string& filepath, int amountOfCols, int amountOfRows)
 	: BaseComponent{}
 	, m_pTexture{nullptr}
-	, m_AmountOfCols{amountOfCols}
 	, m_AmountOfRows{amountOfRows}
-	, m_IsInChargeOfDeletion{ false }
+	, m_AmountOfCols{amountOfCols}
 {
 	SetTexture(filepath);
 }
 
 dae::TextureComponent::TextureComponent(SDL_Texture* pTexture, int amountOfCols, int amountOfRows)
 	: BaseComponent{}
-	, m_pTexture{ new dae::Texture2D{pTexture} }
-	, m_IsInChargeOfDeletion{ true }
-	, m_AmountOfCols{ amountOfCols }
+	, m_pTexture{ new Texture2D{pTexture} }
 	, m_AmountOfRows{ amountOfRows }
+	, m_AmountOfCols{ amountOfCols }
+	, m_IsInChargeOfDeletion{ true }
 {
 	CalculateDimension();
 }
@@ -49,7 +48,7 @@ void dae::TextureComponent::SetDestinationRectDimensions(const Vector2f& dst)
 
 Rectf dae::TextureComponent::GetDestinationRect() const
 {
-	auto pos = m_pGameObject->GetComponent<dae::Transform>()->GetWorldPosition();
+	const glm::vec3 pos = m_pGameObject->GetComponent<dae::Transform>()->GetWorldPosition();
 	return Rectf{ pos.x,pos.y ,m_DestinationRect.w,m_DestinationRect.h };
 }
 
@@ -65,47 +64,38 @@ Rectf dae::TextureComponent::GetSourceRect() const
 
 void dae::TextureComponent::CalculateSourceRect(int imagePartIndex)
 {
-	int colIndex{ imagePartIndex % m_AmountOfCols };
-	int rowIndex{ imagePartIndex / m_AmountOfCols };
+	const int colIndex{ imagePartIndex % m_AmountOfCols };
+	const int rowIndex{ imagePartIndex / m_AmountOfCols };
 
 	CalculateSourceRect(colIndex, rowIndex);
 }
 
 void dae::TextureComponent::CalculateSourceRect(int col, int row)
 {
-	float widthPart{ float(m_Width) / m_AmountOfCols };
-	float heightPart{ float(m_Height) / m_AmountOfRows };
+	const float widthPart{ static_cast<float>(m_Width) / static_cast<float>(m_AmountOfCols) };
+	const float heightPart{ static_cast<float>(m_Height) / static_cast<float>(m_AmountOfRows) };
 
-	m_SourceRect = Rectf{ col * widthPart,row * heightPart,widthPart,heightPart };
+	m_SourceRect = Rectf{static_cast<float>(col) * widthPart,static_cast<float>(row) * heightPart,widthPart,heightPart };
 }
 
 void dae::TextureComponent::Render() const
 {
 	if (m_pGameObject == nullptr)return;
 
-	Transform* transform = m_pGameObject->GetTransform();
-	const glm::vec3 pos = transform->GetWorldPosition();
+	const Transform* pTransform = m_pGameObject->GetTransform();
+	const glm::vec3 pos = pTransform->GetWorldPosition();
 
-	Rectf dstRect = GetDestinationRect();
-	Rectf srcRect = GetSourceRect();
+	const Rectf dstRect = GetDestinationRect();
+	const Rectf srcRect = GetSourceRect();
 
-	SDL_Rect dst = { int(pos.x), int(pos.y), int(dstRect.w), int(dstRect.h) };
-	SDL_Rect src = { int(srcRect.x),int(srcRect.y),int(srcRect.w),int(srcRect.h) };
-	if (src.w != 0 && src.h != 0)
-	{
-		if (dst.w != 0 && dst.h != 0)
-		{
-			Renderer::GetInstance().RenderTexture(this, src, dst);
-		}
-		else
-		{
-			Renderer::GetInstance().RenderTexture(this, src, dst.x, dst.y);
-		}
-	}
-	else
-	{
-		Renderer::GetInstance().RenderTexture(this,static_cast<const float>(dst.x),static_cast<const float>(dst.y));
-	}
+	const SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(dstRect.w), static_cast<int>(dstRect.h) };
+	const SDL_Rect src = { static_cast<int>(srcRect.x),static_cast<int>(srcRect.y),static_cast<int>(srcRect.w),static_cast<int>(srcRect.h) };
+
+	src.w != 0 && src.h != 0 ?
+		dst.w != 0 && dst.h != 0 ?
+			Renderer::GetInstance().RenderTexture(this, src, dst)
+			: Renderer::GetInstance().RenderTexture(this, src, dst.x, dst.y)
+		: Renderer::GetInstance().RenderTexture(this,static_cast<const float>(dst.x),static_cast<const float>(dst.y));
 }
 
 void dae::TextureComponent::UpdateTexture()
