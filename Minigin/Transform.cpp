@@ -12,7 +12,7 @@ dae::Transform::Transform(const glm::vec3& pos)
 glm::vec3 dae::Transform::GetWorldPosition()const
 {
 	const GameObject* parent = m_pGameObject->GetParent();
-	if (parent != nullptr && m_NeedUpdate)
+	if (m_NeedUpdate && parent != nullptr)
 	{
 		m_WorldPosition = parent->GetTransform()->GetWorldPosition();
 		m_NeedUpdate = false;
