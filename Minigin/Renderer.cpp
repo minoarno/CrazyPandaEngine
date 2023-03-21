@@ -27,6 +27,11 @@ void dae::Renderer::Init(SDL_Window* window)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
+	ImGui_ImplOpenGL2_Init();
 }
 
 void dae::Renderer::Render() const
@@ -37,6 +42,15 @@ void dae::Renderer::Render() const
 
 	SceneManager::GetInstance().Render();
 	
+	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame(m_window);
+	ImGui::NewFrame();
+
+	ImGui::ShowDemoWindow();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+	
 	SDL_RenderPresent(m_renderer);
 }
 
@@ -44,6 +58,10 @@ void dae::Renderer::Destroy()
 {
 	if (m_renderer != nullptr)
 	{
+		ImGui_ImplOpenGL2_Shutdown();
+		ImGui_ImplSDL2_Shutdown();
+		ImGui::DestroyContext();
+
 		SDL_DestroyRenderer(m_renderer);
 		m_renderer = nullptr;
 	}
@@ -81,9 +99,7 @@ void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, con
 void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const int x, const int y, const int width, const int height) const
 {
 	SDL_Rect dst{ x,y,width,height };
-
-	SDL_Point center{ int(width * .5f), int(height * .5f) };
-	SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), &srcRect, &dst);
+	RenderTexture(pTextureComponent,srcRect, dst);
 }
 
 inline SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }

@@ -91,11 +91,21 @@ void dae::TextureComponent::Render() const
 	const SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(dstRect.w), static_cast<int>(dstRect.h) };
 	const SDL_Rect src = { static_cast<int>(srcRect.x),static_cast<int>(srcRect.y),static_cast<int>(srcRect.w),static_cast<int>(srcRect.h) };
 
-	src.w != 0 && src.h != 0 ?
-		dst.w != 0 && dst.h != 0 ?
-			Renderer::GetInstance().RenderTexture(this, src, dst)
-			: Renderer::GetInstance().RenderTexture(this, src, dst.x, dst.y)
-		: Renderer::GetInstance().RenderTexture(this,static_cast<const float>(dst.x),static_cast<const float>(dst.y));
+	if(src.w != 0 && src.h != 0)
+	{
+		if (dst.w != 0 && dst.h != 0)
+		{
+			Renderer::GetInstance().RenderTexture(this, src, dst);
+		}
+		else
+		{
+			Renderer::GetInstance().RenderTexture(this, src, dst.x, dst.y)	;
+		}
+	}
+	else
+	{
+		Renderer::GetInstance().RenderTexture(this,static_cast<const float>(dst.x),static_cast<const float>(dst.y));
+	}
 }
 
 void dae::TextureComponent::UpdateTexture()
