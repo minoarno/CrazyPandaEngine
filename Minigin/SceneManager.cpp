@@ -4,44 +4,37 @@
 
 void dae::SceneManager::Update()
 {
-	for(auto& scene : m_scenes)
-	{
-		scene->Update();
-	}
+	m_Scenes[m_ActiveScene]->Update();
 }
 
 void dae::SceneManager::FixedUpdate()
 {
-	for (auto& scene : m_scenes)
-	{
-		scene->FixedUpdate();
-	}
+	m_Scenes[m_ActiveScene]->FixedUpdate();
 }
 
 void dae::SceneManager::LateUpdate()
 {
-	for (auto& scene : m_scenes)
-	{
-		scene->LateUpdate();
-	}
+	m_Scenes[m_ActiveScene]->LateUpdate();
 }
 
 void dae::SceneManager::Render()
 {
-	for (const auto& scene : m_scenes)
-	{
-		scene->Render();
-	}
+	m_Scenes[m_ActiveScene]->Render();
 }
 
 void dae::SceneManager::CleanUp()
 {
-	m_scenes.clear();
+	m_Scenes.clear();
+}
+
+void dae::SceneManager::RenderImGui()
+{
+	m_Scenes[m_ActiveScene]->RenderImGui();
 }
 
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
+	m_Scenes.push_back(scene);
 	return *scene;
 }

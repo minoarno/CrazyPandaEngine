@@ -65,6 +65,7 @@ namespace dae
 		void Update();
 		void FixedUpdate();
 		void Render()const;
+		void RenderImGui();
 		void LateUpdate();
 
 		void AddComponent_(BaseComponent* newComponent);

@@ -22,6 +22,7 @@ namespace dae
 		virtual void Update() {};
 		virtual void LateUpdate() {};
 		virtual void Render() const {};
+		virtual void RenderImGui(){};
 
 		GameObject* m_pGameObject{ nullptr };
 	private:

@@ -91,6 +91,19 @@ void dae::GameObject::Render() const
 	}
 }
 
+void dae::GameObject::RenderImGui()
+{
+	for (size_t i = 0; i < m_pBaseComponents.size(); i++)
+	{
+		m_pBaseComponents[i]->RenderImGui();
+	}
+
+	for (size_t i = 0; i < m_pChildren.size(); i++)
+	{
+		m_pChildren[i]->RenderImGui();
+	}
+}
+
 void dae::GameObject::SetPosition(float x, float y, float z)
 {
 	m_pTransform->SetLocalPosition(x, y, z);
