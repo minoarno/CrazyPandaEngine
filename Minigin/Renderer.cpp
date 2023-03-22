@@ -30,6 +30,7 @@ void dae::Renderer::Init(SDL_Window* window)
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImPlot::CreateContext();
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL2_Init();
 }
@@ -46,7 +47,22 @@ void dae::Renderer::Render() const
 	ImGui_ImplSDL2_NewFrame(m_window);
 	ImGui::NewFrame();
 
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
+
+	int xValues[11]{ 0,1,2,3,4,5,6,7,8,9,10 };
+	const char* const xValuesText[11]{ "1","2","4","8","16","32","64","128","256","512","1024" };
+	int yValues1[11]{ 8585,8143,5343,3222,1712,590,131,134,38,14,7};
+	int yValues2[11]{ 6239,3452,2456,2291,2272,975,654,313,160,70,13 };
+
+	if (ImPlot::BeginPlot("Trash The Cache"))
+	{
+		ImPlot::SetupAxes("stepsize", "avg. time (in ms)", ImPlotAxisFlags_::ImPlotAxisFlags_PanStretch);
+		ImPlot::PlotLine("avg.time", xValues, yValues1, 11);
+		ImPlot::PlotLine("avg. time Alt", xValues, yValues2, 11);
+		ImPlot::SetupAxisLimitsConstraints(ImAxis_::ImAxis_X1, 0, 9000);
+
+		ImPlot::EndPlot();
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
@@ -60,6 +76,7 @@ void dae::Renderer::Destroy()
 	{
 		ImGui_ImplOpenGL2_Shutdown();
 		ImGui_ImplSDL2_Shutdown();
+		ImPlot::DestroyContext();
 		ImGui::DestroyContext();
 
 		SDL_DestroyRenderer(m_renderer);
