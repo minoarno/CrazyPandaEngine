@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include "GameObject.h"
+#include "EngineTime.h"
 
 class Command
 {
@@ -11,74 +13,40 @@ public:
 	Command& operator=(Command&& other) = delete;
 
 	virtual ~Command() = default;
-	virtual void Execute() const = 0;
+	virtual void Execute() = 0;
+	virtual void Undo() = 0;
 };
 
-class FireCommand final : public Command
+class MoveCommand final : public Command
 {
 public:
-	FireCommand() = default;
-	FireCommand(const FireCommand&) = delete;
-	FireCommand& operator=(const FireCommand&) = delete;
-	FireCommand(FireCommand&&) = delete;
-	FireCommand& operator=(FireCommand&&) = delete;
-
-	virtual ~FireCommand() = default;
-
-	virtual void Execute() const
+	MoveCommand(dae::GameObject* pGameobject, const glm::fvec3& dir)
+		: Command{}
+		, m_Direction{ dir }
+		, m_pGameObject{ pGameobject }
 	{
-		std::cout << "Fire\n";
+
 	}
-};
+	MoveCommand(const MoveCommand&) = delete;
+	MoveCommand& operator=(const MoveCommand&) = delete;
+	MoveCommand(MoveCommand&&) = delete;
+	MoveCommand& operator=(MoveCommand&&) = delete;
 
-class DuckCommand final : public Command
-{
-public:
-	DuckCommand() = default;
-	DuckCommand(const DuckCommand&) = delete;
-	DuckCommand& operator=(const DuckCommand&) = delete;
-	DuckCommand(DuckCommand&&) = delete;
-	DuckCommand& operator=(DuckCommand&&) = delete;
+	virtual ~MoveCommand() = default;
 
-	virtual ~DuckCommand() = default;
-
-	virtual void Execute() const
+	virtual void Execute() 
 	{
-		std::cout << "Duck\n";
+		m_PrevLocalPos = m_pGameObject->GetTransform()->GetLocalPosition();
+		m_pGameObject->GetTransform()->Move(m_Direction * static_cast<float>(Time::GetInstance().GetElapsedSeconds()));
 	}
-};
 
-class JumpCommand final : public Command
-{
-public:
-	JumpCommand() = default;
-	JumpCommand(const JumpCommand&) = delete;
-	JumpCommand& operator=(const JumpCommand&) = delete;
-	JumpCommand(JumpCommand&&) = delete;
-	JumpCommand& operator=(JumpCommand&&) = delete;
-
-	virtual ~JumpCommand() = default;
-
-	virtual void Execute() const
+	virtual void Undo()
 	{
-		std::cout << "Jump\n";
+		m_pGameObject->GetTransform()->SetLocalPosition(m_PrevLocalPos.x,m_PrevLocalPos.y,m_PrevLocalPos.z);
 	}
-};
-
-class FartCommand final : public Command
-{
-public:
-	FartCommand() = default;
-	FartCommand(const FartCommand&) = delete;
-	FartCommand& operator=(const FartCommand&) = delete;
-	FartCommand(FartCommand&&) = delete;
-	FartCommand& operator=(FartCommand&&) = delete;
-
-	virtual ~FartCommand() = default;
-
-	virtual void Execute() const
-	{
-		std::cout << "Fart\n";
-	}
+private:
+	glm::fvec3 m_Direction;
+	glm::fvec3 m_PrevLocalPos;
+	dae::GameObject* m_pGameObject;
 };
 

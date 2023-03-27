@@ -33,6 +33,10 @@ public:
 	void AddOnPressDown(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
 	void AddOnHold(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
 	void AddOnRelease(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
+	
+	void AddOnPressDown(SDL_Keycode keyButton, Command* command);
+	void AddOnHold(SDL_Keycode keyButton, Command* command);
+	void AddOnRelease(SDL_Keycode keyButton, Command* command);
 
 	void CleanUp();
 private:

@@ -47,3 +47,8 @@ void dae::Transform::Move(float x, float y, float z)
 	m_LocalPosition.y += y;
 	m_LocalPosition.z += z;
 }
+
+void dae::Transform::Move(const glm::fvec3& move)
+{
+	m_LocalPosition += move;
+}

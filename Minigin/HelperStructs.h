@@ -32,8 +32,8 @@ struct Vector2f
 	{
 	}
 	Vector2f(int x, int y)
-		: x{ float(x) }
-		, y{ float(y) }
+		: x{ static_cast<float>(x) }
+		, y{ static_cast<float>(y) }
 	{
 	}
 };
