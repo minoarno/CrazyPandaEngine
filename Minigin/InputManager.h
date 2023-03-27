@@ -27,7 +27,7 @@ public:
 	InputManager();
 	~InputManager();
 
-	bool ProcessInput();
+	bool ProcessInput() const;
 	bool IsPressed(ControllerButton button, DWORD playerID) const;
 
 	void AddOnPressDown(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
@@ -41,5 +41,5 @@ public:
 	void CleanUp();
 private:
 	class XInputManager;
-	std::unique_ptr<XInputManager> pimpl;
+	std::unique_ptr<XInputManager> pimpl{};
 };

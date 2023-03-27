@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include "Command.h"
 #include <map>
+#include <algorithm>
 
 struct InputStruct
 {
@@ -13,7 +14,7 @@ public:
 	Command* pOnRelease = nullptr;
 	bool wasPressedDownPreviousFrame = false;
 
-	InputStruct() {};
+	InputStruct() = default;;
 	~InputStruct() 
 	{
 		delete pOnPressDown;
@@ -45,11 +46,13 @@ bool operator>(const PlayerButton& lhs, const PlayerButton& rhs)
 	return lhs.button > rhs.button || (lhs.button == rhs.button && lhs.playerID > rhs.playerID);
 }
 
-class InputManager::XInputManager
+class InputManager::XInputManager final
 {
 public:
+	XInputManager() = default;
+	~XInputManager() = default;
 	bool ProcessInput();
-	bool IsPressed(ControllerButton button, DWORD playerID) const;
+	[[nodiscard]] bool IsPressed(ControllerButton button, DWORD playerID) const;
 
 	void AddOnPressDown(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
 	void AddOnHold(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
@@ -61,8 +64,8 @@ public:
 
 	void CleanUp();
 private:
-	std::map<PlayerButton, InputStruct*> m_ControllerCommands;
-	std::map<SDL_Keycode, InputStruct*> m_KeyboardCommands;
+	std::map<PlayerButton, InputStruct*> m_ControllerCommands = std::map<PlayerButton, InputStruct*>();
+	std::map<SDL_Keycode, InputStruct*> m_KeyboardCommands = std::map<SDL_Keycode, InputStruct*>();
 
 	bool m_DidInputGet = false;
 };
@@ -76,7 +79,11 @@ bool InputManager::XInputManager::ProcessInput()
 		ZeroMemory(&m_pCurrentState, sizeof(XINPUT_STATE));
 		XInputGetState(i, &m_pCurrentState);
 
-		if (!IsPressed(ControllerButton(m_pCurrentState.Gamepad.wButtons), i))
+		if (IsPressed(static_cast<ControllerButton>(m_pCurrentState.Gamepad.wButtons), i))
+		{
+			m_ControllerCommands[PlayerButton{ static_cast<ControllerButton>(m_pCurrentState.Gamepad.wButtons), i }]->wasPressedDownPreviousFrame = true;
+		}
+		else
 		{
 			for (auto& c : m_ControllerCommands)
 			{
@@ -93,6 +100,7 @@ bool InputManager::XInputManager::ProcessInput()
 	}
 
 
+	std::vector<SDL_Keycode> keysPressedThisFrame = std::vector<SDL_Keycode>();
 	//Makes us able to close the application
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) 
@@ -103,9 +111,9 @@ bool InputManager::XInputManager::ProcessInput()
 		}
 		if (e.type == SDL_KEYDOWN) 
 		{
-			if (m_KeyboardCommands.find(button) != m_KeyboardCommands.end())
+			if (m_KeyboardCommands.contains(button))
 			{
-				auto& command = m_KeyboardCommands[button];
+				auto command = m_KeyboardCommands[button];
 				if (command->wasPressedDownPreviousFrame)
 				{
 					if (command->pOnHold != nullptr)
@@ -120,23 +128,33 @@ bool InputManager::XInputManager::ProcessInput()
 						command->pOnPressDown->Execute();
 					}
 				}
-
+				command->wasPressedDownPreviousFrame = true;
+				keysPressedThisFrame.emplace_back(button);
 			}
 		}
-		if (e.type == SDL_KEYUP)
+		else if (e.type == SDL_KEYUP)
 		{
-			if (m_KeyboardCommands.find(button) == m_KeyboardCommands.end())
+			if (m_KeyboardCommands.contains(button))
 			{
-				auto& command = m_KeyboardCommands[button]; 
+				const auto& command = m_KeyboardCommands[button]; 
 				if (command->pOnRelease != nullptr)
 				{
 					command->pOnRelease->Execute();
 				}
 			}
 		}
-		//if (e.type == SDL_MOUSEBUTTONDOWN) {
-		//	
-		//}
+	}
+
+	for (auto& c : m_KeyboardCommands)
+	{
+		if (std::find(keysPressedThisFrame.begin(), keysPressedThisFrame.end(),c.first) == keysPressedThisFrame.end())
+		{
+			c.second->wasPressedDownPreviousFrame = false;
+			if (c.second->pOnRelease != nullptr)
+			{
+				c.second->pOnRelease->Execute();
+			}
+		}
 	}
 
 	return true;
@@ -144,50 +162,33 @@ bool InputManager::XInputManager::ProcessInput()
 
 bool InputManager::XInputManager::IsPressed(ControllerButton button, DWORD playerID) const
 {
-	// todo: return whether the given button is pressed or not.
-
-	if (m_ControllerCommands.find(PlayerButton{ button,playerID }) != m_ControllerCommands.end())
+	if (m_ControllerCommands.contains(PlayerButton{ button,playerID }))
 	{
-		const bool previousState = m_ControllerCommands.at(PlayerButton{ button,playerID })->wasPressedDownPreviousFrame;
-		if (previousState == false)
-		{
-			m_ControllerCommands.at(PlayerButton{ button,playerID })->wasPressedDownPreviousFrame = true;
-			if (m_ControllerCommands.at(PlayerButton{ button,playerID })->pOnPressDown != nullptr)
-			{
-				m_ControllerCommands.at(PlayerButton{ button,playerID })->pOnPressDown->Execute();
-			}
-		}
-		else
+		if (m_ControllerCommands.at(PlayerButton{ button,playerID })->wasPressedDownPreviousFrame)
 		{
 			if (m_ControllerCommands.at(PlayerButton{ button,playerID })->pOnHold != nullptr)
 			{
 				m_ControllerCommands.at(PlayerButton{ button,playerID })->pOnHold->Execute();
 			}
 		}
+		else
+		{
+			if (m_ControllerCommands.at(PlayerButton{ button,playerID })->pOnPressDown != nullptr)
+			{
+				m_ControllerCommands.at(PlayerButton{ button,playerID })->pOnPressDown->Execute();
+			}
+		}
 		return true;
 	}
 	return false;
-
-	//switch (button)
-	//{
-	//case ControllerButton::ButtonA:
-	//	return m_pCurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_A;
-	//case ControllerButton::ButtonB:
-	//	return m_pCurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_B;
-	//case ControllerButton::ButtonX:
-	//	return m_pCurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
-	//case ControllerButton::ButtonY:
-	//	return m_pCurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_Y;
-	//default: return false;
-	//}
 }
 
 void InputManager::XInputManager::AddOnPressDown(ControllerButton controllerButton, Command* command, DWORD playerID)
 {
 	auto button = PlayerButton{ controllerButton,playerID };
-	if (m_ControllerCommands.find(button) == m_ControllerCommands.end())
+	if (!m_ControllerCommands.contains(button))
 	{
-		InputStruct* inputStruct = new InputStruct{};
+		auto inputStruct = new InputStruct{};
 		inputStruct->pOnPressDown = command;
 		m_ControllerCommands.emplace(button, inputStruct);
 	}
@@ -200,9 +201,9 @@ void InputManager::XInputManager::AddOnPressDown(ControllerButton controllerButt
 void InputManager::XInputManager::AddOnHold(ControllerButton controllerButton, Command* command, DWORD playerID)
 {
 	auto button = PlayerButton{ controllerButton,playerID };
-	if (m_ControllerCommands.find(PlayerButton{ controllerButton,playerID }) == m_ControllerCommands.end())
+	if (!m_ControllerCommands.contains(PlayerButton{ controllerButton,playerID }))
 	{
-		InputStruct* inputStruct = new InputStruct{};
+		auto* inputStruct = new InputStruct{};
 		inputStruct->pOnHold = command;
 		m_ControllerCommands.emplace(button, inputStruct);
 	}
@@ -215,9 +216,9 @@ void InputManager::XInputManager::AddOnHold(ControllerButton controllerButton, C
 void InputManager::XInputManager::AddOnRelease(ControllerButton controllerButton, Command* command, DWORD playerID)
 {
 	auto button = PlayerButton{ controllerButton,playerID };
-	if (m_ControllerCommands.find(PlayerButton{ controllerButton,playerID }) == m_ControllerCommands.end())
+	if (!m_ControllerCommands.contains(PlayerButton{ controllerButton,playerID }))
 	{
-		InputStruct* inputStruct = new InputStruct{};
+		auto* inputStruct = new InputStruct{};
 		inputStruct->pOnRelease = command;
 		m_ControllerCommands.emplace(button, inputStruct);
 	}
@@ -229,9 +230,9 @@ void InputManager::XInputManager::AddOnRelease(ControllerButton controllerButton
 
 void InputManager::XInputManager::AddOnPressDown(SDL_Keycode button, Command* command)
 {
-	if (m_KeyboardCommands.find(button) == m_KeyboardCommands.end())
+	if (!m_KeyboardCommands.contains(button))
 	{
-		InputStruct* inputStruct = new InputStruct{};
+		auto* inputStruct = new InputStruct{};
 		inputStruct->pOnPressDown = command;
 		m_KeyboardCommands.emplace(button, inputStruct);
 	}
@@ -243,9 +244,9 @@ void InputManager::XInputManager::AddOnPressDown(SDL_Keycode button, Command* co
 
 void InputManager::XInputManager::AddOnHold(SDL_Keycode button, Command* command)
 {
-	if (m_KeyboardCommands.find(button) == m_KeyboardCommands.end())
+	if (!m_KeyboardCommands.contains(button))
 	{
-		InputStruct* inputStruct = new InputStruct{};
+		auto* inputStruct = new InputStruct{};
 		inputStruct->pOnHold = command;
 		m_KeyboardCommands.emplace(button, inputStruct);
 	}
@@ -257,9 +258,9 @@ void InputManager::XInputManager::AddOnHold(SDL_Keycode button, Command* command
 
 void InputManager::XInputManager::AddOnRelease(SDL_Keycode button, Command* command)
 {
-	if (m_KeyboardCommands.find(button) == m_KeyboardCommands.end())
+	if (!m_KeyboardCommands.contains(button))
 	{
-		InputStruct* inputStruct = new InputStruct{};
+		auto* inputStruct = new InputStruct{};
 		inputStruct->pOnRelease = command;
 		m_KeyboardCommands.emplace(button, inputStruct);
 	}
@@ -277,6 +278,13 @@ void InputManager::XInputManager::CleanUp()
 		p.second = nullptr;
 	}
 	m_ControllerCommands.clear();
+
+	for (auto& p : m_KeyboardCommands)
+	{
+		delete p.second;
+		p.second = nullptr;
+	}
+	m_KeyboardCommands.clear();
 }
 
 InputManager::InputManager()
@@ -286,7 +294,7 @@ InputManager::InputManager()
 
 InputManager::~InputManager() = default;
 
-bool InputManager::ProcessInput()
+bool InputManager::ProcessInput() const
 {
 	return pimpl->ProcessInput();
 }

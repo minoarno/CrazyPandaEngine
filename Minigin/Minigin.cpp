@@ -125,4 +125,5 @@ void dae::Minigin::CleanUp()
 	SceneManager::GetInstance().CleanUp();
 	Renderer::GetInstance().Destroy();
 	ResourceManager::GetInstance().CleanUp();
+	InputManager::GetInstance().CleanUp();
 }
