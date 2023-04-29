@@ -16,6 +16,7 @@ void dae::EventSubject::RemoveObserver(dae::EventObserver* observer)
 		if (*it == observer)
 		{
 			it = m_pObservers.erase(it);
+			m_AmountObservers--;
 		}
 		else
 		{
