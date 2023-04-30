@@ -209,9 +209,6 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="MiniginPCH.cpp">
       <Filter>Core</Filter>
     </ClCompile>
