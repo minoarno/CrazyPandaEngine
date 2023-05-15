@@ -54,7 +54,7 @@ void load()
 
 	auto* texture = gameobject->AddComponent(new dae::TextureComponent("SpritesDigDug.png"));
 	texture->SetSourceRect(Rectf{ 0,0,40,40 });
-	texture->SetDestinationRectDimensions(Vector2f{ 20,20 });
+	texture->SetDestinationRectDimensions(glm::vec2{ 20.f,20.f });
 	scene.Add(gameobject);
 
 	//float speed{ 180.f };
@@ -84,7 +84,7 @@ void load()
 	scene.Add(gameobject);
 
 	texture->SetSourceRect(Rectf{ 0,0,40,40 });
-	texture->SetDestinationRectDimensions(Vector2f{ 20,20 });
+	texture->SetDestinationRectDimensions(glm::vec2{ 20.f,20.f });
 
 	//InputManager::GetInstance().AddOnHold(SDLK_LEFT, new MoveCommand{ gameobject.get(),glm::fvec3{-speed,0,0} });
 	//InputManager::GetInstance().AddOnHold(SDLK_RIGHT, new MoveCommand{ gameobject.get(),glm::fvec3{speed,0,0} });

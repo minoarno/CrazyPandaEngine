@@ -24,7 +24,7 @@ namespace dae
 		dae::Texture2D* GetTexture()const { return m_pTexture; }
 		void SetTexture(const std::string& filename);
 
-		void SetDestinationRectDimensions(const Vector2f& dst);
+		void SetDestinationRectDimensions(const glm::vec2& dst);
 		Rectf GetDestinationRect()const;
 		void SetSourceRect(const Rectf& src);
 		Rectf GetSourceRect()const;

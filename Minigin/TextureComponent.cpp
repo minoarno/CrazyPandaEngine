@@ -40,7 +40,7 @@ void dae::TextureComponent::SetTexture(const std::string& filename)
 	CalculateSourceRect(0);
 }
 
-void dae::TextureComponent::SetDestinationRectDimensions(const Vector2f& dst)
+void dae::TextureComponent::SetDestinationRectDimensions(const glm::vec2& dst)
 {
 	m_DestinationRect.w = dst.x;
 	m_DestinationRect.h = dst.y;
