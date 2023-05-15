@@ -12,7 +12,7 @@ bool IsOverlapping(const Rectf& rect1, const Rectf& rect2)
 	return true;
 }
 
-bool IsOverlapping(const Rectf& rect, const Vector2f& p)
+bool IsOverlapping(const Rectf& rect, const glm::vec2& p)
 {
 	if (rect.x > p.x || p.x > rect.x + rect.w) return false;
 
@@ -39,9 +39,9 @@ bool IsOverlapping(const Rectf& rect, const Vector2f& p)
 //	glEnd();
 //}
 
-Vector2f RotateVector(const Vector2f& vector, float angleInRadians)
+glm::vec2 RotateVector(const glm::vec2& vector, float angleInRadians)
 {
-	Vector2f result{};
+	glm::vec2 result{};
 	result.x = vector.x * cos(angleInRadians) - vector.y * sin(angleInRadians);
 	result.y = vector.x * sin(angleInRadians) + vector.y * cos(angleInRadians);
 

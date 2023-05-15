@@ -12,7 +12,7 @@ namespace dae
 	{
 	public:
 		void SetPosition(float x, float y, float z = 0.0f);
-		void SetPosition(const Vector2f& pos);
+		void SetPosition(const glm::vec2& pos);
 		[[nodiscard]] float GetRotation()const;
 
 		GameObject();

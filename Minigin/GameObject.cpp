@@ -109,7 +109,7 @@ void dae::GameObject::SetPosition(float x, float y, float z)
 	m_pTransform->SetLocalPosition(x, y, z);
 }
 
-void dae::GameObject::SetPosition(const Vector2f& pos)
+void dae::GameObject::SetPosition(const glm::vec2& pos)
 {
 	SetPosition(float(pos.x), float(pos.y), 0.f);
 }
