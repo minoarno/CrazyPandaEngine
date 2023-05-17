@@ -7,15 +7,69 @@
     <Filter Include="Commands">
       <UniqueIdentifier>{04be0994-b62d-4170-a3bb-eb64b84986a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{4a0282e0-3f01-4e5e-a62d-33e11755fc14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observers">
+      <UniqueIdentifier>{ba214ba6-4ab0-49d8-b95e-c38884867508}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sandbox.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="FpsComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LiveObserver.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lives.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplay.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDisplay.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreObserver.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SandboxCommands.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LiveObserver.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lives.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplay.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreDisplay.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreObserver.h">
+      <Filter>Observers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -33,9 +33,6 @@
     <ClInclude Include="BaseComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="FpsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="RotatorComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -123,27 +120,6 @@
     <ClInclude Include="EventSubject.h">
       <Filter>Observer</Filter>
     </ClInclude>
-    <ClInclude Include="LiveObserver.h">
-      <Filter>Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="Lives.h">
-      <Filter>Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesDisplay.h">
-      <Filter>Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="Score.h">
-      <Filter>Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreDisplay.h">
-      <Filter>Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreObserver.h">
-      <Filter>Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -189,9 +165,6 @@
       <Filter>Rendering\imgui</Filter>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FpsComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="RotatorComponent.cpp">
@@ -250,27 +223,6 @@
     </ClCompile>
     <ClCompile Include="EventSubject.cpp">
       <Filter>Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="LiveObserver.cpp">
-      <Filter>Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="Lives.cpp">
-      <Filter>Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesDisplay.cpp">
-      <Filter>Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="Score.cpp">
-      <Filter>Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreDisplay.cpp">
-      <Filter>Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreObserver.cpp">
-      <Filter>Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>Audio</Filter>
