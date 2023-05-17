@@ -28,6 +28,9 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{7c68d09c-2375-4f1c-bfd2-f7bd2bf69285}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{de7d5cc0-71ba-49bc-a272-0d81f12930b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h">
@@ -132,6 +135,15 @@
     <ClInclude Include="AudioManager.h">
       <Filter>Audio</Filter>
     </ClInclude>
+    <ClInclude Include="BoxColliderComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidbodyComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui.cpp">
@@ -226,6 +238,15 @@
     </ClCompile>
     <ClCompile Include="AudioManager.cpp">
       <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxColliderComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidbodyComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Logging</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

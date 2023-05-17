@@ -175,6 +175,7 @@
     <ClInclude Include="Lives.h" />
     <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PrefabFactoryClass.h" />
     <ClInclude Include="SandboxCommands.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="ScoreDisplay.h" />

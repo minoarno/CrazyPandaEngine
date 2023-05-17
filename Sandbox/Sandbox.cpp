@@ -59,12 +59,12 @@ void load()
 	texture->SetDestinationRectDimensions(glm::vec2{ 20.f,20.f });
 	scene.Add(gameobject);
 
-	//float speed{ 180.f };
+	float speed{ 180.f };
 
-	//InputManager::GetInstance().AddOnHold(SDLK_q, new MoveCommand{gameobject.get(),glm::fvec3{-speed,0,0}});
-	//InputManager::GetInstance().AddOnHold(SDLK_d, new MoveCommand{gameobject.get(),glm::fvec3{speed,0,0}});
-	//InputManager::GetInstance().AddOnHold(SDLK_s, new MoveCommand{gameobject.get(),glm::fvec3{0,speed,0}});
-	//InputManager::GetInstance().AddOnHold(SDLK_z, new MoveCommand{gameobject.get(),glm::fvec3{0,-speed,0}});
+	InputManager::GetInstance().AddOnHold(SDLK_q, new MoveCommand{gameobject.get(),glm::fvec3{-speed,0,0}});
+	InputManager::GetInstance().AddOnHold(SDLK_d, new MoveCommand{gameobject.get(),glm::fvec3{speed,0,0}});
+	InputManager::GetInstance().AddOnHold(SDLK_s, new MoveCommand{gameobject.get(),glm::fvec3{0,speed,0}});
+	InputManager::GetInstance().AddOnHold(SDLK_z, new MoveCommand{gameobject.get(),glm::fvec3{0,-speed,0}});
 
 	PlayerComponent* pPlayerComponent = gameobject->AddComponent(new PlayerComponent{ 5 });
 
@@ -88,10 +88,10 @@ void load()
 	texture->SetSourceRect(Rectf{ 0,0,40,40 });
 	texture->SetDestinationRectDimensions(glm::vec2{ 20.f,20.f });
 
-	//InputManager::GetInstance().AddOnHold(SDLK_LEFT, new MoveCommand{ gameobject.get(),glm::fvec3{-speed,0,0} });
-	//InputManager::GetInstance().AddOnHold(SDLK_RIGHT, new MoveCommand{ gameobject.get(),glm::fvec3{speed,0,0} });
-	//InputManager::GetInstance().AddOnHold(SDLK_DOWN, new MoveCommand{ gameobject.get(),glm::fvec3{0,speed,0} });
-	//InputManager::GetInstance().AddOnHold(SDLK_UP, new MoveCommand{ gameobject.get(),glm::fvec3{0,-speed,0} });
+	InputManager::GetInstance().AddOnHold(SDLK_LEFT, new MoveCommand{ gameobject.get(),glm::fvec3{-speed,0,0} });
+	InputManager::GetInstance().AddOnHold(SDLK_RIGHT, new MoveCommand{ gameobject.get(),glm::fvec3{speed,0,0} });
+	InputManager::GetInstance().AddOnHold(SDLK_DOWN, new MoveCommand{ gameobject.get(),glm::fvec3{0,speed,0} });
+	InputManager::GetInstance().AddOnHold(SDLK_UP, new MoveCommand{ gameobject.get(),glm::fvec3{0,-speed,0} });
 
 	pPlayerComponent = gameobject->AddComponent(new PlayerComponent{ 5 });
 
