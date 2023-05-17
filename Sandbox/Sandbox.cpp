@@ -8,7 +8,7 @@
 #endif
 #endif
 
-#include "Command.h"
+#include "SandboxCommands.h"
 #include "Minigin.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
@@ -22,6 +22,8 @@
 #include "Lives.h"
 #include "LivesDisplay.h"
 #include "ScoreDisplay.h"
+
+#include "ServiceLocator.h"
 
 void load()
 {
@@ -104,6 +106,9 @@ void load()
 	gameobject->AddComponent(new ScoreDisplay{ pPlayerComponent });
 	gameobject->SetPosition(20, 240);
 	scene.Add(gameobject);
+
+	ServiceLocator::GetAudio().AddSound("bell.wav");
+	ServiceLocator::GetAudio().PlaySound(0);
 }
 
 int main(int, char* []) {

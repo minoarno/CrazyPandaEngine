@@ -7,6 +7,8 @@
 #include <chrono>
 #include <thread>
 #include "EngineTime.h"
+#include "AudioManager.h"
+#include "ServiceLocator.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -66,11 +68,13 @@ dae::Minigin::Minigin(const std::string &dataPath)
 	Renderer::GetInstance().Init(g_window);
 
 	ResourceManager::GetInstance().Init(dataPath);
+	ServiceLocator::Provide(new Audio{});
 }
 
 dae::Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
+	ServiceLocator::CleanUp();
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	SDL_Quit();
