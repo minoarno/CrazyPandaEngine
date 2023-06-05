@@ -31,6 +31,9 @@
     <Filter Include="Logging">
       <UniqueIdentifier>{de7d5cc0-71ba-49bc-a272-0d81f12930b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Box2D">
+      <UniqueIdentifier>{9bbab75f-c7a3-4007-a924-ee21032dce74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h">
@@ -135,15 +138,25 @@
     <ClInclude Include="AudioManager.h">
       <Filter>Audio</Filter>
     </ClInclude>
-    <ClInclude Include="BoxColliderComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="RigidbodyComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Logging</Filter>
     </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="b2DebugDraw.h">
+      <Filter>Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.h">
+      <Filter>Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D.h">
+      <Filter>Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui.cpp">
@@ -239,14 +252,21 @@
     <ClCompile Include="AudioManager.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="BoxColliderComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="RigidbodyComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Logging</Filter>
     </ClCompile>
+    <ClCompile Include="b2DebugDraw.cpp">
+      <Filter>Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderComponent.cpp">
+      <Filter>Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="ContactListener.cpp" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,17 @@
 #include <typeindex>
 #include <functional>
 
+enum class CollisionType
+{
+	BeginContact,
+	EndContact,
+	PreSolve,
+	PostSolve
+};
+
+class b2Fixture;
+class b2Contact;
+typedef std::function<void(b2Fixture*, b2Fixture*, b2Contact*, CollisionType)> CollisionCallback;
 namespace dae
 {
 	class BaseComponent;
@@ -34,6 +45,9 @@ namespace dae
 		bool SetParent(GameObject* newParentObject);
 		void RemoveChild(GameObject* childObject);
 
+		void SetScene(Scene* pScene);
+		[[nodiscard]] Scene* GetScene() const;
+
 		template<typename T>
 		[[nodiscard]] std::enable_if_t<std::is_base_of_v<BaseComponent, T>, T*> GetComponent() const;
 		template<typename T>
@@ -50,7 +64,13 @@ namespace dae
 		[[nodiscard]] bool GetActive()const { return m_IsActive; }
 
 		[[nodiscard]] Transform* GetTransform()const { return m_pTransform; }
+
+		void Collision(b2Fixture* pThisFixture, b2Fixture* pOtherFixture, b2Contact* pContact, CollisionType contactType);
+		void AddCollisionCallback(const CollisionCallback& callback);
 	private:
+		dae::Scene* m_pScene;
+		std::string m_Tag;
+
 		bool m_IsActive{ true };
 		bool m_IsInitialized{ false };
 		
@@ -69,6 +89,8 @@ namespace dae
 		void LateUpdate();
 
 		void AddComponent_(BaseComponent* newComponent);
+
+		std::vector<CollisionCallback> m_CollisionCallbacks;
 	};
 
 	template<typename T>

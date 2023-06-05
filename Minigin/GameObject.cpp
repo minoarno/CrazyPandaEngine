@@ -176,6 +176,20 @@ void dae::GameObject::RemoveChild(GameObject* childObject)
 	}
 }
 
+void dae::GameObject::SetScene(Scene* pScene)
+{
+	m_pScene = pScene;
+	for (GameObject* pChild : m_pChildren)
+	{
+		pChild->SetScene(pScene);
+	}
+}
+
+dae::Scene* dae::GameObject::GetScene() const
+{
+	return m_pScene;
+}
+
 dae::GameObject* dae::GameObject::GetChild(int index) const
 {
 	if (index >= int(m_pChildren.size()))
@@ -184,4 +198,17 @@ dae::GameObject* dae::GameObject::GetChild(int index) const
 	}
 
 	return m_pChildren[index];
+}
+
+void dae::GameObject::Collision(b2Fixture* pThisFixture, b2Fixture* pOtherFixture, b2Contact* pContact, CollisionType contactType)
+{
+	for (size_t i = 0; i < m_CollisionCallbacks.size(); i++)
+	{
+		m_CollisionCallbacks[i](pThisFixture, pOtherFixture, pContact, contactType);
+	}
+}
+
+void dae::GameObject::AddCollisionCallback(const CollisionCallback& callback)
+{
+	m_CollisionCallbacks.emplace_back(callback);
 }
