@@ -11,7 +11,7 @@ namespace dae
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
-		void Add(std::shared_ptr<GameObject> object);
+		std::shared_ptr<GameObject> Add(std::shared_ptr<GameObject> object);
 		void Remove(std::shared_ptr<GameObject> object);
 		void RemoveAll();
 

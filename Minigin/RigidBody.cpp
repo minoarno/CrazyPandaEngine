@@ -46,7 +46,9 @@ void RigidBody::Initialize()
 	m_BodyDef.position = {pos.x, pos.y};
 	m_BodyDef.fixedRotation = true;
 
-	m_pBody = m_pGameObject->GetScene()->GetWorld()->CreateBody(&m_BodyDef);
+	auto pScene = m_pGameObject->GetScene();
+	auto pWorld = pScene->GetWorld();
+	m_pBody = pWorld->CreateBody(&m_BodyDef);
 }
 
 void RigidBody::Update()

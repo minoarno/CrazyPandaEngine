@@ -43,9 +43,11 @@ Scene::Scene(const std::string& name)
 #endif
 }
 
-void Scene::Add(std::shared_ptr<GameObject> object)
+std::shared_ptr<GameObject> Scene::Add(std::shared_ptr<GameObject> object)
 {
+	object->SetScene(this);
 	m_objects.emplace_back(std::move(object));
+	return m_objects.back();
 }
 
 void Scene::Remove(std::shared_ptr<GameObject> object)

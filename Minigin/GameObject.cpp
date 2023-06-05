@@ -130,7 +130,8 @@ dae::GameObject* dae::GameObject::AddChild(GameObject* child)
 {
 	if(child->SetParent(this))
 	{
-		m_pChildren.emplace_back(child);		
+		m_pChildren.emplace_back(child);	
+		child->SetScene(m_pScene);
 		return child;
 	}
 	return nullptr;
