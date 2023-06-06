@@ -38,6 +38,12 @@ void RigidBody::Move(const float x, const float y)
 	m_pBody->SetLinearVelocity(linearVelocity);
 }
 
+void RigidBody::SetEnabled(bool value)
+{
+	m_pBody->SetActive(value);
+	m_pBody->SetLinearVelocity({ 0,0 });
+}
+
 void RigidBody::Initialize()
 {
 	m_BodyDef.userData = m_pGameObject;

@@ -15,6 +15,8 @@ public:
 	b2Fixture* AddCollider(const b2FixtureDef& fixtureDef);
 	void Move(const float x, const float y);
 	b2Body* GetBody() { return m_pBody; };
+
+	void SetEnabled(bool value);
 protected:
 	void Initialize() override;
 	void Update() override;
