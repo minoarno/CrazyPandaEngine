@@ -100,7 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\spdlog\include;$(SolutionDir)3rdParty\Box2D\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\spdlog\include;$(SolutionDir)3rdParty\Box2D\include;$(SolutionDir)3rdParty\Clipper\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -114,15 +114,16 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib;opengl32.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;Box2D.lib;Clipper2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration);$(SolutionDir)3rdParty\Clipper\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb $(OutputPath) /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\Clipper\$(PlatformTarget)\$(Configuration)\*.dll" "$(OutputPath)" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -132,7 +133,7 @@ xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb 
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\spdlog\include;$(SolutionDir)3rdParty\Box2D\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\spdlog\include;$(SolutionDir)3rdParty\Box2D\include;$(SolutionDir)3rdParty\Clipper\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -146,15 +147,16 @@ xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb 
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib;opengl32.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;Box2D.lib;Clipper2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration);$(SolutionDir)3rdParty\Clipper\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb $(OutputPath) /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\Clipper\$(PlatformTarget)\$(Configuration)\*.dll" "$(OutputPath)" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,7 +168,7 @@ xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb 
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\spdlog\include;$(SolutionDir)3rdParty\Box2D\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\spdlog\include;$(SolutionDir)3rdParty\Box2D\include;$(SolutionDir)3rdParty\Clipper\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -182,15 +184,16 @@ xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb 
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib;opengl32.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;Box2D.lib;Clipper2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration);$(SolutionDir)3rdParty\Clipper\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb $(OutputPath) /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\Clipper\$(PlatformTarget)\$(Configuration)\*.dll" "$(OutputPath)" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -202,7 +205,7 @@ xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb 
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\spdlog\include;$(SolutionDir)3rdParty\Box2D\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\spdlog\include;$(SolutionDir)3rdParty\Box2D\include;$(SolutionDir)3rdParty\Clipper\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -218,15 +221,16 @@ xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb 
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib;opengl32.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xinput.lib;opengl32.lib;Box2D.lib;Clipper2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration);$(SolutionDir)3rdParty\Clipper\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(OutputPath) /R /Y
-xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb $(OutputPath) /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)3rdParty\Clipper\$(PlatformTarget)\$(Configuration)\*.dll" "$(OutputPath)" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -235,6 +239,7 @@ xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb 
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Box2D.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="ClipperHelper.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="ContactListener.h" />
@@ -286,6 +291,7 @@ xcopy $(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb 
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MiniginPCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="ClipperHelper.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="EngineTime.cpp">

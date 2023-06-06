@@ -34,6 +34,9 @@
     <Filter Include="Box2D">
       <UniqueIdentifier>{9bbab75f-c7a3-4007-a924-ee21032dce74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Clipper2">
+      <UniqueIdentifier>{24a6bd7c-7ace-458c-a8b7-c7d071bc3ab2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="Box2D.h">
       <Filter>Box2D</Filter>
     </ClInclude>
+    <ClInclude Include="ClipperHelper.h">
+      <Filter>Clipper2</Filter>
+    </ClInclude>
     <ClInclude Include="ContactListener.h" />
   </ItemGroup>
   <ItemGroup>
@@ -268,5 +274,8 @@
       <Filter>Box2D</Filter>
     </ClCompile>
     <ClCompile Include="ContactListener.cpp" />
+    <ClCompile Include="ClipperHelper.cpp">
+      <Filter>Clipper2</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

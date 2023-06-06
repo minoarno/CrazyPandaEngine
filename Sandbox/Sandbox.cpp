@@ -109,6 +109,7 @@ void load()
 
 	ServiceLocator::GetAudio().AddSound("bell.wav");
 	ServiceLocator::GetAudio().PlaySound(0);
+
 }
 
 int main(int, char* []) {
