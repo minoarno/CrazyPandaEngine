@@ -11,7 +11,7 @@
 
 using namespace dae;
 
-unsigned int Scene::m_idCounter = 0;
+unsigned int Scene::m_IdCounter = 0;
 
 b2World* dae::Scene::GetWorld()
 {
@@ -19,8 +19,8 @@ b2World* dae::Scene::GetWorld()
 }
 
 Scene::Scene(const std::string& name) 
-	: m_name(name) 
-	, m_objects{}
+	: m_Name(name) 
+	, m_pObjects{}
 	, m_pWorld{new b2World{{0,0}}}
 {
 	m_pWorld->SetAllowSleeping(false);
@@ -43,62 +43,62 @@ Scene::Scene(const std::string& name)
 #endif
 }
 
-std::shared_ptr<GameObject> Scene::Add(std::shared_ptr<GameObject> object)
+GameObject* Scene::Add(GameObject* pObject)
 {
-	object->SetScene(this);
-	m_objects.emplace_back(std::move(object));
-	return m_objects.back();
+	pObject->SetScene(this);
+	m_pObjects.emplace_back(std::move(pObject));
+	return m_pObjects.back();
 }
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
+void Scene::Remove(GameObject* object)
 {
-	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+	m_pObjects.erase(std::remove(m_pObjects.begin(), m_pObjects.end(), object), m_pObjects.end());
 }
 
 void Scene::RemoveAll()
 {
-	m_objects.clear();
+	m_pObjects.clear();
 }
 
 void Scene::Update()
 {
 	m_pWorld->Step(float(Time::GetInstance().GetElapsedSeconds()), 10, 8);
 
-	for (size_t i = 0; i < m_objects.size(); i++)
+	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
-		m_objects[i]->Update();
+		m_pObjects[i]->Update();
 	}
 }
 
 void dae::Scene::FixedUpdate()
 {
-	for (size_t i = 0; i < m_objects.size(); i++)
+	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
-		m_objects[i]->FixedUpdate();
+		m_pObjects[i]->FixedUpdate();
 	}
 }
 
 void dae::Scene::LateUpdate()
 {
-	for (size_t i = 0; i < m_objects.size(); i++)
+	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
-		m_objects[i]->LateUpdate();
+		m_pObjects[i]->LateUpdate();
 	}
 }
 
 void Scene::Render() const
 {
-	for (size_t i = 0; i < m_objects.size(); i++)
+	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
-		m_objects[i]->Render();
+		m_pObjects[i]->Render();
 	}
 }
 
 void Scene::RenderImGui()
 {
-	for (size_t i = 0; i < m_objects.size(); i++)
+	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
-		m_objects[i]->RenderImGui();
+		m_pObjects[i]->RenderImGui();
 	}
 }
 
@@ -112,6 +112,13 @@ void dae::Scene::OnSceneAttach()
 
 dae::Scene::~Scene()
 {
+	for (size_t i = 0; i < m_pObjects.size(); i++)
+	{
+		delete m_pObjects[i];
+		m_pObjects[i] = nullptr;
+	}
+	m_pObjects.clear();
+
 	delete m_pContactListener;
 	m_pContactListener = nullptr;
 
