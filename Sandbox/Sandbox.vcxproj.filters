@@ -13,6 +13,12 @@
     <Filter Include="Entry">
       <UniqueIdentifier>{b65c9a0a-2fbb-4b1d-b4b6-3bae946595fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JSON">
+      <UniqueIdentifier>{dd5975f6-55ed-496d-8259-e6a7959b92c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemies">
+      <UniqueIdentifier>{2f83427d-4091-4593-9b8e-7a122d17b249}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sandbox.cpp">
@@ -41,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="ScoreObserver.cpp">
       <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonHelper.cpp">
+      <Filter>JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="PrefabFactoryClass.h">
       <Filter>Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonHelper.h">
+      <Filter>JSON</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
