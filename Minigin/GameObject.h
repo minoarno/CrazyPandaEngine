@@ -67,6 +67,9 @@ namespace dae
 
 		void Collision(b2Fixture* pThisFixture, b2Fixture* pOtherFixture, b2Contact* pContact, CollisionType contactType);
 		void AddCollisionCallback(const CollisionCallback& callback);
+
+		void SetTag(const std::string& tag) { m_Tag = tag; }
+		std::string GetTag() const { return m_Tag; }
 	private:
 		dae::Scene* m_pScene;
 		std::string m_Tag;
