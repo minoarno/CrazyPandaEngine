@@ -1,23 +1,12 @@
 #pragma once
-#include "GameObject.h"
-using namespace dae;
-
-static GameObject* CreatePlayer()
+namespace dae
 {
-
+	class GameObject;
+	class Scene;
 }
 
-static GameObject* CreatePooka()
-{
-
-}
-
-static GameObject* CreateFygar()
-{
-
-}
-
-static GameObject* CreateRock()
-{
-
-}
+dae::GameObject* CreatePlayer(dae::Scene& scene);
+dae::GameObject* CreatePooka(dae::Scene& scene);
+dae::GameObject* CreateFygar(dae::Scene& scene);
+dae::GameObject* CreateRock(dae::Scene& scene);
+dae::GameObject* CreateBlock(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims);

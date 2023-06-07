@@ -51,6 +51,12 @@
     <ClCompile Include="JsonHelper.cpp">
       <Filter>JSON</Filter>
     </ClCompile>
+    <ClCompile Include="PrefabFactoryClass.cpp">
+      <Filter>Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SandboxCommands.h">
@@ -85,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="JsonHelper.h">
       <Filter>JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoreComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

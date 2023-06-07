@@ -176,11 +176,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FpsComponent.cpp" />
+    <ClCompile Include="HighScoreComponent.cpp" />
     <ClCompile Include="JsonHelper.cpp" />
     <ClCompile Include="LiveObserver.cpp" />
     <ClCompile Include="Lives.cpp" />
     <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="PrefabFactoryClass.cpp" />
     <ClCompile Include="Sandbox.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="ScoreDisplay.cpp" />
@@ -188,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsComponent.h" />
+    <ClInclude Include="HighScoreComponent.h" />
     <ClInclude Include="JsonHelper.h" />
     <ClInclude Include="LiveObserver.h" />
     <ClInclude Include="Lives.h" />
