@@ -64,42 +64,50 @@ void Scene::Update()
 {
 	m_pWorld->Step(float(Time::GetInstance().GetElapsedSeconds()), 10, 8);
 
-	for(auto& object : m_objects)
+	for (size_t i = 0; i < m_objects.size(); i++)
 	{
-		object->Update();
+		m_objects[i]->Update();
 	}
 }
 
 void dae::Scene::FixedUpdate()
 {
-	for (auto& object : m_objects)
+	for (size_t i = 0; i < m_objects.size(); i++)
 	{
-		object->FixedUpdate();
+		m_objects[i]->FixedUpdate();
 	}
 }
 
 void dae::Scene::LateUpdate()
 {
-	for (auto& object : m_objects)
+	for (size_t i = 0; i < m_objects.size(); i++)
 	{
-		object->LateUpdate();
+		m_objects[i]->LateUpdate();
 	}
 }
 
 void Scene::Render() const
 {
-	for (const auto& object : m_objects)
+	for (size_t i = 0; i < m_objects.size(); i++)
 	{
-		object->Render();
+		m_objects[i]->Render();
 	}
 }
 
 void Scene::RenderImGui()
 {
-	for (const auto& object : m_objects)
+	for (size_t i = 0; i < m_objects.size(); i++)
 	{
-		object->RenderImGui();
+		m_objects[i]->RenderImGui();
 	}
+}
+
+void dae::Scene::OnSceneDetach()
+{
+}
+
+void dae::Scene::OnSceneAttach()
+{
 }
 
 dae::Scene::~Scene()

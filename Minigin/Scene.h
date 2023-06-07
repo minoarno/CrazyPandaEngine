@@ -21,6 +21,9 @@ namespace dae
 		void Render() const;
 		void RenderImGui();
 		
+		void OnSceneDetach();
+		void OnSceneAttach();
+
 		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;

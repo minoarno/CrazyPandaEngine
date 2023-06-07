@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "Log.h"
 
 void dae::SceneManager::Update()
 {
@@ -30,6 +31,39 @@ void dae::SceneManager::CleanUp()
 void dae::SceneManager::RenderImGui()
 {
 	m_Scenes[m_ActiveScene]->RenderImGui();
+}
+
+void dae::SceneManager::NextScene()
+{
+	if (m_Scenes.size() > 1)
+	{
+		m_Scenes[m_ActiveScene]->OnSceneDetach();
+		m_ActiveScene = ++m_ActiveScene % m_Scenes.size();
+		m_Scenes[m_ActiveScene]->OnSceneAttach();
+	}
+}
+
+void dae::SceneManager::LoadScene(int index)
+{
+	if (index != m_ActiveScene)
+	{
+		if (index >= 0 && index < int(m_Scenes.size()))
+		{
+			m_Scenes[m_ActiveScene]->OnSceneDetach();
+			m_ActiveScene = index;
+			m_Scenes[m_ActiveScene]->OnSceneAttach();
+		}
+		else
+		{
+			// out of range
+			ME_CORE_WARN("The scene index is out of range");
+		}
+	}
+	else
+	{
+		// Same scene
+		ME_CORE_WARN("The scene is the same as the current one");
+	}
 }
 
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
