@@ -34,12 +34,13 @@ dae::GameObject* CreateRock(dae::Scene& scene)
 	return gameobject;
 }
 
-dae::GameObject* CreateBlock(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims)
+dae::GameObject* CreateBlock(dae::GameObject* pLevel, const glm::vec2& pos, const glm::vec2& dims, int index)
 {
-	auto gameobject = scene.Add(new dae::GameObject{});
+	auto gameobject = pLevel->AddChild(new dae::GameObject{});
 	gameobject->SetPosition(pos);
 
-	auto texture = gameobject->AddComponent(new TextureComponent{ "LevelBlock.png" });
+	auto texture = gameobject->AddComponent(new TextureComponent{ "Blocks.png" });
+	texture->SetSourceRect(Rectf{ 0,index * 8.f,8.f,8.f });
 	texture->SetDestinationRectDimensions({ dims.x, dims.y });
 
 	gameobject->AddComponent(new RigidBody(true));

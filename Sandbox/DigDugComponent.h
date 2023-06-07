@@ -10,4 +10,6 @@ public:
 	DigDugComponent(DigDugComponent&&) = delete;
 	DigDugComponent& operator=(DigDugComponent&&) = delete;
 	~DigDugComponent() override = default;
+protected:
+	
 };

@@ -15,12 +15,11 @@
 void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject* pLevelObject)
 {
 	auto posLevel = pLevelObject->GetComponent<dae::Transform>()->GetLocalPosition();
-
 	try
 	{
 		nlohmann::json j = LoadJsonFile(jsonFile);
 
-		dae::Scene* pScene = pLevelObject->GetScene();
+		pLevelObject->GetTransform()->SetLocalPosition(20, 40, 0);
 
 		auto level = j.at("Level").get<std::vector<std::vector<int>>>();
 		int blockWidth = j.at("BlockWidth").get<int>();
@@ -33,7 +32,7 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 				LevelBlockID id = LevelBlockID(level[r][c]);
 				if (id != LevelBlockID::empty)
 				{
-					dae::GameObject* pLevelBlock = pLevelObject->AddChild(CreateBlock(*pScene, glm::vec2{ c * blockWidth, r * blockHeight }, glm::vec2{ blockWidth,blockHeight }));
+					dae::GameObject* pLevelBlock = CreateBlock(pLevelObject, glm::vec2{ c * blockWidth, r * blockHeight }, glm::vec2{ blockWidth,blockHeight }, (int)id);
 					pLevelBlock->SetTag("Level");
 				}
 			}
@@ -41,9 +40,7 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 	}
 	catch (const std::exception&)
 	{
-
 	}
-
 }
 
 nlohmann::json JsonHelper::LoadJsonFile(const std::string& jsonFile)

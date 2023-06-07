@@ -12,19 +12,17 @@ dae::GameObject::GameObject() : m_pTransform{ nullptr }
 
 dae::GameObject::~GameObject()
 {
-	for (const BaseComponent* baseComponent : m_pBaseComponents)
+	for (size_t i = 0; i < m_pBaseComponents.size(); i++)
 	{
-		delete baseComponent;
-		baseComponent = nullptr;
+		delete m_pBaseComponents[i];
+		m_pBaseComponents[i] = nullptr;
 	}
-	m_pBaseComponents.clear();
 
-	for (const GameObject* child : m_pChildren)
+	for (size_t i = 0; i < m_pChildren.size(); i++)
 	{
-		delete child;
-		child = nullptr;
+		delete m_pChildren[i];
+		m_pChildren[i] = nullptr;
 	}
-	m_pChildren.clear();
 }
 
 void dae::GameObject::Initialize()

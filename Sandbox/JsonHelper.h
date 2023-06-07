@@ -11,10 +11,12 @@ namespace dae
 	class GameObject;
 }
 
-enum class LevelBlockID
+enum class LevelBlockID : int
 {
 	empty = 0,
-	block = 1
+	topBlock = 1,
+	midBlock = 2,
+	botBlock = 3
 };
 
 namespace JsonHelper
