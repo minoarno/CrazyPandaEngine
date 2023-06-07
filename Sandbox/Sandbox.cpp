@@ -28,13 +28,24 @@
 #include "RigidBody.h"
 #include "BoxCollider.h"
 
+#include "JsonHelper.h"
+
 void load()
+{
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level1");
+
+	auto pLevel = scene.Add(new dae::GameObject{});
+
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+}
+
+void Demo()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 
 	auto gameobject = scene.Add(new dae::GameObject{});
 	gameobject->AddComponent(new dae::TextureComponent("background.tga"));
-	
+
 
 	gameobject = scene.Add(new dae::GameObject{});
 	gameobject->AddComponent(new dae::TextureComponent("logo.tga"));
@@ -62,10 +73,10 @@ void load()
 
 	float speed{ 180.f };
 
-	InputManager::GetInstance().AddOnHold(SDLK_q, new MoveCommand{gameobject,glm::fvec3{-speed,0,0}});
-	InputManager::GetInstance().AddOnHold(SDLK_d, new MoveCommand{gameobject,glm::fvec3{speed,0,0}});
-	InputManager::GetInstance().AddOnHold(SDLK_s, new MoveCommand{gameobject,glm::fvec3{0,speed,0}});
-	InputManager::GetInstance().AddOnHold(SDLK_z, new MoveCommand{gameobject,glm::fvec3{0,-speed,0}});
+	InputManager::GetInstance().AddOnHold(SDLK_q, new MoveCommand{ gameobject,glm::fvec3{-speed,0,0} });
+	InputManager::GetInstance().AddOnHold(SDLK_d, new MoveCommand{ gameobject,glm::fvec3{speed,0,0} });
+	InputManager::GetInstance().AddOnHold(SDLK_s, new MoveCommand{ gameobject,glm::fvec3{0,speed,0} });
+	InputManager::GetInstance().AddOnHold(SDLK_z, new MoveCommand{ gameobject,glm::fvec3{0,-speed,0} });
 
 	PlayerComponent* pPlayerComponent = gameobject->AddComponent(new PlayerComponent{ 5 });
 
@@ -86,8 +97,8 @@ void load()
 	texture = gameobject->AddComponent(new dae::TextureComponent("SpritesDigDug.png"));
 	texture->SetSourceRect(Rectf{ 0,0,40,40 });
 	texture->SetDestinationRectDimensions(glm::vec2{ 20.f,20.f });
-	gameobject->AddComponent(new RigidBody{false});
-	gameobject->AddComponent(new BoxCollider{{20.f,20.f}});
+	gameobject->AddComponent(new RigidBody{ false });
+	gameobject->AddComponent(new BoxCollider{ {20.f,20.f} });
 
 	InputManager::GetInstance().AddOnHold(SDLK_LEFT, new MoveCommand{ gameobject,glm::fvec3{-speed,0,0} });
 	InputManager::GetInstance().AddOnHold(SDLK_RIGHT, new MoveCommand{ gameobject,glm::fvec3{speed,0,0} });

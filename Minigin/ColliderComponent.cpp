@@ -19,7 +19,7 @@ void ColliderComponent::Initialize()
 	RigidBody* pRigid = m_pGameObject->GetComponent<RigidBody>();
 	if (pRigid == nullptr)
 	{
-		ME_CORE_WARN("You need to add the rigidbody before the collider component.");
+		Log::CoreWarning("You need to add the rigidbody before the collider component.");
 		return;
 	}
 	m_pFixture = pRigid->AddCollider(m_FixtureDef);

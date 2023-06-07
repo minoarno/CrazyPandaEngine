@@ -19,7 +19,7 @@ RigidBody::~RigidBody()
 	{
 		if (pWorld->IsLocked())
 		{
-			ME_CORE_ERROR("Removal while physics step is active");
+			Log::CoreError("Removal while physics step is active");
 		}
 		pWorld->DestroyBody(m_pBody);
 	}

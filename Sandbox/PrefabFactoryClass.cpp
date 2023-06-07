@@ -38,7 +38,6 @@ dae::GameObject* CreateBlock(dae::Scene& scene, const glm::vec2& pos, const glm:
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
 	gameobject->SetPosition(pos);
-	//gameobject->SetScene(pScene);
 
 	auto texture = gameobject->AddComponent(new TextureComponent{ "LevelBlock.png" });
 	texture->SetDestinationRectDimensions({ dims.x, dims.y });

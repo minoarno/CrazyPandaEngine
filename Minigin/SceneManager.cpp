@@ -56,13 +56,13 @@ void dae::SceneManager::LoadScene(int index)
 		else
 		{
 			// out of range
-			ME_CORE_WARN("The scene index is out of range");
+			Log::CoreWarning("The scene index is out of range");
 		}
 	}
 	else
 	{
 		// Same scene
-		ME_CORE_WARN("The scene is the same as the current one");
+		Log::CoreWarning("The scene is the same as the current one");
 	}
 }
 

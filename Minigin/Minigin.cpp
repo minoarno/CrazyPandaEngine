@@ -11,6 +11,7 @@
 #include "ServiceLocator.h"
 
 #include "SDL_mixer.h"
+#include "Log.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -79,6 +80,8 @@ dae::Minigin::Minigin(const std::string &dataPath)
 
 	ResourceManager::GetInstance().Init(dataPath);
 	ServiceLocator::Provide(new Audio{});
+
+	Log::Initialize();
 }
 
 dae::Minigin::~Minigin()
