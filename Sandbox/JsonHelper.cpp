@@ -37,6 +37,19 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 				}
 			}
 		}
+
+		//Border
+		for (int r = -1; r <= int(level.size()); r++)
+		{
+			for (int c = -1; c <= int(level[0].size()); c++)
+			{
+				if (c == -1 || r == -1 || c == int(level[0].size()) || r == int(level.size()))
+				{
+					dae::GameObject* pLevelBlock = CreateBlock(pLevelObject, glm::vec2{ c * blockWidth, r * blockHeight }, glm::vec2{ blockWidth,blockHeight }, 0);
+					pLevelBlock->SetTag("Border");
+				}
+			}
+		}
 	}
 	catch (const std::exception&)
 	{
