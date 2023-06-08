@@ -11,7 +11,6 @@
 #include "ServiceLocator.h"
 
 #include "SDL_mixer.h"
-#include "Log.h"
 
 using namespace std;
 using namespace std::chrono;

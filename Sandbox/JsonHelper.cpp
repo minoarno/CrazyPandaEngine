@@ -10,8 +10,6 @@
 #include "PrefabFactoryClass.h"
 #include "HighScoreComponent.h"
 
-#include "Log.h"
-
 void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject* pLevelObject)
 {
 	auto posLevel = pLevelObject->GetComponent<dae::Transform>()->GetLocalPosition();

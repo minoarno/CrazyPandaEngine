@@ -70,12 +70,16 @@ namespace dae
 
 		void SetTag(const std::string& tag) { m_Tag = tag; }
 		std::string GetTag() const { return m_Tag; }
+
+		void SetIsMarkedForDelete(bool value) { m_IsMarkedForDelete = value; }
+		bool GetIsMarkedForDelete()const { return m_IsMarkedForDelete; }
 	private:
 		dae::Scene* m_pScene;
 		std::string m_Tag;
 
 		bool m_IsActive{ true };
 		bool m_IsInitialized{ false };
+		bool m_IsMarkedForDelete{ false };
 		
 		Transform* m_pTransform;
 		std::vector<BaseComponent*> m_pBaseComponents;

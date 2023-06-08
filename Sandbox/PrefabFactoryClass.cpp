@@ -19,6 +19,13 @@ dae::GameObject* CreatePlayer(dae::Scene& scene)
 dae::GameObject* CreatePooka(dae::Scene& scene)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
+
+	gameobject->AddComponent(new RigidBody());
+
+	const glm::vec2& dims{ 16,16 };
+
+	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+
 	return gameobject;
 }
 
@@ -45,5 +52,6 @@ dae::GameObject* CreateBlock(dae::GameObject* pLevel, const glm::vec2& pos, cons
 
 	gameobject->AddComponent(new RigidBody(true));
 	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+
 	return gameobject;
 }

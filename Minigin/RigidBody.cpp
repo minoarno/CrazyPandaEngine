@@ -4,7 +4,6 @@
 
 #include "Scene.h"
 #include "Box2D.h"
-#include "Log.h"
 
 RigidBody::RigidBody(bool isStatic)
 	: BaseComponent{}

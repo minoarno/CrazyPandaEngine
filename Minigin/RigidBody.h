@@ -5,7 +5,7 @@
 class RigidBody final : public dae::BaseComponent
 {
 public:
-	RigidBody(bool isStatic);
+	RigidBody(bool isStatic = false);
 	RigidBody(const RigidBody&) = delete;
 	RigidBody& operator=(const RigidBody&) = delete;
 	RigidBody(RigidBody&&) = delete;

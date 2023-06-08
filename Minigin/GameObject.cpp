@@ -140,14 +140,14 @@ bool dae::GameObject::SetParent(GameObject* newParentObject)
 	if (this->m_pParent != nullptr)
 	{
 		//Detach it
-		std::cout << "The object already has a parent\n";
+		Log::CoreWarning("The object already has a parent");
 		return false;
 	}
 
 	if (this == newParentObject)
 	{
 		//LOGGER
-		std::cout << "The gameobject and the child are the same!\n";
+		Log::CoreWarning("The gameobject and the child are the same!");
 		return false;
 	}
 
@@ -177,6 +177,12 @@ void dae::GameObject::RemoveChild(GameObject* childObject)
 
 void dae::GameObject::SetScene(Scene* pScene)
 {
+	if (m_pScene != nullptr)
+	{
+		Log::CoreWarning("This gameobject is already attached to a scene.");
+		return;
+	}
+
 	m_pScene = pScene;
 	for (GameObject* pChild : m_pChildren)
 	{
@@ -193,6 +199,7 @@ dae::GameObject* dae::GameObject::GetChild(int index) const
 {
 	if (index >= int(m_pChildren.size()))
 	{
+		Log::CoreWarning("There is no child with index \"" + std::to_string(index) + "\" .");
 		return nullptr;
 	}
 
