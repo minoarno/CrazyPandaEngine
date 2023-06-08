@@ -1,8 +1,6 @@
 #include "MiniginPCH.h"
 #include "ScoreDisplay.h"
 
-#include "GameObject.h"
-
 #include "TextComponent.h"
 #include "ResourceManager.h"
 #include "ScoreObserver.h"

@@ -1,6 +1,5 @@
 #include "MiniginPCH.h"
 #include "Transform.h"
-#include "GameObject.h"
 
 dae::Transform::Transform(const glm::vec3& pos)
 	: BaseComponent{}

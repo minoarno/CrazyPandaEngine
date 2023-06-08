@@ -19,5 +19,7 @@ public:
 	EnemyComponent& operator=(EnemyComponent&&) = delete;
 	~EnemyComponent() override = default;
 protected:
+	virtual void Initialize();
 
+	virtual void Update();
 };

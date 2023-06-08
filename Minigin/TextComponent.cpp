@@ -2,7 +2,6 @@
 #include <SDL_ttf.h>
 #include "TextComponent.h"
 
-#include "GameObject.h"
 #include "Renderer.h"
 #include "Font.h"
 #include "TextureComponent.h"

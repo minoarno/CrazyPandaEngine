@@ -1,12 +1,13 @@
 #pragma once
 #include "MiniginPCH.h"
 #include "PrefabFactoryClass.h"
-#include "GameObject.h"
 #include "Scene.h"
 
 #include "TextureComponent.h"
 #include "RigidBody.h"
 #include "BoxCollider.h"
+
+#include "EnemyComponent.h"
 
 using namespace dae;
 
@@ -25,6 +26,7 @@ dae::GameObject* CreatePooka(dae::Scene& scene)
 	const glm::vec2& dims{ 16,16 };
 
 	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	gameobject->AddComponent(new EnemyComponent{});
 
 	return gameobject;
 }

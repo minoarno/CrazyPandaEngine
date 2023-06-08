@@ -13,7 +13,6 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "Scene.h"
-#include "GameObject.h"
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "FpsComponent.h"

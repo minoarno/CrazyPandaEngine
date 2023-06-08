@@ -1,7 +1,6 @@
 #include "MiniginPCH.h"
 #include "LivesDisplay.h"
 
-#include "GameObject.h"
 #include "TextComponent.h"
 #include "ResourceManager.h"
 #include "LiveObserver.h"

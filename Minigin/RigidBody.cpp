@@ -1,6 +1,5 @@
 #include "MiniginPCH.h"
 #include "RigidBody.h"
-#include "GameObject.h"
 
 #include "Scene.h"
 #include "Box2D.h"

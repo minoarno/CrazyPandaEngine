@@ -2,7 +2,6 @@
 #include "RotatorComponent.h"
 
 #include "EngineTime.h"
-#include "GameObject.h"
 
 dae::RotatorComponent::RotatorComponent(float rotationSpeed, float distanceFromMiddle)
     : m_RotationSpeed{rotationSpeed}

@@ -5,8 +5,6 @@
 #include "ResourceManager.h"
 #include <fstream>
 
-#include "GameObject.h"
-
 #include "PrefabFactoryClass.h"
 #include "HighScoreComponent.h"
 

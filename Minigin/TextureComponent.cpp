@@ -2,7 +2,6 @@
 #include "Texture2D.h"
 #include "TextureComponent.h"
 #include "ResourceManager.h"
-#include "GameObject.h"
 #include "Renderer.h"
 
 dae::TextureComponent::TextureComponent(const std::string& filepath, int amountOfCols, int amountOfRows)

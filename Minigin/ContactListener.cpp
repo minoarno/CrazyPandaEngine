@@ -1,8 +1,6 @@
 #include "MiniginPCH.h"
 #include "ContactListener.h"
 
-#include "GameObject.h"
-
 void ContactListener::BeginContact(b2Contact* contact)
 {
 	Contact(contact, CollisionType::BeginContact);

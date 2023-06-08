@@ -1,8 +1,6 @@
 #include "MiniginPCH.h"
 #include "ColliderComponent.h"
 #include "RigidBody.h"
-#include "GameObject.h"
-#include "Log.h"
 
 ColliderComponent::ColliderComponent()
 	:BaseComponent{}

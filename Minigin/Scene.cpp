@@ -1,9 +1,6 @@
 #include "MiniginPCH.h"
 #include "Scene.h"
-#include "GameObject.h"
 
-
-#include "Log.h"
 #include "Box2D.h"
 #include "ContactListener.h"
 #include "b2DebugDraw.h"
