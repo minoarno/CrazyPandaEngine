@@ -104,6 +104,10 @@ void dae::GameObject::RenderImGui()
 void dae::GameObject::SetPosition(float x, float y, float z)
 {
 	m_pTransform->SetLocalPosition(x, y, z);
+	auto pRigidBody = GetComponent<RigidBody>();
+	if (pRigidBody == nullptr) return;
+
+	pRigidBody->GetBody()->SetTransform({ x,y }, 0);
 }
 
 void dae::GameObject::SetPosition(const glm::vec2& pos)

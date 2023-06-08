@@ -1,7 +1,7 @@
 #pragma once
-#include "BaseComponent.h"
+#include "EnemyComponent.h"
 
-class PookaComponent : public dae::BaseComponent
+class PookaComponent : public EnemyComponent
 {
 public:
 	PookaComponent();

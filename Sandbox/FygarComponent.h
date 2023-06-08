@@ -1,6 +1,6 @@
 #pragma once
-#include "BaseComponent.h"
-class FygarComponent : public dae::BaseComponent
+#include "EnemyComponent.h"
+class FygarComponent : public EnemyComponent
 {
 public:
 	FygarComponent();

@@ -8,6 +8,8 @@
 #include "BoxCollider.h"
 
 #include "EnemyComponent.h"
+#include "PookaComponent.h"
+#include "FygarComponent.h"
 
 using namespace dae;
 
@@ -26,7 +28,7 @@ dae::GameObject* CreatePooka(dae::Scene& scene)
 	const glm::vec2& dims{ 16,16 };
 
 	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
-	gameobject->AddComponent(new EnemyComponent{});
+	gameobject->AddComponent(new PookaComponent{});
 
 	return gameobject;
 }
@@ -34,6 +36,14 @@ dae::GameObject* CreatePooka(dae::Scene& scene)
 dae::GameObject* CreateFygar(dae::Scene& scene)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
+
+	gameobject->AddComponent(new RigidBody());
+
+	const glm::vec2& dims{ 16,16 };
+
+	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	gameobject->AddComponent(new FygarComponent{});
+
 	return gameobject;
 }
 

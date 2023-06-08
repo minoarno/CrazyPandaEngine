@@ -157,6 +157,7 @@
       <Filter>Box2D</Filter>
     </ClInclude>
     <ClInclude Include="ContactListener.h" />
+    <ClInclude Include="RayCastCallback.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui.cpp">
@@ -268,5 +269,6 @@
       <Filter>Box2D</Filter>
     </ClCompile>
     <ClCompile Include="ContactListener.cpp" />
+    <ClCompile Include="RayCastCallback.cpp" />
   </ItemGroup>
 </Project>

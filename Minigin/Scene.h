@@ -4,6 +4,7 @@
 class ContactListener;
 class b2World;
 class b2DebugDraw;
+class RayCastCallback;
 namespace dae
 {
 	class GameObject;
@@ -31,6 +32,7 @@ namespace dae
 		Scene& operator=(Scene&& other) = delete;
 
 		b2World* GetWorld();
+		bool RayCast(RayCastCallback& hit, const glm::vec2& pos, const glm::vec2& dir);
 	private: 
 		explicit Scene(const std::string& name);
 

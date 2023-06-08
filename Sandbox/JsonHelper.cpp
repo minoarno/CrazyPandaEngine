@@ -10,12 +10,11 @@
 
 void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject* pLevelObject)
 {
-	auto posLevel = pLevelObject->GetComponent<dae::Transform>()->GetLocalPosition();
 	try
 	{
 		nlohmann::json j = LoadJsonFile(jsonFile);
-
 		pLevelObject->GetTransform()->SetLocalPosition(20, 40, 0);
+		auto posLevel = pLevelObject->GetComponent<dae::Transform>()->GetLocalPosition();
 
 		auto level = j.at("Level").get<std::vector<std::vector<int>>>();
 		int blockWidth = j.at("BlockWidth").get<int>();
@@ -33,6 +32,9 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 				}
 			}
 		}
+
+		auto pPooka = CreatePooka(*pLevelObject->GetScene());
+		pPooka->SetPosition(glm::vec2{ posLevel.x + 5 * blockWidth, posLevel.y + 6 * blockHeight });
 
 		//Border
 		for (int r = -1; r <= int(level.size()); r++)

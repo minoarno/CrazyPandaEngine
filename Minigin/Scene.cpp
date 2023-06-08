@@ -15,6 +15,12 @@ b2World* dae::Scene::GetWorld()
 	return m_pWorld;
 }
 
+bool dae::Scene::RayCast(RayCastCallback& hit, const glm::vec2& pos, const glm::vec2& dir)
+{
+	m_pWorld->RayCast(&hit, { pos.x, pos.y }, { pos.x + dir.x, pos.y + dir.y });
+	return hit.m_pHitFixture != nullptr;
+}
+
 Scene::Scene(const std::string& name) 
 	: m_Name(name) 
 	, m_pObjects{}
