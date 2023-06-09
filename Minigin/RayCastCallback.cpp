@@ -6,7 +6,7 @@ float32 RayCastCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& point, 
 
     // Store fixture data or perform actions based on the collision
     dae::GameObject* gameObjectHit = static_cast<dae::GameObject*>(fixture->GetUserData());
-    if (m_Tag != "" && m_Tag != gameObjectHit->GetTag()) return -1;
+    if (m_Tags.size() > 0 && std::find(m_Tags.begin(), m_Tags.end(), gameObjectHit->GetTag()) == m_Tags.end()) return -1;
     this->m_pHitFixture = gameObjectHit;
     this->m_Position = { point.x, point.y };
     this->m_Normal = { normal.x, normal.y };

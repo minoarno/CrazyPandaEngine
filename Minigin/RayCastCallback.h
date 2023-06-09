@@ -10,6 +10,6 @@ public:
     glm::vec2 m_Position;
     glm::vec2 m_Normal;
     float m_Fraction;
-    std::string m_Tag;
+    std::vector<std::string> m_Tags;
 };
 

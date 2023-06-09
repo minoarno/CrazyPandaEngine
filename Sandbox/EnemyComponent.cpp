@@ -45,7 +45,7 @@ void EnemyComponent::Update()
 	}
 
 	RayCastCallback hit{};
-	hit.m_Tag = "Level";
+	hit.m_Tags = { "Level", "Border"};
 	glm::vec2 pos = m_pGameObject->GetTransform()->GetWorldPosition() + glm::vec3{ 8 };
 
 	float distance = 10.f;
@@ -53,27 +53,32 @@ void EnemyComponent::Update()
 	{
 		std::vector<glm::vec2> possibleNewDirections{};
 		RayCastCallback hitRight{};
+		hitRight.m_Tags = { "Level", "Border" };
 		if (!m_pGameObject->GetScene()->RayCast(hitRight, pos, glm::vec2{ distance,0 }))
 		{
 			possibleNewDirections.emplace_back(glm::vec2{ 1,0 });
 		}
 		RayCastCallback hitLeft{};
+		hitLeft.m_Tags = { "Level", "Border" };
 		if (!m_pGameObject->GetScene()->RayCast(hitLeft, pos, glm::vec2{ -distance, 0 }))
 		{
 			possibleNewDirections.emplace_back(glm::vec2{ -1,0 });
 		}
 		RayCastCallback hitDown{};
+		hitDown.m_Tags = { "Level", "Border" };
 		if (!m_pGameObject->GetScene()->RayCast(hitDown, pos, glm::vec2{ 0, distance }))
 		{
 			possibleNewDirections.emplace_back(glm::vec2{ 0, 1 });
 		}
 		RayCastCallback hitUp{};
+		hitUp.m_Tags = { "Level", "Border" };
 		if (!m_pGameObject->GetScene()->RayCast(hitUp, pos, glm::vec2{ 0, -distance }))
 		{
 			possibleNewDirections.emplace_back(glm::vec2{ 0, -1 });
 		}
-		m_Direction = possibleNewDirections[std::rand() % possibleNewDirections.size()];
+		m_Direction = possibleNewDirections[std::rand() % int(possibleNewDirections.size())];
 	}
+
 	float elapsed = static_cast<float>(Time::GetInstance().GetElapsedSeconds());
 	RigidBody* rigidBody = m_pGameObject->GetComponent<RigidBody>();
 	auto v = rigidBody->GetBody()->GetLinearVelocity();
