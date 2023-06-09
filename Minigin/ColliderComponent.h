@@ -15,8 +15,10 @@ public:
 	ColliderComponent& operator=(ColliderComponent&&) = delete;
 	virtual ~ColliderComponent() = default;
 
+	void SetIsTrigger(bool value);
 protected:
 	virtual void Initialize() override;
+
 	b2PolygonShape m_Shape{};
 
 	b2Fixture* m_pFixture{ nullptr };

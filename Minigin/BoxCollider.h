@@ -13,5 +13,5 @@ public:
 	~BoxCollider() = default;
 
 protected:
-	virtual void Initialize() override;
+	void Initialize() override;
 };

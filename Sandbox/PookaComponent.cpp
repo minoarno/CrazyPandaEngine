@@ -10,8 +10,6 @@ PookaComponent::PookaComponent()
 
 void PookaComponent::Initialize()
 {
-	//EnemyComponent::Initialize();
-	auto pTexture = m_pGameObject->AddComponent(new dae::TextureComponent{"Pooka.png"});
-	pTexture->SetDestinationRectDimensions({ 16, 16 });
-	pTexture->SetSourceRect({ 0,0,16,16 });
+	EnemyComponent::Initialize();
+
 }

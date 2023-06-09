@@ -5,8 +5,8 @@ namespace dae
 	class Scene;
 }
 
-dae::GameObject* CreatePlayer(dae::Scene& scene);
-dae::GameObject* CreatePooka(dae::Scene& scene);
-dae::GameObject* CreateFygar(dae::Scene& scene);
-dae::GameObject* CreateRock(dae::Scene& scene);
+dae::GameObject* CreatePlayer(dae::Scene& scene, const glm::vec2& pos);
+dae::GameObject* CreatePooka(dae::Scene& scene, const glm::vec2& pos);
+dae::GameObject* CreateFygar(dae::Scene& scene, const glm::vec2& pos);
+dae::GameObject* CreateRock(dae::Scene& scene, const glm::vec2& pos);
 dae::GameObject* CreateBlock(dae::GameObject* pLevel, const glm::vec2& pos, const glm::vec2& dims, int index);

@@ -16,7 +16,7 @@ namespace dae
 		SDL_Color m_clearColor{};	
 	public:
 		void Init(SDL_Window* window);
-		void Render() const;
+		void Render([[maybe_unused]] bool drawBox2DRenderer) const;
 		void Destroy();
 
 		void RenderTexture(const dae::TextureComponent* pTextureComponent, const float x, const float y) const;
@@ -24,6 +24,8 @@ namespace dae
 		void RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const int x, const int y) const;
 		void RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const int x, const int y, const int width, const int height) const;
 		void RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const SDL_Rect& dstRect) const;
+
+		void DrawRectangle(const SDL_Rect& rect, const Colorf& color);
 
 		SDL_Renderer* GetSDLRenderer() const;
 

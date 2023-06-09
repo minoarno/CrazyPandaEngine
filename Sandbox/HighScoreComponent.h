@@ -10,4 +10,6 @@ public:
 	HighScoreComponent(HighScoreComponent&&) = delete;
 	HighScoreComponent& operator=(HighScoreComponent&&) = delete;
 	~HighScoreComponent();
+protected:
+
 };

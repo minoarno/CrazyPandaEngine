@@ -13,57 +13,62 @@
 
 using namespace dae;
 
-dae::GameObject* CreatePlayer(dae::Scene& scene)
+dae::GameObject* CreatePlayer(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
+	gameobject->SetPosition(pos);
 	return gameobject;
 }
 
-dae::GameObject* CreatePooka(dae::Scene& scene)
+dae::GameObject* CreatePooka(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
-
 	gameobject->AddComponent(new RigidBody());
+
 
 	const glm::vec2& dims{ 16,16 };
 
-	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	gameobject->AddComponent(new BoxCollider({dims.x, dims.y}, {dims.x / 2, dims.y / 2}));
 	gameobject->AddComponent(new PookaComponent{});
 
+	auto pTexture = gameobject->AddComponent(new dae::TextureComponent{ "Pooka.png" });
+	pTexture->SetDestinationRectDimensions({ 16, 16 });
+	pTexture->SetSourceRect({ 0,0,16,16 });
+	gameobject->SetPosition(pos);
 	return gameobject;
 }
 
-dae::GameObject* CreateFygar(dae::Scene& scene)
+dae::GameObject* CreateFygar(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
-
 	gameobject->AddComponent(new RigidBody());
 
 	const glm::vec2& dims{ 16,16 };
 
 	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
 	gameobject->AddComponent(new FygarComponent{});
-
+	gameobject->SetPosition(pos);
 	return gameobject;
 }
 
-dae::GameObject* CreateRock(dae::Scene& scene)
+dae::GameObject* CreateRock(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
+	gameobject->SetPosition(pos);
 	return gameobject;
 }
 
 dae::GameObject* CreateBlock(dae::GameObject* pLevel, const glm::vec2& pos, const glm::vec2& dims, int index)
 {
 	auto gameobject = pLevel->AddChild(new dae::GameObject{});
-	gameobject->SetPosition(pos);
+	gameobject->AddComponent(new RigidBody(true));
+	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
 
 	auto texture = gameobject->AddComponent(new TextureComponent{ "Blocks.png" });
 	texture->SetSourceRect(Rectf{ 0,index * 8.f,8.f,8.f });
 	texture->SetDestinationRectDimensions({ dims.x, dims.y });
 
-	gameobject->AddComponent(new RigidBody(true));
-	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	gameobject->SetPosition(pos);
 
 	return gameobject;
 }

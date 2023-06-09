@@ -9,6 +9,7 @@ public:
 		Walk,
 		Ghost,
 		Bloated,
+		Fire,
 		Die
 	};
 
@@ -18,8 +19,15 @@ public:
 	EnemyComponent(EnemyComponent&&) = delete;
 	EnemyComponent& operator=(EnemyComponent&&) = delete;
 	~EnemyComponent() override = default;
+
+	void SetEnemyState(EnemyState newState);
+	EnemyState GetEnemyState()const { return m_State; }
 protected:
 	virtual void Initialize();
 
 	virtual void Update();
+
+	EnemyState m_State;
+	glm::vec2 m_Direction;
+	float m_Speed{ 200.f };
 };

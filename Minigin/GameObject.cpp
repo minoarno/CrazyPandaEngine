@@ -107,7 +107,15 @@ void dae::GameObject::SetPosition(float x, float y, float z)
 	auto pRigidBody = GetComponent<RigidBody>();
 	if (pRigidBody == nullptr) return;
 
-	pRigidBody->GetBody()->SetTransform({ x,y }, 0);
+	if (m_pParent == nullptr)
+	{
+		pRigidBody->GetBody()->SetTransform({ x,y }, 0);
+	}
+	else
+	{
+		auto worldPos = GetParent()->GetTransform()->GetWorldPosition();
+		pRigidBody->GetBody()->SetTransform({ worldPos.x + x,worldPos.y + y}, 0);
+	}
 }
 
 void dae::GameObject::SetPosition(const glm::vec2& pos)

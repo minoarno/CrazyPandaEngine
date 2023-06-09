@@ -35,7 +35,7 @@ void dae::Renderer::Init(SDL_Window* window)
 	ImGui_ImplOpenGL2_Init();
 }
 
-void dae::Renderer::Render() const
+void dae::Renderer::Render([[maybe_unused]] bool drawBox2DRenderer ) const
 {
 	const auto& color = GetBackgroundColor();
 	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
@@ -52,6 +52,13 @@ void dae::Renderer::Render() const
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	
+#if _DEBUG
+	if (drawBox2DRenderer)
+	{
+		SceneManager::GetInstance().RenderDebug();
+	}
+#endif // _DEBUG
+
 	SDL_RenderPresent(m_renderer);
 }
 
@@ -96,6 +103,12 @@ void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, con
 void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const SDL_Rect& dstRect) const
 {
 	SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), &srcRect, &dstRect);
+}
+
+void dae::Renderer::DrawRectangle(const SDL_Rect& rect, const Colorf& color)
+{
+	SDL_SetRenderDrawColor(GetSDLRenderer(), static_cast<Uint8>(color.r), static_cast<Uint8>(color.g), static_cast<Uint8>(color.b), 1);
+	SDL_RenderFillRect(GetSDLRenderer(), &rect);
 }
 
 void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const int x, const int y, const int width, const int height) const

@@ -28,13 +28,13 @@
 #include "BoxCollider.h"
 
 #include "JsonHelper.h"
+#include "PrefabFactoryClass.h"
 
 void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level1");
 
 	auto pLevel = scene.Add(new dae::GameObject{});
-
 	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
 }
 

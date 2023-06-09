@@ -59,6 +59,7 @@ void RigidBody::Update()
 {
 	if (m_pBody == nullptr) return;
 
+	auto worldPos = (m_pGameObject->GetParent() != nullptr)? m_pGameObject->GetParent()->GetTransform()->GetWorldPosition() : glm::vec3{0, 0, 0};
 	auto pos = m_pBody->GetPosition();
-	m_pGameObject->GetComponent<dae::Transform>()->SetLocalPosition(pos.x, pos.y, 0);
+	m_pGameObject->SetPosition(pos.x - worldPos.x, pos.y - worldPos.y, 0);
 }

@@ -19,6 +19,7 @@ namespace dae
 
 		void CleanUp();
 		void RenderImGui();
+		void RenderDebug();
 
 		void NextScene();
 		void LoadScene(int index);

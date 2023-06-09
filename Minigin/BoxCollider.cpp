@@ -1,6 +1,8 @@
 #include "MiniginPCH.h"
 #include "BoxCollider.h"
 #include "Box2D.h"
+#include "Box2D/Common/b2Draw.h"
+#include "Renderer.h"
 
 BoxCollider::BoxCollider(const glm::vec2& dim, const glm::vec2& center)
 	:ColliderComponent{}
@@ -14,6 +16,5 @@ BoxCollider::BoxCollider(const glm::vec2& dim, const glm::vec2& center)
 void BoxCollider::Initialize()
 {
 	ColliderComponent::Initialize();
-
 	m_pFixture->SetSensor(false);
 }

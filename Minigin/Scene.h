@@ -21,6 +21,7 @@ namespace dae
 		void LateUpdate();
 		void Render() const;
 		void RenderImGui();
+		void RenderDebug();
 		
 		void OnSceneDetach();
 		void OnSceneAttach();

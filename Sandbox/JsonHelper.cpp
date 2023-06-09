@@ -27,14 +27,11 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 				LevelBlockID id = LevelBlockID(level[r][c]);
 				if (id != LevelBlockID::empty)
 				{
-					dae::GameObject* pLevelBlock = CreateBlock(pLevelObject, glm::vec2{ c * blockWidth, r * blockHeight }, glm::vec2{ blockWidth,blockHeight }, (int)id);
+					auto pLevelBlock = CreateBlock(pLevelObject, glm::vec2{ c * blockWidth, r * blockHeight }, glm::vec2{ blockWidth,blockHeight}, (int)id);
 					pLevelBlock->SetTag("Level");
 				}
 			}
 		}
-
-		auto pPooka = CreatePooka(*pLevelObject->GetScene());
-		pPooka->SetPosition(glm::vec2{ posLevel.x + 5 * blockWidth, posLevel.y + 6 * blockHeight });
 
 		//Border
 		for (int r = -1; r <= int(level.size()); r++)
@@ -43,11 +40,14 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 			{
 				if (c == -1 || r == -1 || c == int(level[0].size()) || r == int(level.size()))
 				{
-					dae::GameObject* pLevelBlock = CreateBlock(pLevelObject, glm::vec2{ c * blockWidth, r * blockHeight }, glm::vec2{ blockWidth,blockHeight }, 0);
+					auto pLevelBlock = CreateBlock(pLevelObject, glm::vec2{ c * blockWidth, r * blockHeight }, glm::vec2{ blockWidth,blockHeight }, 0);
 					pLevelBlock->SetTag("Border");
 				}
 			}
 		}
+
+		CreatePooka(*pLevelObject->GetScene(), glm::vec2{ posLevel.x + 4 * blockWidth, posLevel.y + 6 * blockHeight });
+		CreatePooka(*pLevelObject->GetScene(), glm::vec2{ posLevel.x + 8 * blockWidth, posLevel.y + 8 * blockHeight });
 	}
 	catch (const std::exception&)
 	{
@@ -68,6 +68,26 @@ nlohmann::json JsonHelper::LoadJsonFile(const std::string& jsonFile)
 	return j;
 }
 
-void JsonHelper::LoadHighScore(const std::string& /*jsonFile*/, HighScoreComponent* /*pHighScoreList*/)
+void JsonHelper::LoadHighScore(const std::string& jsonFile, HighScoreComponent* /*pHighScoreList*/)
 {
+	try
+	{
+		nlohmann::json j = LoadJsonFile(jsonFile);
+	}
+	catch (const std::exception&)
+	{
+
+	}
+}
+
+void JsonHelper::SaveHighScore(const std::string& jsonFile, HighScoreComponent* /*pHighScoreList*/)
+{
+	try
+	{
+		nlohmann::json j = LoadJsonFile(jsonFile);
+	}
+	catch (const std::exception&)
+	{
+
+	}
 }

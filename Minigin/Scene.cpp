@@ -105,6 +105,11 @@ void Scene::RenderImGui()
 	}
 }
 
+void dae::Scene::RenderDebug()
+{
+	m_pWorld->DrawDebugData();
+}
+
 void dae::Scene::OnSceneDetach()
 {
 }

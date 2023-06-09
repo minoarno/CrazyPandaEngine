@@ -32,6 +32,11 @@ void dae::SceneManager::RenderImGui()
 	m_Scenes[m_ActiveScene]->RenderImGui();
 }
 
+void dae::SceneManager::RenderDebug()
+{
+	m_Scenes[m_ActiveScene]->RenderDebug();
+}
+
 void dae::SceneManager::NextScene()
 {
 	if (m_Scenes.size() > 1)

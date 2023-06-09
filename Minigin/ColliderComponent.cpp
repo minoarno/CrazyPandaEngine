@@ -1,10 +1,14 @@
 #include "MiniginPCH.h"
 #include "ColliderComponent.h"
-#include "RigidBody.h"
 
 ColliderComponent::ColliderComponent()
 	:BaseComponent{}
 {
+}
+
+void ColliderComponent::SetIsTrigger(bool value)
+{
+	m_pFixture->SetSensor(value);
 }
 
 void ColliderComponent::Initialize()
