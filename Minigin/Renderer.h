@@ -19,10 +19,10 @@ namespace dae
 		void Render([[maybe_unused]] bool drawBox2DRenderer) const;
 		void Destroy();
 
-		void RenderTexture(const dae::TextureComponent* pTextureComponent, const float x, const float y) const;
-		void RenderTexture(const dae::TextureComponent* pTextureComponent, const float x, const float y, const float width, const float height) const;
-		void RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const int x, const int y) const;
-		void RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const int x, const int y, const int width, const int height) const;
+		void RenderTexture(const TextureComponent* pTextureComponent, float x, float y) const;
+		void RenderTexture(const TextureComponent* pTextureComponent, float x, float y, float width, float height) const;
+		void RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, int x, int y) const;
+		void RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, int x, int y, int width, int height) const;
 		void RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const SDL_Rect& dstRect) const;
 
 		void DrawRectangle(const SDL_Rect& rect, const Colorf& color);

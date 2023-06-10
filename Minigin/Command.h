@@ -24,6 +24,7 @@ public:
 		: Command{}
 		, m_Direction{ dir }
 		, m_pGameObject{ pGameobject }
+		, m_PrevLocalPos{ }
 	{
 
 	}

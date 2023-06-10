@@ -29,5 +29,10 @@ protected:
 
 	EnemyState m_State;
 	glm::vec2 m_Direction;
-	float m_Speed{ 200.f };
+	float m_Speed{ 100.f };
+
+	int m_WalkAnimations{2};
+	int m_BloathAnimations{4};
+	int m_DeadAnimations{1};
+	int m_CurrentAnimationIndex{0};
 };

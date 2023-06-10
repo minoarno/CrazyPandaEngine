@@ -76,7 +76,7 @@ void dae::Renderer::Destroy()
 	}
 }
 
-void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent, const float x, const float y) const
+void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent, float x, float y) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
@@ -85,7 +85,7 @@ void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent
 	SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, &dst);
 }
 
-void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent, const float x, const float y, const float width, const float height) const
+void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent, float x, float y, float width, float height) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
@@ -95,7 +95,7 @@ void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent
 	SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, &dst);
 }
 
-void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const int x, const int y) const
+void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, int x, int y) const
 {
 	RenderTexture(pTextureComponent, srcRect, x, y, pTextureComponent->GetTextureWidth(), pTextureComponent->GetTextureHeight());
 }
@@ -111,7 +111,7 @@ void dae::Renderer::DrawRectangle(const SDL_Rect& rect, const Colorf& color)
 	SDL_RenderFillRect(GetSDLRenderer(), &rect);
 }
 
-void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const int x, const int y, const int width, const int height) const
+void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, int x, int y, int width, int height) const
 {
 	SDL_Rect dst{ x,y,width,height };
 	RenderTexture(pTextureComponent,srcRect, dst);

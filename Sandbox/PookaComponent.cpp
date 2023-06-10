@@ -11,5 +11,4 @@ PookaComponent::PookaComponent()
 void PookaComponent::Initialize()
 {
 	EnemyComponent::Initialize();
-
 }

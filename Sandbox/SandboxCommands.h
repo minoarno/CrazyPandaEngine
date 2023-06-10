@@ -1,6 +1,8 @@
 #pragma once
 #include "Command.h"
 #include "PlayerComponent.h"
+#include "DigDugComponent.h"
+#include "Scene.h"
 
 class DieCommand final : public Command
 {
@@ -46,4 +48,73 @@ public:
 	void Undo() override {}
 private:
 	PlayerComponent* m_pPlayerComponent;
+};
+
+class DigDugMoveCommand final : public Command
+{
+public:
+	DigDugMoveCommand(dae::GameObject* pGameobject, const glm::fvec3& dir, float speed)
+		: Command{}
+		, m_Direction{ dir }
+		, m_pGameObject{ pGameobject }
+		, m_Speed{ speed }
+	{
+
+	}
+	DigDugMoveCommand(const DigDugMoveCommand&) = delete;
+	DigDugMoveCommand& operator=(const DigDugMoveCommand&) = delete;
+	DigDugMoveCommand(DigDugMoveCommand&&) = delete;
+	DigDugMoveCommand& operator=(DigDugMoveCommand&&) = delete;
+
+	~DigDugMoveCommand() override = default;
+
+	virtual void Execute()
+	{
+		auto direction = m_Direction * (static_cast<float>(Time::GetInstance().GetElapsedSeconds()) * m_Speed);
+		m_pGameObject->GetComponent<RigidBody>()->Move(direction.x, direction.y);
+
+		RayCastCallback hit{};
+		hit.m_Tags = { "Level" };
+		glm::vec2 pos = m_pGameObject->GetTransform()->GetWorldPosition() + glm::vec3{ 8 };
+		float distance = 10.f;
+		if (m_pGameObject->GetScene()->RayCast(hit, pos, m_Direction * glm::vec2{ distance }))
+		{
+			hit.m_pHitFixture->SetIsMarkedForDelete(true);
+		}
+	}
+	
+	virtual void Undo()	{}
+
+private:
+	glm::vec2 m_Direction;
+	float m_Speed;
+	dae::GameObject* m_pGameObject;
+};
+
+class DigDugPumpCommand final : public Command
+{
+public:
+	DigDugPumpCommand(DigDugComponent* pDigDug)
+		: Command{}
+		, m_pDigDugComponent{ pDigDug}
+	{
+
+	}
+	DigDugPumpCommand(const DigDugPumpCommand&) = delete;
+	DigDugPumpCommand& operator=(const DigDugPumpCommand&) = delete;
+	DigDugPumpCommand(DigDugPumpCommand&&) = delete;
+	DigDugPumpCommand& operator=(DigDugPumpCommand&&) = delete;
+
+	~DigDugPumpCommand() override = default;
+
+	virtual void Execute()
+	{
+		m_pDigDugComponent->PumpAttack();
+	}
+
+	virtual void Undo()
+	{
+	}
+private:
+	DigDugComponent* m_pDigDugComponent;
 };
