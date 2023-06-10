@@ -156,8 +156,12 @@
     <ClInclude Include="Box2D.h">
       <Filter>Box2D</Filter>
     </ClInclude>
-    <ClInclude Include="ContactListener.h" />
-    <ClInclude Include="RayCastCallback.h" />
+    <ClInclude Include="RayCastCallback.h">
+      <Filter>Box2D</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactListener.h">
+      <Filter>Box2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui.cpp">
@@ -268,7 +272,11 @@
     <ClCompile Include="RigidBody.cpp">
       <Filter>Box2D</Filter>
     </ClCompile>
-    <ClCompile Include="ContactListener.cpp" />
-    <ClCompile Include="RayCastCallback.cpp" />
+    <ClCompile Include="RayCastCallback.cpp">
+      <Filter>Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="ContactListener.cpp">
+      <Filter>Box2D</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

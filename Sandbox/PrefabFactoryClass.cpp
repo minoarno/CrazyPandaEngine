@@ -11,6 +11,8 @@
 #include "PookaComponent.h"
 #include "FygarComponent.h"
 #include "DigDugComponent.h"
+#include "FireComponent.h"
+#include "PumpComponent.h"
 
 using namespace dae;
 
@@ -92,5 +94,35 @@ dae::GameObject* CreateBlock(dae::GameObject* pLevel, const glm::vec2& pos, cons
 
 	gameobject->SetPosition(pos);
 
+	return gameobject;
+}
+
+dae::GameObject* CreatePump(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims)
+{
+	auto gameobject = scene.Add(new dae::GameObject{});
+	auto pRigid = gameobject->AddComponent(new RigidBody());
+	pRigid->SetGravityScale(0);
+
+	auto pBox = gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	pBox->SetIsTrigger(true);
+	gameobject->AddComponent(new FireComponent{});
+	gameobject->SetPosition(pos);
+
+	gameobject->SetPosition(pos);
+	return gameobject;
+}
+
+dae::GameObject* CreateFire(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims)
+{
+	auto gameobject = scene.Add(new dae::GameObject{});
+	auto pRigid = gameobject->AddComponent(new RigidBody());
+	pRigid->SetGravityScale(0);
+
+	auto pBox = gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	pBox->SetIsTrigger(true);
+	gameobject->AddComponent(new FireComponent{});
+	gameobject->SetPosition(pos);
+
+	gameobject->SetPosition(pos);
 	return gameobject;
 }

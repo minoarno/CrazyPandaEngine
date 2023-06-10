@@ -28,6 +28,8 @@ public:
 	~DigDugComponent() override = default;
 
 	void PumpAttack();
+	void SetDirection(CharacterDirection direction);
+	void SetState(CharacterState state);
 protected:
 	void Initialize() override;
 	void Update() override;
