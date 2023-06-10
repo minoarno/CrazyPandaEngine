@@ -1,7 +1,8 @@
 #include "MiniginPCH.h"
 #include "RockComponent.h"
 
-#include "EnemyComponent.h"
+#include "PookaComponent.h"
+#include "FygarComponent.h"
 #include "DigDugComponent.h"
 
 #include "Scene.h"
@@ -15,13 +16,18 @@ void RockComponent::Initialize()
 			if (m_IsFalling)
 			{
 				auto gameObject = static_cast<dae::GameObject*>(pOtherFixture->GetUserData());
-				if (gameObject->GetTag() == "Enemy")
+				if (gameObject->GetTag() == "Pooka")
 				{
 					//Kill enemy
-					EnemyComponent* pEnemy = gameObject->GetComponent<EnemyComponent>();
+					EnemyComponent* pEnemy = gameObject->GetComponent<PookaComponent>();
 					pEnemy->SetEnemyState(EnemyComponent::EnemyState::Crushed);
 				}
-
+				if (gameObject->GetTag() == "Fygar")
+				{
+					//Kill enemy
+					EnemyComponent* pEnemy = gameObject->GetComponent<FygarComponent>();
+					pEnemy->SetEnemyState(EnemyComponent::EnemyState::Crushed);
+				}
 				if (gameObject->GetTag() == "Player")
 				{
 					//Kill player
@@ -65,6 +71,7 @@ void RockComponent::Update()
 			m_StartWobble = static_cast<float>(Time::GetInstance().GetTotalSeconds());
 			m_IsFalling = true;
 		}
+		return;
 	}
 	
 	if (m_StartWobble + m_WobbleDuration > Time::GetInstance().GetTotalSeconds()) return;
@@ -73,7 +80,7 @@ void RockComponent::Update()
 
 	RayCastCallback hitGround{};
 	hitGround.m_Tags = { "Level", "Border" };
-	if (m_pGameObject->GetScene()->RayCast(hitGround, pos, glm::vec2{ 0, 10 }))
+	if (m_pGameObject->GetScene()->RayCast(hitGround, pos, glm::vec2{ 0, 12 }))
 	{
 		m_IsCrumbling = true;
 		m_SmallStartCrumble = static_cast<float>(Time::GetInstance().GetTotalSeconds());

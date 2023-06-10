@@ -60,6 +60,7 @@ public:
 		, m_CharacterDirection{ direction }
 	{
 		m_pRigidBody = m_pGameObject->GetComponent<RigidBody>();
+		m_pDigDug = m_pGameObject->GetComponent<DigDugComponent>();
 	}
 	DigDugMoveCommand(const DigDugMoveCommand&) = delete;
 	DigDugMoveCommand& operator=(const DigDugMoveCommand&) = delete;
@@ -82,6 +83,7 @@ public:
 		{
 			m_pGameObject->GetScene()->Remove(hit.m_pHitFixture);
 		}
+		m_pDigDug->SetDirection(m_CharacterDirection);
 	}
 	
 	virtual void Undo()	{}
@@ -91,6 +93,7 @@ private:
 	dae::GameObject* m_pGameObject;
 	DigDugComponent::CharacterDirection m_CharacterDirection;
 	RigidBody* m_pRigidBody;
+	DigDugComponent* m_pDigDug;
 };
 
 class DigDugPumpCommand final : public Command

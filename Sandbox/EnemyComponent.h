@@ -1,6 +1,11 @@
 #pragma once
 #include "BaseComponent.h"
 
+namespace dae
+{
+	class TextureComponent;
+}
+
 class EnemyComponent : public dae::BaseComponent
 {
 public:
@@ -37,8 +42,11 @@ protected:
 	glm::vec2 m_Direction;
 	float m_Speed{ 100.f };
 
+	bool m_LooksRight{ true };
 	int m_WalkAnimations{2};
 	int m_BloathAnimations{4};
 	int m_DeadAnimations{1};
 	int m_CurrentAnimationIndex{0};
+
+	dae::TextureComponent* m_pTexture{};
 };

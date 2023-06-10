@@ -2,6 +2,9 @@
 #include "EnemyComponent.h"
 #include "Scene.h"
 
+#include "DigDugComponent.h"
+#include "TextureComponent.h"
+
 EnemyComponent::EnemyComponent()
 	: BaseComponent{ }
 	, m_Direction{ 0,-1 }
@@ -13,6 +16,30 @@ void EnemyComponent::SetEnemyState(EnemyState newState)
 	if (m_State == newState) return;
 
 	m_CurrentAnimationIndex = 0;
+	switch (newState)
+	{
+	case EnemyState::Walk:
+	default:
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
+		m_pTexture->SetSourceRect({ 0.f,0.f,16.f,16.f });
+		break;
+	case EnemyState::Ghost:
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
+		m_pTexture->SetSourceRect({ 96.f,0.f,16.f,16.f });
+		break;
+	case EnemyState::Fire:
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
+		m_pTexture->SetSourceRect({ 48.f,0.f,16.f,16.f });
+		break;
+	case EnemyState::Crushed:
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
+		m_pTexture->SetSourceRect({ 32.f,0.f,16.f,16.f });
+		break;
+	case EnemyState::Bloated:
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 32.f });
+		m_pTexture->SetSourceRect({ 0.f,16.f,32.f,32.f });
+		break;
+	}
 
 	m_State = newState;
 }
@@ -24,11 +51,14 @@ void EnemyComponent::Initialize()
 			auto gameObject = static_cast<dae::GameObject*>(pOtherFixture->GetUserData());
 			if (gameObject->GetTag() == "Player")
 			{
-				Log::Info("Hit a player");
+				gameObject->GetComponent<DigDugComponent>()->SetState(DigDugComponent::CharacterState::Die);
 			}
+
 		});
 
 	m_Direction = { 0,-1 };
+
+	m_pTexture = m_pGameObject->GetComponent<dae::TextureComponent>();
 }
 
 void EnemyComponent::Update()
@@ -89,6 +119,14 @@ void EnemyComponent::Walk()
 			possibleNewDirections.emplace_back(glm::vec2{ 0, -1 });
 		}
 		m_Direction = possibleNewDirections[std::rand() % int(possibleNewDirections.size())];
+		if (m_Direction.x > 0.01f)
+		{
+			m_pTexture->SetIsFlipped(true);
+		}
+		else if (m_Direction.x < -0.01f)
+		{
+			m_pTexture->SetIsFlipped(false);
+		}
 	}
 
 	float elapsed = static_cast<float>(Time::GetInstance().GetElapsedSeconds());
@@ -103,6 +141,7 @@ void EnemyComponent::Ghost()
 
 void EnemyComponent::Bloated()
 {
+	Log::Info("Bloated");
 }
 
 void EnemyComponent::Crushed()
