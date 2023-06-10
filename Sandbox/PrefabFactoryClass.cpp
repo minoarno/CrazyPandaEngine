@@ -10,12 +10,24 @@
 #include "EnemyComponent.h"
 #include "PookaComponent.h"
 #include "FygarComponent.h"
+#include "DigDugComponent.h"
 
 using namespace dae;
 
 dae::GameObject* CreatePlayer(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
+	gameobject->AddComponent(new RigidBody());
+
+
+	const glm::vec2& dims{ 16,16 };
+
+	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	gameobject->AddComponent(new DigDugComponent{});
+
+	auto pTexture = gameobject->AddComponent(new dae::TextureComponent{ "DigDug.png" });
+	pTexture->SetDestinationRectDimensions({ 16, 16 });
+	pTexture->SetSourceRect({ 0,0,16,16 });
 	gameobject->SetPosition(pos);
 	return gameobject;
 }

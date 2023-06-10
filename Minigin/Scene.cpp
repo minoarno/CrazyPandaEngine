@@ -55,7 +55,14 @@ GameObject* Scene::Add(GameObject* pObject)
 
 void Scene::Remove(GameObject* object)
 {
-	m_pObjects.erase(std::remove(m_pObjects.begin(), m_pObjects.end(), object), m_pObjects.end());
+	if (object->GetParent() == nullptr)
+	{
+		object->SetIsMarkedForDelete(true);
+	}
+	else
+	{
+		object->GetParent()->RemoveChild(object);
+	}
 }
 
 void Scene::RemoveAll()
@@ -87,6 +94,17 @@ void dae::Scene::LateUpdate()
 	{
 		m_pObjects[i]->LateUpdate();
 	}
+
+	m_pObjects.erase(std::remove_if(m_pObjects.begin(), m_pObjects.end(), [=](dae::GameObject* pObject)
+		{
+			if (pObject->GetIsMarkedForDelete())
+			{
+				delete pObject;
+				pObject = nullptr;
+				return true;
+			}
+			return false;
+		}), m_pObjects.end());
 }
 
 void Scene::Render() const

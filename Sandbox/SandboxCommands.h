@@ -53,11 +53,10 @@ private:
 class DigDugMoveCommand final : public Command
 {
 public:
-	DigDugMoveCommand(dae::GameObject* pGameobject, const glm::fvec3& dir, float speed)
+	DigDugMoveCommand(dae::GameObject* pGameobject, const glm::fvec3& dir)
 		: Command{}
 		, m_Direction{ dir }
 		, m_pGameObject{ pGameobject }
-		, m_Speed{ speed }
 	{
 
 	}
@@ -70,7 +69,7 @@ public:
 
 	virtual void Execute()
 	{
-		auto direction = m_Direction * (static_cast<float>(Time::GetInstance().GetElapsedSeconds()) * m_Speed);
+		auto direction = m_Direction * (static_cast<float>(Time::GetInstance().GetElapsedSeconds()));
 		m_pGameObject->GetComponent<RigidBody>()->Move(direction.x, direction.y);
 
 		RayCastCallback hit{};
@@ -79,7 +78,8 @@ public:
 		float distance = 10.f;
 		if (m_pGameObject->GetScene()->RayCast(hit, pos, m_Direction * glm::vec2{ distance }))
 		{
-			hit.m_pHitFixture->SetIsMarkedForDelete(true);
+			Log::Info("Mine Block");
+			m_pGameObject->GetScene()->Remove(hit.m_pHitFixture);
 		}
 	}
 	
@@ -87,7 +87,6 @@ public:
 
 private:
 	glm::vec2 m_Direction;
-	float m_Speed;
 	dae::GameObject* m_pGameObject;
 };
 

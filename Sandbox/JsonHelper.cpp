@@ -13,7 +13,7 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 	try
 	{
 		nlohmann::json j = LoadJsonFile(jsonFile);
-		pLevelObject->GetTransform()->SetLocalPosition(20, 40, 0);
+		pLevelObject->GetTransform()->SetLocalPosition(45, 40, 0);
 		auto posLevel = pLevelObject->GetComponent<dae::Transform>()->GetLocalPosition();
 
 		auto level = j.at("Level").get<std::vector<std::vector<int>>>();
