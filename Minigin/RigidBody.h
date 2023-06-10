@@ -17,6 +17,8 @@ public:
 	b2Body* GetBody() { return m_pBody; };
 
 	void SetEnabled(bool value);
+	void ResetVelocity();
+	void SetGravityScale(float scale);
 protected:
 	void Initialize() override;
 	void Update() override;

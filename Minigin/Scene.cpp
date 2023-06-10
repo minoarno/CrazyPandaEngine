@@ -24,7 +24,7 @@ bool dae::Scene::RayCast(RayCastCallback& hit, const glm::vec2& pos, const glm::
 Scene::Scene(const std::string& name) 
 	: m_Name(name) 
 	, m_pObjects{}
-	, m_pWorld{new b2World{{0,0}}}
+	, m_pWorld{new b2World{{0,9.81f}}}
 {
 	m_pWorld->SetAllowSleeping(false);
 	m_pContactListener = new ContactListener{};

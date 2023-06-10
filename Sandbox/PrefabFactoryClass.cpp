@@ -17,8 +17,8 @@ using namespace dae;
 dae::GameObject* CreatePlayer(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
-	gameobject->AddComponent(new RigidBody());
-
+	auto pRigid = gameobject->AddComponent(new RigidBody());
+	pRigid->SetGravityScale(0);
 
 	const glm::vec2& dims{ 16,16 };
 
@@ -35,8 +35,8 @@ dae::GameObject* CreatePlayer(dae::Scene& scene, const glm::vec2& pos)
 dae::GameObject* CreatePooka(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
-	gameobject->AddComponent(new RigidBody());
-
+	auto pRigid = gameobject->AddComponent(new RigidBody());
+	pRigid->SetGravityScale(0);
 
 	const glm::vec2& dims{ 16,16 };
 
@@ -53,7 +53,8 @@ dae::GameObject* CreatePooka(dae::Scene& scene, const glm::vec2& pos)
 dae::GameObject* CreateFygar(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
-	gameobject->AddComponent(new RigidBody());
+	auto pRigid = gameobject->AddComponent(new RigidBody());
+	pRigid->SetGravityScale(0);
 
 	const glm::vec2& dims{ 16,16 };
 
@@ -66,6 +67,15 @@ dae::GameObject* CreateFygar(dae::Scene& scene, const glm::vec2& pos)
 dae::GameObject* CreateRock(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
+	auto pRigid = gameobject->AddComponent(new RigidBody());
+	pRigid->SetGravityScale(0);
+
+	const glm::vec2& dims{ 16,16 };
+
+	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	gameobject->AddComponent(new FygarComponent{});
+	gameobject->SetPosition(pos);
+
 	gameobject->SetPosition(pos);
 	return gameobject;
 }

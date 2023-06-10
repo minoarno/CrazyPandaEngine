@@ -42,6 +42,16 @@ void RigidBody::SetEnabled(bool value)
 	m_pBody->SetLinearVelocity({ 0,0 });
 }
 
+void RigidBody::ResetVelocity()
+{
+	m_pBody->SetLinearVelocity({ 0,0 });
+}
+
+void RigidBody::SetGravityScale(float scale)
+{
+	m_pBody->SetGravityScale(scale);
+}
+
 void RigidBody::Initialize()
 {
 	m_BodyDef.userData = m_pGameObject;

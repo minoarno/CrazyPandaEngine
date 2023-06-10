@@ -53,12 +53,13 @@ private:
 class DigDugMoveCommand final : public Command
 {
 public:
-	DigDugMoveCommand(dae::GameObject* pGameobject, const glm::fvec3& dir)
+	DigDugMoveCommand(dae::GameObject* pGameobject, const glm::fvec3& dir, DigDugComponent::CharacterDirection direction)
 		: Command{}
 		, m_Direction{ dir }
 		, m_pGameObject{ pGameobject }
+		, m_CharacterDirection{ direction }
 	{
-
+		m_pRigidBody = m_pGameObject->GetComponent<RigidBody>();
 	}
 	DigDugMoveCommand(const DigDugMoveCommand&) = delete;
 	DigDugMoveCommand& operator=(const DigDugMoveCommand&) = delete;
@@ -70,15 +71,15 @@ public:
 	virtual void Execute()
 	{
 		auto direction = m_Direction * (static_cast<float>(Time::GetInstance().GetElapsedSeconds()));
-		m_pGameObject->GetComponent<RigidBody>()->Move(direction.x, direction.y);
+		m_pRigidBody->ResetVelocity();
+		m_pRigidBody->Move(direction.x, direction.y);
 
 		RayCastCallback hit{};
 		hit.m_Tags = { "Level" };
 		glm::vec2 pos = m_pGameObject->GetTransform()->GetWorldPosition() + glm::vec3{ 8 };
 		float distance = 10.f;
-		if (m_pGameObject->GetScene()->RayCast(hit, pos, m_Direction * glm::vec2{ distance }))
+		if (m_pGameObject->GetScene()->RayCast(hit, pos, glm::normalize(m_Direction) * glm::vec2{distance}))
 		{
-			Log::Info("Mine Block");
 			m_pGameObject->GetScene()->Remove(hit.m_pHitFixture);
 		}
 	}
@@ -88,6 +89,8 @@ public:
 private:
 	glm::vec2 m_Direction;
 	dae::GameObject* m_pGameObject;
+	DigDugComponent::CharacterDirection m_CharacterDirection;
+	RigidBody* m_pRigidBody;
 };
 
 class DigDugPumpCommand final : public Command
