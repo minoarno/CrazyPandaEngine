@@ -12,7 +12,7 @@ void EnemyComponent::SetEnemyState(EnemyState newState)
 {
 	if (m_State == newState) return;
 
-
+	m_CurrentAnimationIndex = 0;
 
 	m_State = newState;
 }
@@ -36,16 +36,28 @@ void EnemyComponent::Update()
 	switch (m_State)
 	{
 	case EnemyState::Walk:
-	case EnemyState::Die:
-	case EnemyState::Bloated:
-	case EnemyState::Ghost:
-	case EnemyState::Fire:
 	default:
+		Walk();
+		break;
+	case EnemyState::Crushed:
+		Crushed();
+		break;
+	case EnemyState::Bloated:
+		Bloated();
+		break;
+	case EnemyState::Ghost:
+		Ghost();
+		break;
+	case EnemyState::Fire:
+		Fire();
 		break;
 	}
+}
 
+void EnemyComponent::Walk()
+{
 	RayCastCallback hit{};
-	hit.m_Tags = { "Level", "Border"};
+	hit.m_Tags = { "Level", "Border" };
 	glm::vec2 pos = m_pGameObject->GetTransform()->GetWorldPosition() + glm::vec3{ 8 };
 
 	float distance = 10.f;
@@ -83,4 +95,20 @@ void EnemyComponent::Update()
 	RigidBody* rigidBody = m_pGameObject->GetComponent<RigidBody>();
 	auto v = rigidBody->GetBody()->GetLinearVelocity();
 	rigidBody->Move(m_Direction.x * m_Speed * elapsed, m_Direction.y * m_Speed * elapsed);
+}
+
+void EnemyComponent::Ghost()
+{
+}
+
+void EnemyComponent::Bloated()
+{
+}
+
+void EnemyComponent::Crushed()
+{
+}
+
+void EnemyComponent::Fire()
+{
 }

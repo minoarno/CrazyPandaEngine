@@ -49,8 +49,8 @@ void load()
 	InputManager::GetInstance().AddOnHold(ControllerButton::DPadUp, new DigDugMoveCommand{ gameobject,glm::fvec3{0,-speed,0}, DigDugComponent::CharacterDirection::Up },0);
 	
 	DigDugComponent* pDigDug = gameobject->GetComponent<DigDugComponent>();
-	InputManager::GetInstance().AddOnHold(SDLK_e, new DigDugPumpCommand{ pDigDug });
-	InputManager::GetInstance().AddOnHold(ControllerButton::ButtonA, new DigDugPumpCommand{ pDigDug },0);
+	InputManager::GetInstance().AddOnPressDown(SDLK_e, new DigDugPumpCommand{ pDigDug });
+	InputManager::GetInstance().AddOnPressDown(ControllerButton::ButtonA, new DigDugPumpCommand{ pDigDug },0);
 }
 
 void Demo()

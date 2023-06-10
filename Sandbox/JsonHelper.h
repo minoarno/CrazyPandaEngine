@@ -19,6 +19,14 @@ enum class LevelBlockID : int
 	botBlock = 3
 };
 
+
+struct Enemy
+{
+	int Name;
+	int x;
+	int y;
+};
+
 namespace JsonHelper
 {
 	void LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject* pLevelObject);

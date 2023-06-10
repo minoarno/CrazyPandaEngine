@@ -4,12 +4,12 @@
 class DigDugComponent final : public dae::BaseComponent
 {
 public:
-	enum class CharacterDirection
+	enum class CharacterDirection : int
 	{
-		Right,
-		Up,
-		Left,
-		Down
+		Right = 0,
+		Up = 1,
+		Left = 2,
+		Down = 3
 	};
 
 	enum class CharacterState
@@ -29,11 +29,14 @@ public:
 
 	void PumpAttack();
 	void SetDirection(CharacterDirection direction);
+	CharacterDirection GetDirection()const { return m_Direction; };
 	void SetState(CharacterState state);
+	CharacterState GetState()const { return m_State; };
+
 protected:
 	void Initialize() override;
 	void Update() override;
 
-	CharacterDirection m_CharacterDirection{};
-	CharacterState m_CharacterState{};
+	CharacterDirection m_Direction{};
+	CharacterState m_State{};
 };

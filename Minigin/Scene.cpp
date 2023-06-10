@@ -95,7 +95,7 @@ void dae::Scene::LateUpdate()
 		m_pObjects[i]->LateUpdate();
 	}
 
-	m_pObjects.erase(std::remove_if(m_pObjects.begin(), m_pObjects.end(), [=](dae::GameObject* pObject)
+	m_pObjects.erase(std::remove_if(m_pObjects.begin(), m_pObjects.end(), [&](dae::GameObject* pObject)
 		{
 			if (pObject->GetIsMarkedForDelete())
 			{

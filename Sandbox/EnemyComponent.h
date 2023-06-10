@@ -9,8 +9,8 @@ public:
 		Walk,
 		Ghost,
 		Bloated,
-		Fire,
-		Die
+		Crushed,
+		Fire
 	};
 
 	EnemyComponent();
@@ -26,6 +26,12 @@ protected:
 	virtual void Initialize();
 
 	virtual void Update();
+
+	virtual void Walk();
+	virtual void Ghost();
+	virtual void Bloated();
+	virtual void Crushed();
+	virtual void Fire();
 
 	EnemyState m_State;
 	glm::vec2 m_Direction;

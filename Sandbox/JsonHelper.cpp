@@ -46,8 +46,29 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 			}
 		}
 
-		CreatePooka(*pLevelObject->GetScene(), glm::vec2{ posLevel.x + 4 * blockWidth, posLevel.y + 6 * blockHeight });
-		CreatePooka(*pLevelObject->GetScene(), glm::vec2{ posLevel.x + 8 * blockWidth, posLevel.y + 8 * blockHeight });
+		auto enemies = j.at("Enemies");
+
+		if (enemies.is_array()) {
+			for (const auto& object : enemies) {
+				int enemyType = object["Type"].get<int>();
+				int rowIndex = object["Row"].get<int>();
+				int colIndex = object["Col"].get<int>();
+
+				switch (enemyType)
+				{
+				case 0:
+				default:
+					CreatePooka(*pLevelObject->GetScene(), glm::vec2{ posLevel.x + colIndex * blockWidth, posLevel.y + rowIndex * blockHeight });
+					break;
+				case 1:
+					CreateFygar(*pLevelObject->GetScene(), glm::vec2{ posLevel.x + colIndex * blockWidth, posLevel.y + rowIndex * blockHeight });
+					break;
+				case 2:
+					CreateRock(*pLevelObject->GetScene(), glm::vec2{posLevel.x + colIndex * blockWidth, posLevel.y + rowIndex * blockHeight});
+					break;
+				}
+			}
+		}
 	}
 	catch (const std::exception&)
 	{

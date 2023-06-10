@@ -11,6 +11,7 @@
 #include "PookaComponent.h"
 #include "FygarComponent.h"
 #include "DigDugComponent.h"
+#include "RockComponent.h"
 #include "FireComponent.h"
 #include "PumpComponent.h"
 
@@ -62,6 +63,10 @@ dae::GameObject* CreateFygar(dae::Scene& scene, const glm::vec2& pos)
 
 	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
 	gameobject->AddComponent(new FygarComponent{});
+	
+	auto pTexture = gameobject->AddComponent(new dae::TextureComponent{ "Fygar.png" });
+	pTexture->SetDestinationRectDimensions({ 16, 16 });
+	pTexture->SetSourceRect({ 0,0,16,16 });
 	gameobject->SetPosition(pos);
 	return gameobject;
 }
@@ -72,13 +77,16 @@ dae::GameObject* CreateRock(dae::Scene& scene, const glm::vec2& pos)
 	auto pRigid = gameobject->AddComponent(new RigidBody());
 	pRigid->SetGravityScale(0);
 
-	const glm::vec2& dims{ 16,16 };
+
+	const glm::vec2& dims{ 20,20 };
+	auto texture = gameobject->AddComponent(new TextureComponent{ "Rock.png" });
+	texture->SetSourceRect(Rectf{ 0,0,16.f,16.f });
+	texture->SetDestinationRectDimensions({ dims.x, dims.y });
 
 	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
-	gameobject->AddComponent(new FygarComponent{});
-	gameobject->SetPosition(pos);
+	gameobject->AddComponent(new RockComponent{});
 
-	gameobject->SetPosition(pos);
+	gameobject->SetPosition(pos + glm::vec2{ 2,4 });
 	return gameobject;
 }
 
@@ -97,7 +105,7 @@ dae::GameObject* CreateBlock(dae::GameObject* pLevel, const glm::vec2& pos, cons
 	return gameobject;
 }
 
-dae::GameObject* CreatePump(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims)
+dae::GameObject* CreatePump(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims, int direction)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
 	auto pRigid = gameobject->AddComponent(new RigidBody());
@@ -105,8 +113,11 @@ dae::GameObject* CreatePump(dae::Scene& scene, const glm::vec2& pos, const glm::
 
 	auto pBox = gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
 	pBox->SetIsTrigger(true);
-	gameobject->AddComponent(new FireComponent{});
-	gameobject->SetPosition(pos);
+	gameobject->AddComponent(new PumpComponent{});
+
+	auto texture = gameobject->AddComponent(new TextureComponent{ "Pump.png" });
+	texture->SetSourceRect(Rectf{ 0,direction * 32.f,32.f,32.f });
+	texture->SetDestinationRectDimensions({ dims.x, dims.y });
 
 	gameobject->SetPosition(pos);
 	return gameobject;
@@ -121,7 +132,10 @@ dae::GameObject* CreateFire(dae::Scene& scene, const glm::vec2& pos, const glm::
 	auto pBox = gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
 	pBox->SetIsTrigger(true);
 	gameobject->AddComponent(new FireComponent{});
-	gameobject->SetPosition(pos);
+	
+	auto texture = gameobject->AddComponent(new TextureComponent{ "Fire.png" });
+	texture->SetSourceRect(Rectf{ 0,0,16.f,16.f });
+	texture->SetDestinationRectDimensions({ dims.x, dims.y });
 
 	gameobject->SetPosition(pos);
 	return gameobject;
