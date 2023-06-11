@@ -110,10 +110,9 @@ void JsonHelper::LoadHighScore(const std::string& jsonFile, HighScoreComponent* 
 
 		if (highscoreList.is_array()) {
 			for (const auto& object : highscoreList) {
-				std::string name = object["Name"].get<std::string>();
 				int score = object["Score"].get<int>();
 
-				pHighScoreList->AddScore(score, name);
+				pHighScoreList->AddScore(score);
 			}
 		}
 	}
@@ -129,11 +128,10 @@ void JsonHelper::SaveHighScore(const std::string& jsonFile, HighScoreComponent* 
 	{
 		nlohmann::json j{};
 		auto highscores = pHighScoreList->GetHighScores();
-		for (auto h : highscores)
+		for (auto s : highscores)
 		{
 			nlohmann::json score;
-			score["Name"] = h.name;
-			score["Score"] = h.score;
+			score["Score"] = s;
 			j.emplace_back(score);
 		}
 		SaveJsonFile(jsonFile, j);
