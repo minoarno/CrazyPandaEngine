@@ -72,14 +72,14 @@
     <ClCompile Include="EnemyController.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="FireComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="PumpComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="FireComponent.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
     <ClCompile Include="RockComponent.cpp">
-      <Filter>Components</Filter>
+      <Filter>Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,14 +134,14 @@
     <ClInclude Include="EnemyController.h">
       <Filter>Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="FireComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="PumpComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="FireComponent.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
     <ClInclude Include="RockComponent.h">
-      <Filter>Components</Filter>
+      <Filter>Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

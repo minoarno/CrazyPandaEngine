@@ -235,6 +235,7 @@ xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Box2D.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="ContactListener.h" />
@@ -287,6 +288,7 @@ xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MiniginPCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="EngineTime.cpp">

@@ -34,6 +34,9 @@
     <Filter Include="Box2D">
       <UniqueIdentifier>{9bbab75f-c7a3-4007-a924-ee21032dce74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{292419d8-544e-431d-bcfa-3646b24ebe85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h">
@@ -162,6 +165,9 @@
     <ClInclude Include="ContactListener.h">
       <Filter>Box2D</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui.cpp">
@@ -277,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="ContactListener.cpp">
       <Filter>Box2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
