@@ -1,10 +1,14 @@
 #pragma once
 #include "BaseComponent.h"
 #include "PlayerComponent.h"
+#include "EventObserver.h"
 
-class Score;
-class ScoreObserver;
-class ScoreDisplay final: public dae::BaseComponent
+namespace dae
+{
+	class TextComponent;
+}
+
+class ScoreDisplay final: public dae::BaseComponent, public dae::EventObserver
 {
 public:
 	ScoreDisplay(PlayerComponent* pPlayerComponent);
@@ -12,13 +16,12 @@ public:
 	ScoreDisplay& operator=(const ScoreDisplay&) = delete;
 	ScoreDisplay(ScoreDisplay&&) = delete;
 	ScoreDisplay& operator=(ScoreDisplay&&) = delete;
-	~ScoreDisplay() override;
+	~ScoreDisplay() override = default;
 
 	void Initialize() override;
-
-	[[nodiscard]] ScoreObserver* GetScoreObserver() const { return m_pScoreObserver; };
+	void OnNotify(dae::EventSubject* pEventSubject) override;
 private:
-	ScoreObserver* m_pScoreObserver = nullptr;
 	PlayerComponent* m_pPlayerComponent = nullptr;
+	dae::TextComponent* m_pTextComponent = nullptr;
 };
 

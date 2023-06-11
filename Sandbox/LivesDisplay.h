@@ -1,9 +1,14 @@
 #pragma once
 #include "BaseComponent.h"
+#include "EventObserver.h"
+
+namespace dae
+{
+	class TextComponent;
+}
 
 class PlayerComponent;
-class LiveObserver;
-class LivesDisplay final : public dae::BaseComponent
+class LivesDisplay final : public dae::BaseComponent, public dae::EventObserver
 {
 public:
 	LivesDisplay(PlayerComponent* pPlayerComponent);
@@ -11,13 +16,12 @@ public:
 	LivesDisplay& operator=(const LivesDisplay&) = delete;
 	LivesDisplay(LivesDisplay&&) = delete;
 	LivesDisplay& operator=(LivesDisplay&&) = delete;
-	~LivesDisplay() override;
+	~LivesDisplay() override = default;
 
 	void Initialize() override;
-
-	[[nodiscard]] LiveObserver* GetLivesObserver() const { return m_pLivesObserver; };
+	void OnNotify(dae::EventSubject* pEventSubject) override;
 private:
-	LiveObserver* m_pLivesObserver = nullptr;
 	PlayerComponent* m_pPlayerComponent = nullptr;
+	dae::TextComponent* m_pTextComponent = nullptr;
 };
 

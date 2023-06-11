@@ -67,14 +67,14 @@ void Level2()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level1");
 	auto pLevel = scene.Add(new dae::GameObject{});
-	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+	JsonHelper::LoadSceneUsingJson("Levels/Level2.json", pLevel);
 }
 
 void Level3()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level1");
 	auto pLevel = scene.Add(new dae::GameObject{});
-	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+	JsonHelper::LoadSceneUsingJson("Levels/Level3.json", pLevel);
 }
 
 void Level1Multiplayer()
@@ -89,7 +89,7 @@ void Level2Multiplayer()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("MultiplayerLevel2");
 	auto pLevel = scene.Add(new dae::GameObject{});
-	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+	JsonHelper::LoadSceneUsingJson("Levels/Level2.json", pLevel);
 }
 
 
@@ -97,7 +97,7 @@ void Level3Multiplayer()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("MultiplayerLevel3");
 	auto pLevel = scene.Add(new dae::GameObject{});
-	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+	JsonHelper::LoadSceneUsingJson("Levels/Level3.json", pLevel);
 }
 
 void Level1Versus()
@@ -112,7 +112,7 @@ void Level2Versus()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("VersusLevel2");
 	auto pLevel = scene.Add(new dae::GameObject{});
-	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+	JsonHelper::LoadSceneUsingJson("Levels/Level2.json", pLevel);
 }
 
 
@@ -120,12 +120,15 @@ void Level3Versus()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("VersusLevel3");
 	auto pLevel = scene.Add(new dae::GameObject{});
-	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+	JsonHelper::LoadSceneUsingJson("Levels/Level3.json", pLevel);
 }
 
 void HighScore()
 {
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("HighScore");
+	CreateButton(scene, { 200,100 }, { 200,60 }, "UISingle.png", new LoadSceneCommand{ "MainMenu" });
 
+	InputManager::GetInstance().AddOnHold(SDLK_F1, new LoadSceneCommand{ "MainMenu" });
 }
 
 void LoadScenes()

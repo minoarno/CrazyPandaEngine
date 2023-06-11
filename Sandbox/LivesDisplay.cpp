@@ -3,7 +3,6 @@
 
 #include "TextComponent.h"
 #include "ResourceManager.h"
-#include "LiveObserver.h"
 #include "Lives.h"
 #include "PlayerComponent.h"
 
@@ -13,17 +12,18 @@ LivesDisplay::LivesDisplay(PlayerComponent* pPlayerComponent)
 {
 }
 
-LivesDisplay::~LivesDisplay()
-{
-	delete m_pLivesObserver;
-	m_pLivesObserver = nullptr;
-}
-
 void LivesDisplay::Initialize()
 {
 	dae::TextComponent* pText = new dae::TextComponent{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) };
 	m_pGameObject->AddComponent(pText);
-	m_pLivesObserver = new LiveObserver(pText);
-	m_pPlayerComponent->GetLives()->AddObserver(m_pLivesObserver);
+	m_pTextComponent = pText;
+	m_pPlayerComponent->GetLives()->AddObserver(this);
 	pText->SetText("Lives: 5");
+}
+
+void LivesDisplay::OnNotify(dae::EventSubject* pEventSubject)
+{
+	Lives* lives = reinterpret_cast<Lives*>(pEventSubject);
+	std::string temp = "Lives: " + std::to_string(lives->GetLives());
+	m_pTextComponent->SetText(temp);
 }

@@ -15,7 +15,6 @@ public:
 	enum class CharacterState
 	{
 		Walk,
-		Pumping,
 		Crushed,
 		Die,
 	};
@@ -33,10 +32,25 @@ public:
 	void SetState(CharacterState state);
 	CharacterState GetState()const { return m_State; };
 
+	void SetRespawn(const glm::vec2& pos);
+	void Respawn();
 protected:
 	void Initialize() override;
 	void Update() override;
 
+	void UpdateTexture();
+
+	int m_WalkAnimations{ 2 };
+	int m_GetCrushedAnimations{ 2 };
+	int m_DeadAnimations{ 4 };
+	int m_CurrentAnimationIndex{ 0 };
+	float m_LastAnimationTime{};
+	float m_AnimationDuration{ .5f };
+
+	glm::vec2 m_RespawnPosition{};
+
 	CharacterDirection m_Direction{};
 	CharacterState m_State{};
+
+	dae::TextureComponent* m_pTexture{};
 };

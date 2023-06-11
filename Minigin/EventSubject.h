@@ -6,7 +6,7 @@ namespace dae
 {
 	class EventObserver;
 
-	class EventSubject : public dae::BaseComponent
+	class EventSubject
 	{
 	public:
 		EventSubject() = default;

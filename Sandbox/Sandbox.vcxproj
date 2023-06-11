@@ -182,7 +182,6 @@
     <ClCompile Include="FygarComponent.cpp" />
     <ClCompile Include="HighScoreComponent.cpp" />
     <ClCompile Include="JsonHelper.cpp" />
-    <ClCompile Include="LiveObserver.cpp" />
     <ClCompile Include="Lives.cpp" />
     <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
@@ -191,9 +190,8 @@
     <ClCompile Include="PumpComponent.cpp" />
     <ClCompile Include="RockComponent.cpp" />
     <ClCompile Include="Sandbox.cpp" />
-    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="ScoreDisplay.cpp" />
-    <ClCompile Include="ScoreObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DigDugComponent.h" />
@@ -203,7 +201,6 @@
     <ClInclude Include="FygarComponent.h" />
     <ClInclude Include="HighScoreComponent.h" />
     <ClInclude Include="JsonHelper.h" />
-    <ClInclude Include="LiveObserver.h" />
     <ClInclude Include="Lives.h" />
     <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="PlayerComponent.h" />
@@ -212,9 +209,8 @@
     <ClInclude Include="PumpComponent.h" />
     <ClInclude Include="RockComponent.h" />
     <ClInclude Include="SandboxCommands.h" />
-    <ClInclude Include="Score.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="ScoreDisplay.h" />
-    <ClInclude Include="ScoreObserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

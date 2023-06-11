@@ -13,4 +13,9 @@ public:
 protected:
 	void Initialize() override;
 	void UpdateTexture() override;
+
+	void Update() override;
+
+	float m_LastFireTime{};
+	float m_FireCooldown{};
 };

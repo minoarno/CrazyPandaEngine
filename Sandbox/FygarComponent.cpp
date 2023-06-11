@@ -54,3 +54,10 @@ void FygarComponent::UpdateTexture()
 		break;
 	}
 }
+
+void FygarComponent::Update()
+{
+	EnemyComponent::Update();
+
+
+}

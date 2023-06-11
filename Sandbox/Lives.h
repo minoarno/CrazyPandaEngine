@@ -1,8 +1,8 @@
 #pragma once
 #include "EventSubject.h"
+#include "BaseComponent.h"
 
-
-class Lives final : public dae::EventSubject
+class Lives final : public dae::BaseComponent, public dae::EventSubject
 {
 public:
 	Lives(int amount);

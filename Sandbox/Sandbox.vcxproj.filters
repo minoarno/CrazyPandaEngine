@@ -30,22 +30,16 @@
     <ClCompile Include="PlayerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="LiveObserver.cpp">
-      <Filter>Observers</Filter>
-    </ClCompile>
     <ClCompile Include="Lives.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
     <ClCompile Include="LivesDisplay.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
-    <ClCompile Include="Score.cpp">
+    <ClCompile Include="ScoreManager.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
     <ClCompile Include="ScoreDisplay.cpp">
-      <Filter>Observers</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreObserver.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
     <ClCompile Include="JsonHelper.cpp">
@@ -89,22 +83,16 @@
     <ClInclude Include="PlayerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="LiveObserver.h">
-      <Filter>Observers</Filter>
-    </ClInclude>
     <ClInclude Include="Lives.h">
       <Filter>Observers</Filter>
     </ClInclude>
     <ClInclude Include="LivesDisplay.h">
       <Filter>Observers</Filter>
     </ClInclude>
-    <ClInclude Include="Score.h">
+    <ClInclude Include="ScoreManager.h">
       <Filter>Observers</Filter>
     </ClInclude>
     <ClInclude Include="ScoreDisplay.h">
-      <Filter>Observers</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreObserver.h">
       <Filter>Observers</Filter>
     </ClInclude>
     <ClInclude Include="PrefabFactoryClass.h">

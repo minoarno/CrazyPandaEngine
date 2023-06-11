@@ -2,22 +2,12 @@
 #include "PlayerComponent.h"
 
 #include "Lives.h"
-#include "Score.h"
+#include "ScoreManager.h"
 
 PlayerComponent::PlayerComponent(int amountOfLives)
 	: BaseComponent{}
-	, m_pLives{ new Lives{amountOfLives} }
-	, m_pScore{ new Score{} }
+	, m_pLives{ std::make_shared<Lives>( amountOfLives )}
 {
-}
-
-PlayerComponent::~PlayerComponent()
-{
-	delete m_pLives;
-	m_pLives = nullptr;
-
-	delete m_pScore;
-	m_pScore = nullptr;
 }
 
 void PlayerComponent::Dies()
@@ -27,5 +17,5 @@ void PlayerComponent::Dies()
 
 void PlayerComponent::AddScore(int score)
 {
-	m_pScore->IncreaseScore(score);
+	ScoreManager::GetInstance().IncreaseScore(score);
 }

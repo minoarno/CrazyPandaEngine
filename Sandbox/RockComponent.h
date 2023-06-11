@@ -19,6 +19,8 @@ protected:
 	void Initialize() override;
 	void Update() override;
 
+	void GivePointsForCrushingEnemies();
+
 	bool m_IsFalling{ false };
 	float m_StartWobble{ 0 };
 	float m_WobbleDuration{ 2.f };
@@ -28,4 +30,6 @@ protected:
 	int m_AnimationIndex{ 0 };
 	bool m_IsCrumbling{ false };
 	dae::TextureComponent* m_pTextureComponent{ nullptr };
+	
+	int m_AmountOfEnemiesCrushed{ 0 };
 };

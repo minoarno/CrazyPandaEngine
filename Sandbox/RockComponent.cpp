@@ -9,6 +9,8 @@
 #include "EngineTime.h"
 #include "TextureComponent.h"
 
+#include "ScoreManager.h"
+
 void RockComponent::Initialize()
 {
 	m_pGameObject->AddCollisionCallback([&](b2Fixture*, b2Fixture* pOtherFixture, b2Contact*, CollisionType)
@@ -18,12 +20,22 @@ void RockComponent::Initialize()
 				auto gameObject = static_cast<dae::GameObject*>(pOtherFixture->GetUserData());
 				if (gameObject->GetTag() == "Pooka")
 				{
+					if (!gameObject->GetIsMarkedForDelete())
+					{
+						m_AmountOfEnemiesCrushed++;
+					}
+
 					//Kill enemy
 					EnemyComponent* pEnemy = gameObject->GetComponent<PookaComponent>();
 					pEnemy->SetEnemyState(EnemyComponent::EnemyState::Crushed);
 				}
 				if (gameObject->GetTag() == "Fygar")
 				{
+					if (!gameObject->GetIsMarkedForDelete())
+					{
+						m_AmountOfEnemiesCrushed++;
+					}
+
 					//Kill enemy
 					EnemyComponent* pEnemy = gameObject->GetComponent<FygarComponent>();
 					pEnemy->SetEnemyState(EnemyComponent::EnemyState::Crushed);
@@ -50,6 +62,8 @@ void RockComponent::Update()
 			m_AnimationIndex++;
 			if (m_AnimationIndex == 4)
 			{
+				GivePointsForCrushingEnemies();
+
 				m_pGameObject->GetScene()->Remove(m_pGameObject);
 				return;
 			}
@@ -87,4 +101,43 @@ void RockComponent::Update()
 		m_AnimationIndex++;
 		m_pTextureComponent->SetSourceRect({ m_AnimationIndex * 16.f,0.f,16.f,16.f });
 	}
+}
+
+void RockComponent::GivePointsForCrushingEnemies()
+{
+	int addedScore{ 0 };
+
+	switch (m_AmountOfEnemiesCrushed)
+	{
+	case 0:
+		addedScore = 0;
+		break;
+	case 1:
+		addedScore = 1000;
+		break;
+	case 2:
+		addedScore = 2500;
+		break;
+	case 3:
+		addedScore = 4000;
+		break;
+	case 4:
+		addedScore = 6000;
+		break;
+	case 5:
+		addedScore = 8000;
+		break;
+	case 6:
+		addedScore = 10000;
+		break;
+	case 7:
+		addedScore = 12000;
+		break;
+	case 8:
+	default:
+		addedScore = 15000;
+		break;
+	}
+
+	ScoreManager::GetInstance().IncreaseScore(addedScore);
 }

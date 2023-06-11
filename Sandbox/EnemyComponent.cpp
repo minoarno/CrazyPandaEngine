@@ -115,8 +115,6 @@ void EnemyComponent::UpdateTexture()
 		m_pTexture->SetSourceRect({ m_CurrentAnimationIndex * 26.f,16.f,26.f,26.f });
 		break;
 	}
-
-
 }
 
 void EnemyComponent::Walk()

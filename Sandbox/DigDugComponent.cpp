@@ -2,6 +2,7 @@
 #include "DigDugComponent.h"
 #include "Scene.h"
 #include "PrefabFactoryClass.h"
+#include "TextureComponent.h"
 
 DigDugComponent::DigDugComponent()
 {
@@ -42,10 +43,59 @@ void DigDugComponent::SetState(CharacterState state)
 
 }
 
+void DigDugComponent::SetRespawn(const glm::vec2& pos)
+{
+	m_RespawnPosition = pos;
+}
+
+void DigDugComponent::Respawn()
+{
+	SetState(CharacterState::Walk);
+	SetDirection(CharacterDirection::Right);
+
+	m_pGameObject->SetPosition(m_RespawnPosition);
+}
+
 void DigDugComponent::Initialize()
 {
+	m_pTexture = m_pGameObject->GetComponent<dae::TextureComponent>();
 }
 
 void DigDugComponent::Update()
 {
+	if (m_LastAnimationTime + m_AnimationDuration > Time::GetInstance().GetTotalSeconds()) return;
+
+	m_LastAnimationTime = static_cast<float>(Time::GetInstance().GetTotalSeconds());
+	m_CurrentAnimationIndex++;
+	UpdateTexture();
+}
+
+void DigDugComponent::UpdateTexture()
+{
+	int directionIndex{ int(m_Direction) };
+	switch (m_State)
+	{
+	case CharacterState::Walk:
+		m_CurrentAnimationIndex %= m_WalkAnimations;
+		m_pTexture->SetSourceRect({ (directionIndex * m_WalkAnimations + m_CurrentAnimationIndex) * 16.f, 0.f,16.f,16.f });
+		break;
+	case CharacterState::Crushed:
+		if (m_CurrentAnimationIndex == m_GetCrushedAnimations)
+		{
+			Respawn();
+			return;
+		}
+		m_CurrentAnimationIndex %= m_GetCrushedAnimations;
+		m_pTexture->SetSourceRect({ (directionIndex * m_GetCrushedAnimations + m_CurrentAnimationIndex) * 16.f, 16.f,16.f,16.f });
+	case CharacterState::Die:
+		if (m_CurrentAnimationIndex == m_DeadAnimations)
+		{
+			Respawn();
+			return;
+		}
+		m_CurrentAnimationIndex %= m_DeadAnimations;
+		m_pTexture->SetSourceRect({ (directionIndex * m_DeadAnimations + m_CurrentAnimationIndex) * 16.f, 32.f,16.f,16.f });
+	default:
+		break;
+	}
 }
