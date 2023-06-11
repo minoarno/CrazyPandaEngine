@@ -177,7 +177,6 @@
   <ItemGroup>
     <ClCompile Include="DigDugComponent.cpp" />
     <ClCompile Include="EnemyComponent.cpp" />
-    <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="FireComponent.cpp" />
     <ClCompile Include="FpsComponent.cpp" />
     <ClCompile Include="FygarComponent.cpp" />
@@ -199,7 +198,6 @@
   <ItemGroup>
     <ClInclude Include="DigDugComponent.h" />
     <ClInclude Include="EnemyComponent.h" />
-    <ClInclude Include="EnemyController.h" />
     <ClInclude Include="FireComponent.h" />
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="FygarComponent.h" />

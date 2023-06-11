@@ -69,9 +69,6 @@
     <ClCompile Include="EnemyComponent.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyController.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="PumpComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -129,9 +126,6 @@
       <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="EnemyComponent.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyController.h">
       <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="PumpComponent.h">

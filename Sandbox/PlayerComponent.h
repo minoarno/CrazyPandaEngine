@@ -7,6 +7,7 @@ class PlayerComponent : public dae::BaseComponent
 {
 public:
 	PlayerComponent(int amountOfLives);
+	PlayerComponent(int amountOfLives);
 	PlayerComponent(const PlayerComponent&) = delete;
 	PlayerComponent& operator=(const PlayerComponent&) = delete;
 	PlayerComponent(PlayerComponent&&) = delete;
