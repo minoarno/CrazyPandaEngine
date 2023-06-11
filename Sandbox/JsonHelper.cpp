@@ -72,6 +72,7 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 	}
 	catch (const std::exception&)
 	{
+		Log::Warning("There has been an issue while loading in the level");
 	}
 }
 
@@ -80,7 +81,7 @@ nlohmann::json JsonHelper::LoadJsonFile(const std::string& jsonFile)
 	std::ifstream inputFile{ dae::ResourceManager::GetInstance().GetDataPath() + jsonFile };
 	if (inputFile.fail())
 	{
-		Log::CoreWarning("File \"" + jsonFile + "\" can't be opened or found!");
+		Log::Warning("File \"" + jsonFile + "\" can't be opened or found!");
 		return nullptr;
 	}
 
@@ -89,26 +90,52 @@ nlohmann::json JsonHelper::LoadJsonFile(const std::string& jsonFile)
 	return j;
 }
 
-void JsonHelper::LoadHighScore(const std::string& jsonFile, HighScoreComponent* /*pHighScoreList*/)
+void JsonHelper::SaveJsonFile(const std::string& jsonFile, const nlohmann::json& json)
+{
+	std::ofstream outputFile{ dae::ResourceManager::GetInstance().GetDataPath() + jsonFile };
+
+	outputFile << json;
+	outputFile.close();
+}
+
+void JsonHelper::LoadHighScore(const std::string& jsonFile, HighScoreComponent* pHighScoreList)
 {
 	try
 	{
-		nlohmann::json j = LoadJsonFile(jsonFile);
+		nlohmann::json highscoreList = LoadJsonFile(jsonFile);
+
+		if (highscoreList.is_array()) {
+			for (const auto& object : highscoreList) {
+				std::string name = object["Name"].get<std::string>();
+				int score = object["Score"].get<int>();
+
+				pHighScoreList->AddScore(score, name);
+			}
+		}
 	}
 	catch (const std::exception&)
 	{
-
+		Log::Warning("There has been an issue while loading the highscore");
 	}
 }
 
-void JsonHelper::SaveHighScore(const std::string& jsonFile, HighScoreComponent* /*pHighScoreList*/)
+void JsonHelper::SaveHighScore(const std::string& jsonFile, HighScoreComponent* pHighScoreList)
 {
 	try
 	{
-		nlohmann::json j = LoadJsonFile(jsonFile);
+		nlohmann::json j{};
+		auto highscores = pHighScoreList->GetHighScores();
+		for (auto h : highscores)
+		{
+			nlohmann::json score;
+			score["Name"] = h.name;
+			score["Score"] = h.score;
+			j.emplace_back(score);
+		}
+		SaveJsonFile(jsonFile, j);
 	}
 	catch (const std::exception&)
 	{
-
+		Log::Warning("There has been an issue while saving the highscore");
 	}
 }

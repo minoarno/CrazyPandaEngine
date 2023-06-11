@@ -31,6 +31,7 @@ namespace JsonHelper
 {
 	void LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject* pLevelObject);
 	nlohmann::json LoadJsonFile(const std::string& jsonFile);
+	void SaveJsonFile(const std::string& jsonFile, const nlohmann::json& json);
 	void LoadHighScore(const std::string& jsonFile, HighScoreComponent* pHighScoreList);
 	void SaveHighScore(const std::string& jsonFile, HighScoreComponent* pHighScoreList);
 };
