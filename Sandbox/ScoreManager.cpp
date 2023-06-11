@@ -25,7 +25,7 @@ void ScoreManager::SetHeightLevels(const std::vector<float>& heights)
 
 int ScoreManager::GetHeightMultiplier(float yLevel)
 {
-    for (int i = 0; i < m_Heights.size(); i++)
+    for (int i = 0; i < int(m_Heights.size()); i++)
     {
         if (yLevel < m_Heights[i])
         {

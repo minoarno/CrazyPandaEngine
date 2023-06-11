@@ -15,12 +15,14 @@
 #include "FireComponent.h"
 #include "PumpComponent.h"
 #include "Button.h"
+#include "Lives.h"
 
 using namespace dae;
 
 dae::GameObject* CreatePlayer(dae::Scene& scene, const glm::vec2& pos)
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
+	gameobject->AddComponent(new Lives(3));
 	auto pRigid = gameobject->AddComponent(new RigidBody());
 	pRigid->SetGravityScale(0);
 

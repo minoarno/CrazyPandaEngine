@@ -64,6 +64,10 @@ void Level1()
 	auto pScore = scene.Add(new dae::GameObject{});
 	pScore->AddComponent(new ScoreDisplay{});
 	pScore->SetPosition({ 10,450 });
+
+	auto pLives = scene.Add(new dae::GameObject{});
+	pLives->AddComponent(new LivesDisplay{ gameobject->GetComponent<Lives>() });
+	pLives->SetPosition({ 100,450 });
 }
 
 void Level2()

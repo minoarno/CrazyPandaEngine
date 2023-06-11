@@ -7,11 +7,11 @@ namespace dae
 	class TextComponent;
 }
 
-class PlayerComponent;
+class Lives;
 class LivesDisplay final : public dae::BaseComponent, public dae::EventObserver
 {
 public:
-	LivesDisplay(PlayerComponent* pPlayerComponent);
+	LivesDisplay(Lives* pLivesComponent);
 	LivesDisplay(const LivesDisplay&) = delete;
 	LivesDisplay& operator=(const LivesDisplay&) = delete;
 	LivesDisplay(LivesDisplay&&) = delete;
@@ -21,7 +21,7 @@ public:
 	void Initialize() override;
 	void OnNotify(dae::EventSubject* pEventSubject) override;
 private:
-	PlayerComponent* m_pPlayerComponent = nullptr;
+	Lives* m_pLivesComponent = nullptr;
 	dae::TextComponent* m_pTextComponent = nullptr;
 };
 

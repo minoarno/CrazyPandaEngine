@@ -72,7 +72,7 @@ void dae::SceneManager::LoadScene(int index)
 
 void dae::SceneManager::LoadScene(const std::string& name)
 {
-	for (int index = 0; index < m_Scenes.size(); index++)
+	for (int index = 0; index < int(m_Scenes.size()); index++)
 	{
 		if (m_Scenes[index].get()->GetSceneName() == name)
 		{

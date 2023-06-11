@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "PrefabFactoryClass.h"
 #include "TextureComponent.h"
+#include "Lives.h"
 
 DigDugComponent::DigDugComponent()
 {
@@ -58,6 +59,7 @@ void DigDugComponent::Respawn()
 
 	m_pGameObject->SetPosition(m_RespawnPosition);
 	m_pGameObject->GetComponent<RigidBody>()->ResetVelocity();
+	m_pGameObject->GetComponent<Lives>()->LoseLife();
 }
 
 void DigDugComponent::Initialize()
