@@ -204,5 +204,6 @@ void EnemyComponent::Fire()
 
 void EnemyComponent::AddScore()
 {
-	ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(100));
+	auto y = m_pGameObject->GetTransform()->GetWorldPosition().y;
+	ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(y) * 100);
 }

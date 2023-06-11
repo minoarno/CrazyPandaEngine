@@ -59,15 +59,16 @@ void FygarComponent::UpdateTexture()
 
 void FygarComponent::AddScore()
 {
+	auto y = m_pGameObject->GetTransform()->GetWorldPosition().y;
 	if (m_pPump != nullptr &&
 		(m_pPump->GetCharacterDirection() == DigDugComponent::CharacterDirection::Left ||
 		m_pPump->GetCharacterDirection() == DigDugComponent::CharacterDirection::Right))
 	{
-		ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(200));
+		ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(y) * 200);
 	}
 	else
 	{
-		ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(100));
+		ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(y) * 100);
 	}
 }
 

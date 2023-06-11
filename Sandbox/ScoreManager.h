@@ -19,7 +19,7 @@ public:
 	int GetHeightMultiplier(float yLevel);
 private:
 	friend class dae::Singleton<ScoreManager>;
-	int m_Score = 0;
+	int m_Score{ 0 };
 	std::vector<float> m_Heights;
 };
 

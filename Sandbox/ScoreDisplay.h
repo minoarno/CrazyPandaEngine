@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseComponent.h"
-#include "PlayerComponent.h"
 #include "EventObserver.h"
 
 namespace dae
@@ -11,7 +10,7 @@ namespace dae
 class ScoreDisplay final: public dae::BaseComponent, public dae::EventObserver
 {
 public:
-	ScoreDisplay(PlayerComponent* pPlayerComponent);
+	ScoreDisplay();
 	ScoreDisplay(const ScoreDisplay&) = delete;
 	ScoreDisplay& operator=(const ScoreDisplay&) = delete;
 	ScoreDisplay(ScoreDisplay&&) = delete;
@@ -21,7 +20,6 @@ public:
 	void Initialize() override;
 	void OnNotify(dae::EventSubject* pEventSubject) override;
 private:
-	PlayerComponent* m_pPlayerComponent = nullptr;
 	dae::TextComponent* m_pTextComponent = nullptr;
 };
 

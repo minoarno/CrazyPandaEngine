@@ -34,6 +34,7 @@ void DigDugComponent::PumpAttack()
 void DigDugComponent::SetDirection(CharacterDirection direction)
 {
 	m_Direction = direction;
+	UpdateTexture();
 }
 
 void DigDugComponent::SetState(CharacterState state)

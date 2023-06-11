@@ -8,6 +8,8 @@
 #include "PrefabFactoryClass.h"
 #include "HighScoreComponent.h"
 
+#include "ScoreManager.h"
+
 void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject* pLevelObject)
 {
 	try
@@ -47,7 +49,6 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 		}
 
 		auto enemies = j.at("Enemies");
-
 		if (enemies.is_array()) {
 			for (const auto& object : enemies) {
 				int enemyType = object["Type"].get<int>();
@@ -69,10 +70,13 @@ void JsonHelper::LoadSceneUsingJson(const std::string& jsonFile, dae::GameObject
 				}
 			}
 		}
+
+		auto heights = j.at("Heights").get<std::vector<float>>();
+		ScoreManager::GetInstance().SetHeightLevels(heights);
 	}
 	catch (const std::exception&)
 	{
-		Log::Warning("There has been an issue while loading in the level");
+		Log::Warning("There has been an issue while loading in the level.");
 	}
 }
 
@@ -115,7 +119,7 @@ void JsonHelper::LoadHighScore(const std::string& jsonFile, HighScoreComponent* 
 	}
 	catch (const std::exception&)
 	{
-		Log::Warning("There has been an issue while loading the highscore");
+		Log::Warning("There has been an issue while loading the highscore.");
 	}
 }
 
@@ -136,6 +140,6 @@ void JsonHelper::SaveHighScore(const std::string& jsonFile, HighScoreComponent* 
 	}
 	catch (const std::exception&)
 	{
-		Log::Warning("There has been an issue while saving the highscore");
+		Log::Warning("There has been an issue while saving the highscore.");
 	}
 }

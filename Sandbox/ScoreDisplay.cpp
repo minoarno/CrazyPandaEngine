@@ -5,15 +5,14 @@
 #include "ResourceManager.h"
 #include "ScoreManager.h"
 
-ScoreDisplay::ScoreDisplay(PlayerComponent* pPlayerComponent)
+ScoreDisplay::ScoreDisplay()
 	: BaseComponent{}
-	, m_pPlayerComponent{pPlayerComponent}
 {
 }
 
 void ScoreDisplay::Initialize()
 {
-	dae::TextComponent* pText = new dae::TextComponent{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) };
+	dae::TextComponent* pText = new dae::TextComponent{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20) };
 	m_pGameObject->AddComponent(pText);
 	m_pTextComponent = pText;
 	ScoreManager::GetInstance().AddObserver(this);
@@ -22,7 +21,7 @@ void ScoreDisplay::Initialize()
 
 void ScoreDisplay::OnNotify(dae::EventSubject* pEventSubject)
 {
-	ScoreManager* score = reinterpret_cast<ScoreManager*>(pEventSubject);
+	ScoreManager* score = dynamic_cast<ScoreManager*>(pEventSubject);
 	std::string temp = "Score: " + std::to_string(score->GetScore());
 	m_pTextComponent->SetText(temp);
 }

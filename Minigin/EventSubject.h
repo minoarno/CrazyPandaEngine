@@ -10,7 +10,7 @@ namespace dae
 	{
 	public:
 		EventSubject() = default;
-		~EventSubject() = default;
+		virtual ~EventSubject() = default;
 
 		EventSubject(const EventSubject& other) = delete;
 		EventSubject& operator=(const EventSubject& other) = delete;
@@ -20,7 +20,7 @@ namespace dae
 		void AddObserver(EventObserver* observer);
 		void RemoveObserver(EventObserver* observer);
 	protected:
-		void Notify(EventSubject* pBaseComponent);
+		virtual void Notify(EventSubject* pBaseComponent);
 
 	private:
 		std::vector<EventObserver*> m_pObservers{};
