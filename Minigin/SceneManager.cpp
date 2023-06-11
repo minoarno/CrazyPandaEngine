@@ -93,6 +93,7 @@ dae::Scene& dae::SceneManager::GetActiveScene() const
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
+	scene->SetIndex(int(m_Scenes.size()));
 	m_Scenes.push_back(scene);
 	return *scene;
 }

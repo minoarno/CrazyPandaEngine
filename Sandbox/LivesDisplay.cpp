@@ -23,7 +23,7 @@ void LivesDisplay::Initialize()
 
 void LivesDisplay::OnNotify(dae::EventSubject* pEventSubject)
 {
-	Lives* lives = dynamic_cast<Lives*>(pEventSubject);
-	std::string temp = "Lives: " + std::to_string(lives->GetLives());
+	Lives* pLives = dynamic_cast<Lives*>(pEventSubject);
+	std::string temp = "Lives: " + std::to_string(pLives->GetLives());
 	m_pTextComponent->SetText(temp);
 }

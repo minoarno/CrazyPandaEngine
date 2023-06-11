@@ -33,5 +33,5 @@ void Button::Click(const glm::vec2& mousePos)
 
 void Button::Initialize()
 {
-	InputManager::GetInstance().AddUIButton(this);
+	InputManager::GetInstance().AddUIButton(m_pGameObject->GetScene()->GetIndex(), this);
 }

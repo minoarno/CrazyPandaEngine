@@ -29,17 +29,17 @@ public:
 	~InputManager();
 
 	bool ProcessInput() const;
-	bool IsPressed(ControllerButton button, DWORD playerID) const;
+	bool IsPressed(int index ,ControllerButton button, DWORD playerID) const;
 
-	void AddOnPressDown(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
-	void AddOnHold(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
-	void AddOnRelease(ControllerButton controllerButton, Command* command, DWORD playerID = 0);
+	void AddOnPressDown(int index, ControllerButton controllerButton, Command* command, DWORD playerID = 0);
+	void AddOnHold(int index, ControllerButton controllerButton, Command* command, DWORD playerID = 0);
+	void AddOnRelease(int index, ControllerButton controllerButton, Command* command, DWORD playerID = 0);
 	
-	void AddOnPressDown(SDL_Keycode keyButton, Command* command);
-	void AddOnHold(SDL_Keycode keyButton, Command* command);
-	void AddOnRelease(SDL_Keycode keyButton, Command* command);
+	void AddOnPressDown(int index, SDL_Keycode keyButton, Command* command);
+	void AddOnHold(int index, SDL_Keycode keyButton, Command* command);
+	void AddOnRelease(int index, SDL_Keycode keyButton, Command* command);
 
-	void AddUIButton(Button* pButton);
+	void AddUIButton(int index, Button* pButton);
 
 	void CleanUp();
 private:

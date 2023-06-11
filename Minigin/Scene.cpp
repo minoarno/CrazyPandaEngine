@@ -130,10 +130,12 @@ void dae::Scene::RenderDebug()
 
 void dae::Scene::OnSceneDetach()
 {
+	if (m_OnSceneDetach != nullptr) m_OnSceneDetach();
 }
 
 void dae::Scene::OnSceneAttach()
 {
+	if (m_OnSceneDetach != nullptr) m_OnSceneAttach();
 }
 
 dae::Scene::~Scene()

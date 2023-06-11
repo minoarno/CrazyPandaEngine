@@ -72,6 +72,9 @@
     <ClCompile Include="RockComponent.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="GameStateManager.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SandboxCommands.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="RockComponent.h">
       <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateManager.h">
+      <Filter>Observers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
