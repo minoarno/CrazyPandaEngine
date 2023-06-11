@@ -17,6 +17,8 @@ public:
 	Rectf GetHitbox()const;
 	void Click(const glm::vec2& mousePos);
 
+protected:
+	void Initialize() override;
 private:
 	Command* m_pCommand;
 

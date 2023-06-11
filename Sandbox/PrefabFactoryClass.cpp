@@ -14,6 +14,7 @@
 #include "RockComponent.h"
 #include "FireComponent.h"
 #include "PumpComponent.h"
+#include "Button.h"
 
 using namespace dae;
 
@@ -144,5 +145,18 @@ dae::GameObject* CreateFire(dae::Scene& scene, const glm::vec2& pos, const glm::
 
 	gameobject->SetPosition(pos);
 	gameobject->SetTag("Fire");
+	return gameobject;
+}
+
+dae::GameObject* CreateButton(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims, const std::string& texture, Command* pCommand)
+{
+	auto gameobject = scene.Add(new dae::GameObject{});
+
+	auto pTexture = gameobject->AddComponent(new TextureComponent{ texture });
+	pTexture->SetDestinationRectDimensions({ dims.x, dims.y });
+	
+	gameobject->AddComponent(new Button{ dims,pCommand });
+	
+	gameobject->SetPosition(pos);
 	return gameobject;
 }

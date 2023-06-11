@@ -5,6 +5,8 @@
 #include "Command.h"
 #include <map>
 #include <algorithm>
+#include "SceneManager.h"
+#include "Button.h"
 
 struct InputStruct
 {
@@ -62,10 +64,14 @@ public:
 	void AddOnHold(SDL_Keycode keyButton, Command* command);
 	void AddOnRelease(SDL_Keycode keyButton, Command* command);
 
+	void AddUIButton(Button* pButton);
+
 	void CleanUp();
 private:
 	std::map<PlayerButton, InputStruct*> m_ControllerCommands = std::map<PlayerButton, InputStruct*>();
 	std::map<SDL_Keycode, InputStruct*> m_KeyboardCommands = std::map<SDL_Keycode, InputStruct*>();
+
+	std::vector<Button*> m_pButtons{};
 
 	bool m_DidInputGet = false;
 };
@@ -140,6 +146,17 @@ bool InputManager::XInputManager::ProcessInput()
 				if (command->pOnRelease != nullptr)
 				{
 					command->pOnRelease->Execute();
+				}
+			}
+		}
+		if (e.type == SDL_MOUSEBUTTONDOWN)
+		{
+			auto& activeScene = dae::SceneManager::GetInstance().GetActiveScene();
+			for (size_t i = 0; i < m_pButtons.size(); i++)
+			{
+				if (m_pButtons[i]->GetGameObject()->GetScene()->GetSceneName() == activeScene.GetSceneName())
+				{
+					m_pButtons[i]->Click(glm::vec2{ e.motion.x,e.motion.y });
 				}
 			}
 		}
@@ -270,6 +287,11 @@ void InputManager::XInputManager::AddOnRelease(SDL_Keycode button, Command* comm
 	}
 }
 
+void InputManager::XInputManager::AddUIButton(Button* pButton)
+{
+	m_pButtons.emplace_back(pButton);
+}
+
 void InputManager::XInputManager::CleanUp()
 {
 	for (auto& p : m_ControllerCommands)
@@ -332,6 +354,11 @@ void InputManager::AddOnHold(SDL_Keycode keyButton, Command* command)
 void InputManager::AddOnRelease(SDL_Keycode keyButton, Command* command)
 {
 	pimpl->AddOnRelease(keyButton, command);
+}
+
+void InputManager::AddUIButton(Button* pButton)
+{
+	pimpl->AddUIButton(pButton);
 }
 
 void InputManager::CleanUp()

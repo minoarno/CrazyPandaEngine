@@ -2,6 +2,7 @@
 #include "Button.h"
 
 #include "Command.h"
+#include "InputManager.h"
 
 Button::Button(const glm::vec2& dimensions, Command* pCommand)
 	: BaseComponent{ }
@@ -28,4 +29,9 @@ void Button::Click(const glm::vec2& mousePos)
 	{
 		m_pCommand->Execute();
 	}
+}
+
+void Button::Initialize()
+{
+	InputManager::GetInstance().AddUIButton(this);
 }

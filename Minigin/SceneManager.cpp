@@ -70,6 +70,26 @@ void dae::SceneManager::LoadScene(int index)
 	}
 }
 
+void dae::SceneManager::LoadScene(const std::string& name)
+{
+	for (int index = 0; index < m_Scenes.size(); index++)
+	{
+		if (m_Scenes[index].get()->GetSceneName() == name)
+		{
+			m_Scenes[m_ActiveScene]->OnSceneDetach();
+			m_ActiveScene = index;
+			m_Scenes[m_ActiveScene]->OnSceneAttach();
+			return;
+		}
+	}
+	Log::CoreWarning("The scene with name \"" + name + "\" has not been found. Old scene remains.");
+}
+
+dae::Scene& dae::SceneManager::GetActiveScene() const
+{
+	return *m_Scenes[m_ActiveScene];
+}
+
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));

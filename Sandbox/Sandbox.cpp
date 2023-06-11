@@ -30,27 +30,56 @@
 #include "JsonHelper.h"
 #include "PrefabFactoryClass.h"
 
-void load()
+void MainMenu()
+{
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("MainMenu");
+	CreateButton(scene, {200,100}, { 200,60 }, "UISingle.png", new LoadSceneCommand{ "Level1" });
+}
+
+void Level1()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level1");
 
 	auto pLevel = scene.Add(new dae::GameObject{});
 	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
 
-	auto gameobject = CreatePlayer(scene, {300,70});
+	auto gameobject = CreatePlayer(scene, { 300,70 });
 	float speed{ 1000.f };
 	InputManager::GetInstance().AddOnHold(SDLK_q, new DigDugMoveCommand{ gameobject,glm::fvec3{-speed,0,0}, DigDugComponent::CharacterDirection::Left });
 	InputManager::GetInstance().AddOnHold(SDLK_d, new DigDugMoveCommand{ gameobject,glm::fvec3{speed,0,0}, DigDugComponent::CharacterDirection::Right });
 	InputManager::GetInstance().AddOnHold(SDLK_s, new DigDugMoveCommand{ gameobject,glm::fvec3{0,speed,0}, DigDugComponent::CharacterDirection::Down });
 	InputManager::GetInstance().AddOnHold(SDLK_z, new DigDugMoveCommand{ gameobject,glm::fvec3{0,-speed,0}, DigDugComponent::CharacterDirection::Up });
-	InputManager::GetInstance().AddOnHold(ControllerButton::DPadLeft, new DigDugMoveCommand{ gameobject,glm::fvec3{-speed,0,0}, DigDugComponent::CharacterDirection::Left },0);
-	InputManager::GetInstance().AddOnHold(ControllerButton::DPadRight, new DigDugMoveCommand{ gameobject,glm::fvec3{speed,0,0}, DigDugComponent::CharacterDirection::Right },0);
-	InputManager::GetInstance().AddOnHold(ControllerButton::DPadDown, new DigDugMoveCommand{ gameobject,glm::fvec3{0,speed,0}, DigDugComponent::CharacterDirection::Down },0);
-	InputManager::GetInstance().AddOnHold(ControllerButton::DPadUp, new DigDugMoveCommand{ gameobject,glm::fvec3{0,-speed,0}, DigDugComponent::CharacterDirection::Up },0);
-	
+	InputManager::GetInstance().AddOnHold(ControllerButton::DPadLeft, new DigDugMoveCommand{ gameobject,glm::fvec3{-speed,0,0}, DigDugComponent::CharacterDirection::Left }, 0);
+	InputManager::GetInstance().AddOnHold(ControllerButton::DPadRight, new DigDugMoveCommand{ gameobject,glm::fvec3{speed,0,0}, DigDugComponent::CharacterDirection::Right }, 0);
+	InputManager::GetInstance().AddOnHold(ControllerButton::DPadDown, new DigDugMoveCommand{ gameobject,glm::fvec3{0,speed,0}, DigDugComponent::CharacterDirection::Down }, 0);
+	InputManager::GetInstance().AddOnHold(ControllerButton::DPadUp, new DigDugMoveCommand{ gameobject,glm::fvec3{0,-speed,0}, DigDugComponent::CharacterDirection::Up }, 0);
+
 	DigDugComponent* pDigDug = gameobject->GetComponent<DigDugComponent>();
 	InputManager::GetInstance().AddOnPressDown(SDLK_e, new DigDugPumpCommand{ pDigDug });
-	InputManager::GetInstance().AddOnPressDown(ControllerButton::ButtonA, new DigDugPumpCommand{ pDigDug },0);
+	InputManager::GetInstance().AddOnPressDown(ControllerButton::ButtonA, new DigDugPumpCommand{ pDigDug }, 0);
+}
+
+void Level2()
+{
+
+}
+
+void Level3()
+{
+
+}
+
+void HighScore()
+{
+
+}
+
+void load()
+{
+	MainMenu();
+	Level1();
+	Level2();
+	Level3();
 }
 
 void Demo()

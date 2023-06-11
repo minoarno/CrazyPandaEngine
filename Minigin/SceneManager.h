@@ -23,6 +23,9 @@ namespace dae
 
 		void NextScene();
 		void LoadScene(int index);
+		void LoadScene(const std::string& name);
+
+		Scene& GetActiveScene()const;
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;

@@ -34,6 +34,7 @@ namespace dae
 
 		b2World* GetWorld();
 		bool RayCast(RayCastCallback& hit, const glm::vec2& pos, const glm::vec2& dir);
+		std::string GetSceneName()const { return m_Name; };
 	private: 
 		explicit Scene(const std::string& name);
 

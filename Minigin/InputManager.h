@@ -20,6 +20,7 @@ enum class ControllerButton
 	ButtonY = 0x8000
 };
 
+class Button;
 class Command;
 class InputManager final : public dae::Singleton<InputManager>
 {
@@ -37,6 +38,8 @@ public:
 	void AddOnPressDown(SDL_Keycode keyButton, Command* command);
 	void AddOnHold(SDL_Keycode keyButton, Command* command);
 	void AddOnRelease(SDL_Keycode keyButton, Command* command);
+
+	void AddUIButton(Button* pButton);
 
 	void CleanUp();
 private:

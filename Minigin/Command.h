@@ -2,6 +2,8 @@
 #include <iostream>
 #include "GameObject.h"
 #include "EngineTime.h"
+#include "Scene.h"
+#include "SceneManager.h"
 
 class Command
 {
@@ -51,3 +53,30 @@ private:
 	dae::GameObject* m_pGameObject;
 };
 
+class LoadSceneCommand final : public Command
+{
+public:
+	LoadSceneCommand(const std::string& nextSceneName)
+		: m_NextSceneName{ nextSceneName }
+	{
+	}
+	LoadSceneCommand(const LoadSceneCommand&) = delete;
+	LoadSceneCommand& operator=(const LoadSceneCommand&) = delete;
+	LoadSceneCommand(LoadSceneCommand&&) = delete;
+	LoadSceneCommand& operator=(LoadSceneCommand&&) = delete;
+	~LoadSceneCommand() override = default;
+
+	virtual void Execute()
+	{
+		m_PrevSceneName = dae::SceneManager::GetInstance().GetActiveScene().GetSceneName();
+		dae::SceneManager::GetInstance().LoadScene(m_NextSceneName);
+	}
+
+	virtual void Undo()
+	{
+		dae::SceneManager::GetInstance().LoadScene(m_PrevSceneName);
+	}
+private:
+	std::string m_NextSceneName{};
+	std::string m_PrevSceneName{};
+};
