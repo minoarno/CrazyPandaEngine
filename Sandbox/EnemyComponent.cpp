@@ -7,6 +7,7 @@
 #include "BoxCollider.h"
 
 #include "ScoreManager.h"
+#include "GameStateManager.h"
 
 EnemyComponent::EnemyComponent()
 	: BaseComponent{ }
@@ -60,6 +61,12 @@ void EnemyComponent::Initialize()
 
 void EnemyComponent::Update()
 {
+	if (m_HasToBeAddedToList)
+	{
+		GameStateManager::GetInstance().OnEnemySpawn();
+		m_HasToBeAddedToList = false;
+	}
+
 	switch (m_State)
 	{
 	case EnemyState::Walk:
@@ -107,6 +114,7 @@ void EnemyComponent::UpdateTexture()
 		if (m_CurrentAnimationIndex == m_DeadAnimations)
 		{
 			AddScore();
+			GameStateManager::GetInstance().OnEnemyDead();
 			m_pGameObject->GetScene()->Remove(m_pGameObject);
 			return;
 		}
@@ -117,6 +125,7 @@ void EnemyComponent::UpdateTexture()
 		if (m_CurrentAnimationIndex == m_BloathAnimations)
 		{
 			AddScore();
+			GameStateManager::GetInstance().OnEnemyDead();
 			m_pGameObject->GetScene()->Remove(m_pGameObject);
 			return;
 		}

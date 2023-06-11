@@ -47,6 +47,8 @@ protected:
 	glm::vec2 m_PreviousPosition;
 	float m_Speed{ 100.f };
 
+	bool m_HasToBeAddedToList{ true };
+
 	bool m_LooksRight{ true };
 	int m_WalkAnimations{2};
 	int m_GhosstAnimations{2};

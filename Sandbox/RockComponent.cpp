@@ -1,7 +1,6 @@
 #include "MiniginPCH.h"
 #include "RockComponent.h"
 
-#include "PookaComponent.h"
 #include "FygarComponent.h"
 #include "DigDugComponent.h"
 
@@ -24,7 +23,7 @@ void RockComponent::Initialize()
 					m_AmountOfEnemiesCrushed++;
 
 					//Kill enemy
-					EnemyComponent* pEnemy = gameObject->GetComponent<PookaComponent>();
+					EnemyComponent* pEnemy = gameObject->GetComponent<EnemyComponent>();
 					pEnemy->SetEnemyState(EnemyComponent::EnemyState::Crushed);
 				}
 				if (gameObject->GetTag() == "Fygar")

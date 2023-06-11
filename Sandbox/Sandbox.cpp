@@ -28,6 +28,7 @@
 #include "PrefabFactoryClass.h"
 
 #include "ScoreManager.h"
+#include "GameStateManager.h"
 
 enum class Mode
 {
@@ -107,6 +108,11 @@ void AddLevel(const std::string& scenename, const std::string& levelFilename, co
 	default:
 		break;
 	}
+
+	scene.SetOnAttach([&]()
+		{
+			GameStateManager::GetInstance().ResetEnemies();
+		});
 }
 
 /*
@@ -146,7 +152,7 @@ void Level1()
 void HighScore()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("HighScore");
-	CreateButton(scene, { 200,100 }, { 200,60 }, "UISingle.png", new LoadSceneCommand{ "MainMenu" });
+	CreateButton(scene, { 200,300 }, { 200,60 }, "MainMenu.png", new LoadSceneCommand{ "MainMenu" });
 
 	InputManager::GetInstance().AddOnHold(scene.GetIndex(),SDLK_F1, new LoadSceneCommand{ "MainMenu" });
 }

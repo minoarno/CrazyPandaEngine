@@ -14,6 +14,7 @@ public:
 	GameStateManager& operator=(GameStateManager&&) = delete;
 	~GameStateManager() = default;
 
+	void ResetEnemies();
 	void OnEnemySpawn();
 	void OnEnemyDead(); 
 

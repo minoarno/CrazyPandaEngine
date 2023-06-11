@@ -1,7 +1,6 @@
 #include "MiniginPCH.h"
 #include "PumpComponent.h"
 #include "EnemyComponent.h"
-#include "PookaComponent.h"
 #include "FygarComponent.h"
 #include "EngineTime.h"
 #include "Scene.h"
@@ -43,7 +42,7 @@ void PumpComponent::Initialize()
 
 				if (gameObject->GetTag() == "Pooka")
 				{
-					AttachToEnemy(gameObject->GetComponent<PookaComponent>());
+					AttachToEnemy(gameObject->GetComponent<EnemyComponent>());
 				}
 				else if (gameObject->GetTag() == "Fygar")
 				{

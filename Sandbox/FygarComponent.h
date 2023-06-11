@@ -14,7 +14,6 @@ public:
 
 	void SetPump(PumpComponent* pPump) { m_pPump = pPump; };
 protected:
-	void Initialize() override;
 	void UpdateTexture() override;
 
 	void AddScore() override;

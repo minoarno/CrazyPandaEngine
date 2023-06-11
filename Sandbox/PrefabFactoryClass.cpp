@@ -8,7 +8,6 @@
 #include "BoxCollider.h"
 
 #include "EnemyComponent.h"
-#include "PookaComponent.h"
 #include "FygarComponent.h"
 #include "DigDugComponent.h"
 #include "RockComponent.h"
@@ -52,7 +51,7 @@ dae::GameObject* CreatePooka(dae::Scene& scene, const glm::vec2& pos)
 	pTexture->SetSourceRect({ 0,0,16,16 });
 
 	gameobject->AddComponent(new BoxCollider({dims.x, dims.y}, {dims.x / 2, dims.y / 2}));
-	gameobject->AddComponent(new PookaComponent{});
+	gameobject->AddComponent(new EnemyComponent{});
 
 	gameobject->SetPosition(pos);
 	gameobject->SetTag("Pooka");

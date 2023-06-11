@@ -2,6 +2,11 @@
 #include "GameStateManager.h"
 #include "SceneManager.h"
 
+void GameStateManager::ResetEnemies()
+{
+	m_AmountOfEnemies = 0;
+}
+
 void GameStateManager::OnEnemySpawn()
 {
 	m_AmountOfEnemies++;

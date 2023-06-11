@@ -54,9 +54,6 @@
     <ClCompile Include="DigDugComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="PookaComponent.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="FygarComponent.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
@@ -109,9 +106,6 @@
     </ClInclude>
     <ClInclude Include="DigDugComponent.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PookaComponent.h">
-      <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="FygarComponent.h">
       <Filter>Enemies</Filter>

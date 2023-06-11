@@ -161,7 +161,7 @@ bool InputManager::XInputManager::ProcessInput()
 		{
 			if (m_pButtons.contains(sceneIndex))
 			{
-				for (size_t i = 0; i < m_pButtons.size(); i++)
+				for (size_t i = 0; i < m_pButtons[sceneIndex].size(); i++)
 				{
 					m_pButtons[sceneIndex][i]->Click(glm::vec2{ e.motion.x,e.motion.y });
 				}
