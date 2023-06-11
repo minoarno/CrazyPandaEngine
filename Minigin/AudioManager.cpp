@@ -84,7 +84,7 @@ void Audio::MixerAudio::PlaySound(int soundID)
 {
 	if (soundID >= int(m_pSoundEffects.size()))
 	{
-		std::cout << "Sound out of range.\n";
+		Log::CoreWarning("Sound out of range.");
 		return;
 	}
 	std::thread tempThread{ [=]()
@@ -98,7 +98,7 @@ void Audio::MixerAudio::StopSound(int soundID)
 {
 	if (soundID >= int(m_pSoundEffects.size()))
 	{
-		std::cout << "Sound out of range.\n";
+		Log::CoreWarning("Sound out of range.");
 		return;
 	}
 
@@ -111,7 +111,7 @@ void Audio::MixerAudio::StopSound(int soundID)
 		}
 	}
 
-	std::cout << "The sound is currently not being played.\n";
+	Log::CoreWarning("The sound is currently not being played.");
 }
 
 void Audio::MixerAudio::StopAllSounds()
@@ -127,6 +127,7 @@ int Audio::MixerAudio::AddSound(const std::string& file)
 	{
 		m_pSoundEffects.push_back(tmpChunk);
 		std::cout << (m_pSoundEffects.size() - 1) << " Sound is Ready, path: " << file << '\n';
+		Log::CoreInfo(std::to_string(m_pSoundEffects.size() - 1) + " Sound is Ready, path: " + file);
 	}
 	else
 	{
