@@ -126,7 +126,6 @@ int Audio::MixerAudio::AddSound(const std::string& file)
 	if (tmpChunk != nullptr)
 	{
 		m_pSoundEffects.push_back(tmpChunk);
-		std::cout << (m_pSoundEffects.size() - 1) << " Sound is Ready, path: " << file << '\n';
 		Log::CoreInfo(std::to_string(m_pSoundEffects.size() - 1) + " Sound is Ready, path: " + file);
 	}
 	else
