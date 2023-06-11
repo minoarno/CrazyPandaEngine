@@ -16,32 +16,10 @@ void EnemyComponent::SetEnemyState(EnemyState newState)
 	if (m_State == newState) return;
 
 	m_CurrentAnimationIndex = 0;
-	switch (newState)
-	{
-	case EnemyState::Walk:
-	default:
-		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
-		m_pTexture->SetSourceRect({ 0.f,0.f,16.f,16.f });
-		break;
-	case EnemyState::Ghost:
-		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
-		m_pTexture->SetSourceRect({ 96.f,0.f,16.f,16.f });
-		break;
-	case EnemyState::Fire:
-		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
-		m_pTexture->SetSourceRect({ 48.f,0.f,16.f,16.f });
-		break;
-	case EnemyState::Crushed:
-		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
-		m_pTexture->SetSourceRect({ 32.f,0.f,16.f,16.f });
-		break;
-	case EnemyState::Bloated:
-		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 32.f });
-		m_pTexture->SetSourceRect({ 0.f,16.f,32.f,32.f });
-		break;
-	}
 
 	m_State = newState;
+
+	UpdateTexture();
 }
 
 void EnemyComponent::Initialize()
@@ -59,6 +37,7 @@ void EnemyComponent::Initialize()
 	m_Direction = { 0,-1 };
 
 	m_pTexture = m_pGameObject->GetComponent<dae::TextureComponent>();
+	m_pRigidBody = m_pGameObject->GetComponent<RigidBody>();
 }
 
 void EnemyComponent::Update()
@@ -82,6 +61,50 @@ void EnemyComponent::Update()
 		Fire();
 		break;
 	}
+
+	if (m_LastAnimationTime + m_AnimationDuration > Time::GetInstance().GetTotalSeconds()) return;
+
+	m_LastAnimationTime = static_cast<float>(Time::GetInstance().GetTotalSeconds());
+	m_CurrentAnimationIndex++;
+	UpdateTexture();
+}
+
+void EnemyComponent::UpdateTexture()
+{
+	switch (m_State)
+	{
+	case EnemyState::Walk:
+	default:
+		m_CurrentAnimationIndex %= m_WalkAnimations;
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
+		m_pTexture->SetSourceRect({ m_CurrentAnimationIndex * 16.f,0.f,16.f,16.f });
+		break;
+	case EnemyState::Ghost:
+		m_CurrentAnimationIndex %= m_GhosstAnimations;
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
+		m_pTexture->SetSourceRect({ 48.f + m_CurrentAnimationIndex * 16.f,0.f,16.f,16.f });
+		break;
+	case EnemyState::Crushed:
+		if (m_CurrentAnimationIndex == m_DeadAnimations)
+		{
+			m_pGameObject->GetScene()->Remove(m_pGameObject);
+			return;
+		}
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 16.f });
+		m_pTexture->SetSourceRect({ 32.f + m_CurrentAnimationIndex * 16.f,0.f,16.f,16.f });
+		break;
+	case EnemyState::Bloated:
+		if (m_CurrentAnimationIndex == m_BloathAnimations)
+		{
+			m_pGameObject->GetScene()->Remove(m_pGameObject);
+			return;
+		}
+		m_pTexture->SetDestinationRectDimensions(glm::vec2{ 32.f });
+		m_pTexture->SetSourceRect({ m_CurrentAnimationIndex * 26.f,16.f,26.f,26.f });
+		break;
+	}
+
+
 }
 
 void EnemyComponent::Walk()
@@ -121,18 +144,17 @@ void EnemyComponent::Walk()
 		m_Direction = possibleNewDirections[std::rand() % int(possibleNewDirections.size())];
 		if (m_Direction.x > 0.01f)
 		{
-			m_pTexture->SetIsFlipped(true);
+			m_pTexture->SetIsFlipped(false);
 		}
 		else if (m_Direction.x < -0.01f)
 		{
-			m_pTexture->SetIsFlipped(false);
+			m_pTexture->SetIsFlipped(true);
 		}
 	}
 
 	float elapsed = static_cast<float>(Time::GetInstance().GetElapsedSeconds());
-	RigidBody* rigidBody = m_pGameObject->GetComponent<RigidBody>();
-	auto v = rigidBody->GetBody()->GetLinearVelocity();
-	rigidBody->Move(m_Direction.x * m_Speed * elapsed, m_Direction.y * m_Speed * elapsed);
+	auto v = m_pRigidBody->GetBody()->GetLinearVelocity();
+	m_pRigidBody->Move(m_Direction.x * m_Speed * elapsed, m_Direction.y * m_Speed * elapsed);
 }
 
 void EnemyComponent::Ghost()
@@ -141,7 +163,7 @@ void EnemyComponent::Ghost()
 
 void EnemyComponent::Bloated()
 {
-	Log::Info("Bloated");
+	m_pRigidBody->GetBody()->SetLinearVelocity({ 0,0 });
 }
 
 void EnemyComponent::Crushed()

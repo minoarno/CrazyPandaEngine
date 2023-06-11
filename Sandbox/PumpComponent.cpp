@@ -49,13 +49,9 @@ void PumpComponent::Initialize()
 
 void PumpComponent::Update()
 {
-	if (m_pEnemy != nullptr)
+	float totalTime = static_cast<float>(Time::GetInstance().GetTotalSeconds());
+	if (m_StartPump + m_PumpTotal < totalTime)
 	{
-		float totalTime = static_cast<float>(Time::GetInstance().GetTotalSeconds());
-		if (m_StartPump + m_PumpTotal < totalTime)
-		{
-			//m_pGameObject->GetScene()->Remove(m_pEnemy->GetGameObject());
-			//m_pEnemy = nullptr;
-		}
+		m_pGameObject->GetScene()->Remove(m_pGameObject);
 	}
 }

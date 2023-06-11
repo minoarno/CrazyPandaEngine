@@ -21,7 +21,7 @@ private:
 	float m_LastPumpIncrement{};
 	float m_StartPump{};
 	float m_PumpIncrementDuration{.25f};
-	float m_PumpTotal{1.f};
+	float m_PumpTotal{2.f};
 
 	EnemyComponent* m_pEnemy{ nullptr };
 };

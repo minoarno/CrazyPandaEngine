@@ -82,7 +82,15 @@ void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
 	SDL_QueryTexture(pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-	SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, &dst);
+	if (pTextureComponent->GetIsFlipped())
+	{
+		SDL_Point center{ int(x + dst.w * .5f), int(y + dst.h * .5f) };
+		SDL_RenderCopyEx(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, &dst, 0, &center, SDL_FLIP_HORIZONTAL);
+	}
+	else
+	{
+		SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, &dst);
+	}
 }
 
 void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent, float x, float y, float width, float height) const
@@ -92,7 +100,16 @@ void dae::Renderer::RenderTexture(const dae::TextureComponent* pTextureComponent
 	dst.y = static_cast<int>(y);
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
-	SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, &dst);
+
+	if (pTextureComponent->GetIsFlipped())
+	{
+		SDL_Point center{ int(x + dst.w * .5f), int(y + dst.h * .5f) };
+		SDL_RenderCopyEx(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, &dst, 0, &center, SDL_FLIP_HORIZONTAL);
+	}
+	else
+	{
+		SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), nullptr, &dst);
+	}
 }
 
 void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, int x, int y) const
@@ -102,7 +119,15 @@ void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, con
 
 void dae::Renderer::RenderTexture(const TextureComponent* pTextureComponent, const SDL_Rect& srcRect, const SDL_Rect& dstRect) const
 {
-	SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), &srcRect, &dstRect);
+	if (pTextureComponent->GetIsFlipped())
+	{
+		SDL_Point center{ int(dstRect.x + dstRect.w * .5f), int(dstRect.y + dstRect.h * .5f) };
+		SDL_RenderCopyEx(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), &srcRect, &dstRect, 0, &center, SDL_FLIP_HORIZONTAL);
+	}
+	else
+	{
+		SDL_RenderCopy(GetSDLRenderer(), pTextureComponent->GetTexture()->GetSDLTexture(), &srcRect, &dstRect);
+	}
 }
 
 void dae::Renderer::DrawRectangle(const SDL_Rect& rect, const Colorf& color)
