@@ -34,6 +34,8 @@ void MainMenu()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("MainMenu");
 	CreateButton(scene, {200,100}, { 200,60 }, "UISingle.png", new LoadSceneCommand{ "Level1" });
+	CreateButton(scene, {200,200}, { 200,60 }, "UICoop.png", new LoadSceneCommand{ "MultiplayerLevel1" });
+	CreateButton(scene, {200,300}, { 200,60 }, "UIVersus.png", new LoadSceneCommand{ "VersusLevel1" });
 }
 
 void Level1()
@@ -45,6 +47,8 @@ void Level1()
 
 	auto gameobject = CreatePlayer(scene, { 300,70 });
 	float speed{ 1000.f };
+	InputManager::GetInstance().AddOnHold(SDLK_F1, new LoadSceneCommand{ "Level2" });
+	
 	InputManager::GetInstance().AddOnHold(SDLK_q, new DigDugMoveCommand{ gameobject,glm::fvec3{-speed,0,0}, DigDugComponent::CharacterDirection::Left });
 	InputManager::GetInstance().AddOnHold(SDLK_d, new DigDugMoveCommand{ gameobject,glm::fvec3{speed,0,0}, DigDugComponent::CharacterDirection::Right });
 	InputManager::GetInstance().AddOnHold(SDLK_s, new DigDugMoveCommand{ gameobject,glm::fvec3{0,speed,0}, DigDugComponent::CharacterDirection::Down });
@@ -61,12 +65,62 @@ void Level1()
 
 void Level2()
 {
-
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level1");
+	auto pLevel = scene.Add(new dae::GameObject{});
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
 }
 
 void Level3()
 {
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level1");
+	auto pLevel = scene.Add(new dae::GameObject{});
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+}
 
+void Level1Multiplayer()
+{
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("MultiplayerLevel1");
+	auto pLevel = scene.Add(new dae::GameObject{});
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+}
+
+
+void Level2Multiplayer()
+{
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("MultiplayerLevel2");
+	auto pLevel = scene.Add(new dae::GameObject{});
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+}
+
+
+void Level3Multiplayer()
+{
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("MultiplayerLevel3");
+	auto pLevel = scene.Add(new dae::GameObject{});
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+}
+
+void Level1Versus()
+{
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("VersusLevel1");
+	auto pLevel = scene.Add(new dae::GameObject{});
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+}
+
+
+void Level2Versus()
+{
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("VersusLevel2");
+	auto pLevel = scene.Add(new dae::GameObject{});
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
+}
+
+
+void Level3Versus()
+{
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("VersusLevel3");
+	auto pLevel = scene.Add(new dae::GameObject{});
+	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
 }
 
 void HighScore()
@@ -74,12 +128,18 @@ void HighScore()
 
 }
 
-void load()
+void LoadScenes()
 {
 	MainMenu();
 	Level1();
 	Level2();
 	Level3();
+	Level1Multiplayer();
+	Level2Multiplayer();
+	Level3Multiplayer();
+	Level1Versus();
+	Level2Versus();
+	Level3Versus();
 }
 
 void Demo()
@@ -160,14 +220,11 @@ void Demo()
 	gameobject = scene.Add(new dae::GameObject{});
 	gameobject->AddComponent(new ScoreDisplay{ pPlayerComponent });
 	gameobject->SetPosition(20, 240);
-
-	ServiceLocator::GetAudio().AddSound("bell.wav");
-	ServiceLocator::GetAudio().PlaySound(0);
 }
 
 int main(int, char* []) {
 	dae::Minigin engine("../Data/");
-	engine.Run(load);
+	engine.Run(LoadScenes);
 
 	return 0;
 }
