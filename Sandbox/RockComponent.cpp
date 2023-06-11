@@ -20,10 +20,8 @@ void RockComponent::Initialize()
 				auto gameObject = static_cast<dae::GameObject*>(pOtherFixture->GetUserData());
 				if (gameObject->GetTag() == "Pooka")
 				{
-					if (!gameObject->GetIsMarkedForDelete())
-					{
-						m_AmountOfEnemiesCrushed++;
-					}
+					if (gameObject->GetIsMarkedForDelete()) return;
+					m_AmountOfEnemiesCrushed++;
 
 					//Kill enemy
 					EnemyComponent* pEnemy = gameObject->GetComponent<PookaComponent>();
@@ -31,10 +29,8 @@ void RockComponent::Initialize()
 				}
 				if (gameObject->GetTag() == "Fygar")
 				{
-					if (!gameObject->GetIsMarkedForDelete())
-					{
-						m_AmountOfEnemiesCrushed++;
-					}
+					if (gameObject->GetIsMarkedForDelete()) return;
+					m_AmountOfEnemiesCrushed++;
 
 					//Kill enemy
 					EnemyComponent* pEnemy = gameObject->GetComponent<FygarComponent>();

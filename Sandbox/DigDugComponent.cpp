@@ -40,7 +40,9 @@ void DigDugComponent::SetState(CharacterState state)
 {
 	if (m_State == state)return;
 
-
+	m_State = state;
+	m_CurrentAnimationIndex = 0;
+	UpdateTexture();
 }
 
 void DigDugComponent::SetRespawn(const glm::vec2& pos)
@@ -54,6 +56,7 @@ void DigDugComponent::Respawn()
 	SetDirection(CharacterDirection::Right);
 
 	m_pGameObject->SetPosition(m_RespawnPosition);
+	m_pGameObject->GetComponent<RigidBody>()->ResetVelocity();
 }
 
 void DigDugComponent::Initialize()
@@ -65,13 +68,14 @@ void DigDugComponent::Update()
 {
 	if (m_LastAnimationTime + m_AnimationDuration > Time::GetInstance().GetTotalSeconds()) return;
 
-	m_LastAnimationTime = static_cast<float>(Time::GetInstance().GetTotalSeconds());
 	m_CurrentAnimationIndex++;
 	UpdateTexture();
 }
 
 void DigDugComponent::UpdateTexture()
 {
+	m_LastAnimationTime = static_cast<float>(Time::GetInstance().GetTotalSeconds());
+
 	int directionIndex{ int(m_Direction) };
 	switch (m_State)
 	{

@@ -30,7 +30,8 @@ dae::GameObject* CreatePlayer(dae::Scene& scene, const glm::vec2& pos)
 	pTexture->SetSourceRect({ 0,0,16,16 });
 
 	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
-	gameobject->AddComponent(new DigDugComponent{});
+	DigDugComponent* pDigDug = gameobject->AddComponent(new DigDugComponent{});
+	pDigDug->SetRespawn(pos);
 
 	gameobject->SetPosition(pos);
 	gameobject->SetTag("Player");

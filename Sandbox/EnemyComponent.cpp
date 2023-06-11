@@ -39,8 +39,10 @@ void EnemyComponent::SetEnemyState(EnemyState newState)
 
 void EnemyComponent::Initialize()
 {
-	m_pGameObject->AddCollisionCallback([](b2Fixture* , b2Fixture* pOtherFixture, b2Contact* , CollisionType )
+	m_pGameObject->AddCollisionCallback([&](b2Fixture* , b2Fixture* pOtherFixture, b2Contact* , CollisionType )
 		{
+			if (m_State != EnemyState::Walk && m_State != EnemyState::Ghost)return;
+
 			auto gameObject = static_cast<dae::GameObject*>(pOtherFixture->GetUserData());
 			if (gameObject->GetTag() == "Player")
 			{
@@ -80,13 +82,14 @@ void EnemyComponent::Update()
 
 	if (m_LastAnimationTime + m_AnimationDuration > Time::GetInstance().GetTotalSeconds()) return;
 
-	m_LastAnimationTime = static_cast<float>(Time::GetInstance().GetTotalSeconds());
 	m_CurrentAnimationIndex++;
 	UpdateTexture();
 }
 
 void EnemyComponent::UpdateTexture()
 {
+	m_LastAnimationTime = static_cast<float>(Time::GetInstance().GetTotalSeconds());
+
 	switch (m_State)
 	{
 	case EnemyState::Walk:
