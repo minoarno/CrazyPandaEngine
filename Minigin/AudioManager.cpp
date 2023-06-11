@@ -131,7 +131,6 @@ int Audio::MixerAudio::AddSound(const std::string& file)
 	else
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize audio: %s", Mix_GetError());
-
 	}
 	return 0;
 }
