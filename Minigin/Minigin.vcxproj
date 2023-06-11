@@ -122,7 +122,8 @@
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
-xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)Data\" "$(OutputPath)..\Data\" /E /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -154,7 +155,8 @@ xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
-xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)Data\" "$(OutputPath)..\Data\" /E /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -190,7 +192,8 @@ xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
-xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)Data\" "$(OutputPath)..\Data\" /E /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -226,7 +229,8 @@ xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
-xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\Box2D\lib\$(PlatformTarget)\$(Configuration)\*.pdb" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)Data\" "$(OutputPath)..\Data\" /E /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
