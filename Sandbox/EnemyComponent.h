@@ -42,6 +42,7 @@ protected:
 
 	EnemyState m_State;
 	glm::vec2 m_Direction;
+	glm::vec2 m_PreviousPosition;
 	float m_Speed{ 100.f };
 
 	bool m_LooksRight{ true };
@@ -55,4 +56,5 @@ protected:
 
 	dae::TextureComponent* m_pTexture{};
 	RigidBody* m_pRigidBody{};
+	ColliderComponent* m_pColliderComponent{};
 };

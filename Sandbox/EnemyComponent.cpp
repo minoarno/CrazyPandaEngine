@@ -4,6 +4,7 @@
 
 #include "DigDugComponent.h"
 #include "TextureComponent.h"
+#include "BoxCollider.h"
 
 EnemyComponent::EnemyComponent()
 	: BaseComponent{ }
@@ -18,6 +19,16 @@ void EnemyComponent::SetEnemyState(EnemyState newState)
 	m_CurrentAnimationIndex = 0;
 
 	m_State = newState;
+	if (newState == EnemyState::Ghost)
+	{
+		m_pRigidBody->ResetVelocity();
+		m_pColliderComponent->SetIsTrigger(true);
+	}
+	if (m_State == EnemyState::Ghost)
+	{
+		m_pRigidBody->ResetVelocity();
+		m_pColliderComponent->SetIsTrigger(false);
+	}
 
 	UpdateTexture();
 }
@@ -38,6 +49,7 @@ void EnemyComponent::Initialize()
 
 	m_pTexture = m_pGameObject->GetComponent<dae::TextureComponent>();
 	m_pRigidBody = m_pGameObject->GetComponent<RigidBody>();
+	m_pColliderComponent = m_pGameObject->GetComponent<BoxCollider>();
 }
 
 void EnemyComponent::Update()
@@ -152,13 +164,21 @@ void EnemyComponent::Walk()
 		}
 	}
 
+	if (pos == m_PreviousPosition)
+	{
+		SetEnemyState(EnemyState::Ghost);
+	}
+
 	float elapsed = static_cast<float>(Time::GetInstance().GetElapsedSeconds());
 	auto v = m_pRigidBody->GetBody()->GetLinearVelocity();
 	m_pRigidBody->Move(m_Direction.x * m_Speed * elapsed, m_Direction.y * m_Speed * elapsed);
+	
+	m_PreviousPosition = pos;
 }
 
 void EnemyComponent::Ghost()
 {
+
 }
 
 void EnemyComponent::Bloated()
@@ -172,4 +192,5 @@ void EnemyComponent::Crushed()
 
 void EnemyComponent::Fire()
 {
+	SetEnemyState(EnemyState::Walk);
 }
