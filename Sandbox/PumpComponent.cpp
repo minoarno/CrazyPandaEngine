@@ -6,6 +6,12 @@
 #include "EngineTime.h"
 #include "Scene.h"
 
+PumpComponent::PumpComponent(DigDugComponent::CharacterDirection direction)
+	: BaseComponent{}
+	, m_CharacterDirection{ direction }
+{
+}
+
 void PumpComponent::AttachToEnemy(EnemyComponent* pEnemy)
 {
 	if (m_pEnemy != nullptr) return;
@@ -41,7 +47,9 @@ void PumpComponent::Initialize()
 				}
 				else if (gameObject->GetTag() == "Fygar")
 				{
-					AttachToEnemy(gameObject->GetComponent<FygarComponent>());
+					auto fygar = gameObject->GetComponent<FygarComponent>();
+					fygar->SetPump(this);
+					AttachToEnemy(fygar);
 				}
 			}
 		});

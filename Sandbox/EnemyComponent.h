@@ -40,6 +40,8 @@ protected:
 	virtual void Crushed();
 	virtual void Fire();
 
+	virtual void AddScore();
+
 	EnemyState m_State;
 	glm::vec2 m_Direction;
 	glm::vec2 m_PreviousPosition;

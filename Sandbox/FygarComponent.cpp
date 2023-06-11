@@ -4,6 +4,8 @@
 #include "TextureComponent.h"
 #include "Scene.h"
 
+#include "ScoreManager.h"
+
 FygarComponent::FygarComponent()
 	: EnemyComponent{}
 {
@@ -55,9 +57,21 @@ void FygarComponent::UpdateTexture()
 	}
 }
 
-void FygarComponent::Update()
+void FygarComponent::AddScore()
 {
-	EnemyComponent::Update();
+	if (m_pPump != nullptr &&
+		(m_pPump->GetCharacterDirection() == DigDugComponent::CharacterDirection::Left ||
+		m_pPump->GetCharacterDirection() == DigDugComponent::CharacterDirection::Right))
+	{
+		ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(200));
+	}
+	else
+	{
+		ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(100));
+	}
+}
 
+void FygarComponent::Fire()
+{
 
 }

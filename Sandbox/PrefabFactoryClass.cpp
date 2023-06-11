@@ -121,7 +121,7 @@ dae::GameObject* CreatePump(dae::Scene& scene, const glm::vec2& pos, const glm::
 
 	auto pBox = gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
 	pBox->SetIsTrigger(true);
-	gameobject->AddComponent(new PumpComponent{});
+	gameobject->AddComponent(new PumpComponent{ DigDugComponent::CharacterDirection(direction) });
 
 	gameobject->SetPosition(pos);
 	gameobject->SetTag("Pump");

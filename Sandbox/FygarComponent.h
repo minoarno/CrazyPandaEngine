@@ -1,6 +1,8 @@
 #pragma once
 #include "EnemyComponent.h"
-class FygarComponent : public EnemyComponent
+#include "PumpComponent.h"
+
+class FygarComponent final : public EnemyComponent
 {
 public:
 	FygarComponent();
@@ -10,12 +12,17 @@ public:
 	FygarComponent& operator=(FygarComponent&&) = delete;
 	~FygarComponent() override = default;
 
+	void SetPump(PumpComponent* pPump) { m_pPump = pPump; };
 protected:
 	void Initialize() override;
 	void UpdateTexture() override;
 
-	void Update() override;
+	void AddScore() override;
+
+	void Fire() override;
 
 	float m_LastFireTime{};
 	float m_FireCooldown{};
+
+	PumpComponent* m_pPump{ nullptr };
 };

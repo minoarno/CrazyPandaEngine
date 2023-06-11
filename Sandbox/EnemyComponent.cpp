@@ -6,9 +6,13 @@
 #include "TextureComponent.h"
 #include "BoxCollider.h"
 
+#include "ScoreManager.h"
+
 EnemyComponent::EnemyComponent()
 	: BaseComponent{ }
 	, m_Direction{ 0,-1 }
+	, m_PreviousPosition{ }
+	, m_State{ EnemyState::Walk }
 {
 }
 
@@ -99,6 +103,7 @@ void EnemyComponent::UpdateTexture()
 	case EnemyState::Crushed:
 		if (m_CurrentAnimationIndex == m_DeadAnimations)
 		{
+			AddScore();
 			m_pGameObject->GetScene()->Remove(m_pGameObject);
 			return;
 		}
@@ -108,6 +113,7 @@ void EnemyComponent::UpdateTexture()
 	case EnemyState::Bloated:
 		if (m_CurrentAnimationIndex == m_BloathAnimations)
 		{
+			AddScore();
 			m_pGameObject->GetScene()->Remove(m_pGameObject);
 			return;
 		}
@@ -191,4 +197,9 @@ void EnemyComponent::Crushed()
 void EnemyComponent::Fire()
 {
 	SetEnemyState(EnemyState::Walk);
+}
+
+void EnemyComponent::AddScore()
+{
+	ScoreManager::GetInstance().IncreaseScore(ScoreManager::GetInstance().GetHeightMultiplier(100));
 }
