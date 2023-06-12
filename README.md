@@ -32,7 +32,7 @@ The Crazy Panda Engine contains functionality such as:
 - The entire level is read from a JSON file.
 - Box2D handles the collision.
 
-Some Constraints
+Some Constraints:
 - GetComponent needs a very specific type of data. If you ask for the base class of a datatype you will receive the base class instead of the derived variant.
 - You need to know how to deal with your sprites early on and require the amount of Sprites to be filled in. (Because of the lack of a sprite slicer there is some need for magic numbers.)
 
