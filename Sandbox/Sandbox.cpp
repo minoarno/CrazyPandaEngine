@@ -159,12 +159,12 @@ void LoadScenes()
 	AddLevel("Level1", "Levels/Level1.json", "Level2", Mode::Singleplayer);
 	AddLevel("Level2", "Levels/Level2.json", "Level3", Mode::Singleplayer);
 	AddLevel("Level3", "Levels/Level3.json", "MainMenu", Mode::Singleplayer);
+
 	AddLevel("Level1C", "Levels/Level1.json", "Level2C", Mode::Coop);
 	AddLevel("Level2C", "Levels/Level2.json", "Level3C", Mode::Coop);
 	AddLevel("Level3C", "Levels/Level3.json", "MainMenu", Mode::Coop);
-	AddLevel("Level1V", "Levels/Level1.json", "Level2V", Mode::Versus);
-	AddLevel("Level2V", "Levels/Level2.json", "Level3V", Mode::Versus);
-	AddLevel("Level3V", "Levels/Level3.json", "MainMenu", Mode::Versus);
+
+	AddLevel("Level1V", "Levels/Level1.json", "MainMenu", Mode::Versus);
 	HighScore();
 
 	ServiceLocator::GetAudio().AddSound("Sound/Stage Theme.wav");
