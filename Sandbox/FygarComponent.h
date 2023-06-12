@@ -2,7 +2,7 @@
 #include "EnemyComponent.h"
 #include "PumpComponent.h"
 
-class FygarComponent final : public EnemyComponent
+class FygarComponent : public EnemyComponent
 {
 public:
 	FygarComponent();
@@ -10,7 +10,7 @@ public:
 	FygarComponent& operator=(const FygarComponent&) = delete;
 	FygarComponent(FygarComponent&&) = delete;
 	FygarComponent& operator=(FygarComponent&&) = delete;
-	~FygarComponent() override = default;
+	virtual ~FygarComponent() override = default;
 
 	void SetPump(PumpComponent* pPump) { m_pPump = pPump; };
 protected:

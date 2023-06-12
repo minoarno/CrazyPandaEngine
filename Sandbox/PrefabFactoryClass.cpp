@@ -10,6 +10,7 @@
 
 #include "EnemyComponent.h"
 #include "FygarComponent.h"
+#include "PlayerControllerFygar.h"
 #include "DigDugComponent.h"
 #include "RockComponent.h"
 #include "FireComponent.h"
@@ -75,6 +76,26 @@ dae::GameObject* CreateFygar(dae::Scene& scene, const glm::vec2& pos)
 	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
 	gameobject->AddComponent(new FygarComponent{});
 	
+	gameobject->SetPosition(pos);
+	gameobject->SetTag("Fygar");
+	return gameobject;
+}
+
+dae::GameObject* CreatePlayerFygar(dae::Scene& scene, const glm::vec2& pos)
+{
+	auto gameobject = scene.Add(new dae::GameObject{});
+	gameobject->AddComponent(new Lives{1});
+	auto pRigid = gameobject->AddComponent(new RigidBody());
+	pRigid->SetGravityScale(0);
+
+	const glm::vec2& dims{ 16,16 };
+	auto pTexture = gameobject->AddComponent(new dae::TextureComponent{ "Fygar.png" });
+	pTexture->SetDestinationRectDimensions({ 16, 16 });
+	pTexture->SetSourceRect({ 0,0,16,16 });
+
+	gameobject->AddComponent(new BoxCollider({ dims.x, dims.y }, { dims.x / 2, dims.y / 2 }));
+	gameobject->AddComponent(new PlayerControllerFygar{});
+
 	gameobject->SetPosition(pos);
 	gameobject->SetTag("Fygar");
 	return gameobject;

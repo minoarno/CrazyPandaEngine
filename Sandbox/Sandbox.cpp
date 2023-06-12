@@ -16,6 +16,7 @@
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "FpsComponent.h"
+#include "PlayerControllerFygar.h"
 
 #include "InputManager.h"
 #include "Lives.h"
@@ -82,6 +83,7 @@ void AddLevel(const std::string& scenename, const std::string& levelFilename, co
 	pLives->SetPosition({ 200,450 });
 
 	dae::GameObject* pScore;
+	PlayerControllerFygar* pFygar;
 	switch (mode)
 	{
 	case Mode::Singleplayer:
@@ -110,7 +112,24 @@ void AddLevel(const std::string& scenename, const std::string& levelFilename, co
 		pScore->SetPosition({ 10,450 });
 		break;
 	case Mode::Versus:
+		gameobject = CreatePlayerFygar(scene, { 300,200 });
 
+		playerIndex = 1;
+		InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), ControllerButton::DPadLeft, new FygarMoveCommand{ gameobject,glm::fvec3{-speed,0,0} }, playerIndex);
+		InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), ControllerButton::DPadRight, new FygarMoveCommand{ gameobject,glm::fvec3{speed,0,0} }, playerIndex);
+		InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), ControllerButton::DPadDown, new FygarMoveCommand{ gameobject,glm::fvec3{0,speed,0} }, playerIndex);
+		InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), ControllerButton::DPadUp, new FygarMoveCommand{ gameobject,glm::fvec3{0,-speed,0} }, playerIndex);
+
+		pFygar = gameobject->GetComponent<PlayerControllerFygar>();
+		InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), ControllerButton::ButtonA, new FygarFireCommand{ pFygar }, playerIndex);
+
+		pLives = scene.Add(new dae::GameObject{});
+		pLives->AddComponent(new LivesDisplay{ gameobject->GetComponent<Lives>() });
+		pLives->SetPosition({ 400,450 });
+
+		pScore = scene.Add(new dae::GameObject{});
+		pScore->AddComponent(new ScoreDisplay{});
+		pScore->SetPosition({ 10,450 });
 		break;
 	default:
 		break;

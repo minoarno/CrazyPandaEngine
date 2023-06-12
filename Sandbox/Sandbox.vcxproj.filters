@@ -72,6 +72,9 @@
     <ClCompile Include="GameStateManager.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerControllerFygar.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SandboxCommands.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="GameStateManager.h">
       <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControllerFygar.h">
+      <Filter>Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

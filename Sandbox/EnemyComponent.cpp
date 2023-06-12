@@ -38,6 +38,12 @@ void EnemyComponent::SetEnemyState(EnemyState newState)
 	UpdateTexture();
 }
 
+void EnemyComponent::SetIsLookingRight(bool value)
+{
+	m_LooksRight = value;
+	UpdateTexture();
+}
+
 void EnemyComponent::Initialize()
 {
 	m_pGameObject->AddCollisionCallback([&](b2Fixture* , b2Fixture* pOtherFixture, b2Contact* , CollisionType )

@@ -186,6 +186,7 @@
     <ClCompile Include="Lives.cpp" />
     <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="PlayerControllerFygar.cpp" />
     <ClCompile Include="PrefabFactoryClass.cpp" />
     <ClCompile Include="PumpComponent.cpp" />
     <ClCompile Include="RockComponent.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Lives.h" />
     <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PlayerControllerFygar.h" />
     <ClInclude Include="PrefabFactoryClass.h" />
     <ClInclude Include="PumpComponent.h" />
     <ClInclude Include="RockComponent.h" />

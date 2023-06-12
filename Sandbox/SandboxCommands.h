@@ -8,6 +8,7 @@
 #include "GameStateManager.h"
 #include "ServiceLocator.h"
 #include "AudioManager.h"
+#include "PlayerControllerFygar.h"
 
 class DieCommand final : public Command
 {
@@ -175,4 +176,75 @@ public:
 	virtual void Undo()
 	{
 	}
+};
+
+class FygarMoveCommand final : public Command
+{
+public:
+	FygarMoveCommand(dae::GameObject* pGameobject, const glm::vec2& dir)
+		: Command{}
+		, m_Direction{ dir }
+		, m_pGameObject{ pGameobject }
+	{
+		m_pRigidBody = m_pGameObject->GetComponent<RigidBody>();
+	}
+	FygarMoveCommand(const FygarMoveCommand&) = delete;
+	FygarMoveCommand& operator=(const FygarMoveCommand&) = delete;
+	FygarMoveCommand(FygarMoveCommand&&) = delete;
+	FygarMoveCommand& operator=(FygarMoveCommand&&) = delete;
+	~FygarMoveCommand() override = default;
+
+	virtual void Execute()
+	{
+		auto direction = m_Direction * (static_cast<float>(Time::GetInstance().GetElapsedSeconds()));
+		m_pRigidBody->ResetVelocity();
+		m_pRigidBody->Move(direction.x, direction.y);
+
+		if (direction.x > 1)
+		{
+			m_pPlayer->SetIsLookingRight(true);
+		}
+		else if (direction.x < -1)
+		{
+			m_pPlayer->SetIsLookingRight(false);
+		}
+	}
+
+	virtual void Undo()
+	{
+	}
+
+private:
+	glm::vec2 m_Direction;
+	dae::GameObject* m_pGameObject;
+	RigidBody* m_pRigidBody;
+	PlayerControllerFygar* m_pPlayer;
+};
+
+class FygarFireCommand : public Command
+{
+public:
+	FygarFireCommand(PlayerControllerFygar* pPlayer)
+		: Command{}
+		, m_pPlayer{pPlayer}
+	{
+
+	}
+	FygarFireCommand(const FygarFireCommand&) = delete;
+	FygarFireCommand& operator=(const FygarFireCommand&) = delete;
+	FygarFireCommand(FygarFireCommand&&) = delete;
+	FygarFireCommand& operator=(FygarFireCommand&&) = delete;
+	~FygarFireCommand() override = default;
+
+	virtual void Execute()
+	{
+		m_pPlayer->StartFire();
+	}
+
+	virtual void Undo()
+	{
+	}
+
+private:
+	PlayerControllerFygar* m_pPlayer{};
 };

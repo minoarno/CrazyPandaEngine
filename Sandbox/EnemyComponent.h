@@ -28,6 +28,9 @@ public:
 
 	void SetEnemyState(EnemyState newState);
 	EnemyState GetEnemyState()const { return m_State; }
+
+	void SetIsLookingRight(bool value);
+	bool GetIsLookingRight()const { return m_LooksRight; }
 protected:
 	virtual void Initialize();
 
