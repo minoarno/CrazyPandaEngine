@@ -8,7 +8,7 @@ namespace dae
 class HighScoreComponent final : public dae::BaseComponent
 {
 public:
-	HighScoreComponent(const std::string& filepath);
+	HighScoreComponent(const std::string& filepath, dae::TextComponent pText);
 	HighScoreComponent(const HighScoreComponent&) = delete;
 	HighScoreComponent& operator=(const HighScoreComponent&) = delete;
 	HighScoreComponent(HighScoreComponent&&) = delete;
@@ -20,7 +20,6 @@ public:
 	void WriteHighScoreListToFile();
 	std::vector<int> GetHighScores()const { return m_HighScores; }
 protected:
-	void Initialize() override;
 	void Update() override;
 
 	void UpdateText();

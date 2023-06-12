@@ -6,9 +6,10 @@
 
 #include "ScoreManager.h"
 
-HighScoreComponent::HighScoreComponent(const std::string& filepath)
+HighScoreComponent::HighScoreComponent(const std::string& filepath, dae::TextComponent* pText)
 	: BaseComponent{ }
 	, m_Filepath{ filepath }
+	, m_pText{ pText}
 {
 	JsonHelper::LoadHighScore(filepath, this);
 }
@@ -31,11 +32,6 @@ void HighScoreComponent::AddScore(int score)
 void HighScoreComponent::WriteHighScoreListToFile()
 {
 	JsonHelper::SaveHighScore(m_Filepath, this);
-}
-
-void HighScoreComponent::Initialize()
-{
-	m_pText = m_pGameObject->GetComponent<dae::TextComponent>();
 }
 
 void HighScoreComponent::Update()
