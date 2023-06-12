@@ -2,6 +2,9 @@
 #include "GameStateManager.h"
 #include "SceneManager.h"
 
+#include "ServiceLocator.h"
+#include "AudioManager.h"
+
 void GameStateManager::ResetEnemies()
 {
 	m_AmountOfEnemies = 0;
@@ -17,6 +20,7 @@ void GameStateManager::OnEnemyDead()
 	m_AmountOfEnemies--;
 	if (m_AmountOfEnemies == 0)
 	{
+		ServiceLocator::GetAudio().PlaySound(1);
 		CheckForNextScene();
 	}
 }

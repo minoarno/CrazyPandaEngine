@@ -143,6 +143,12 @@ void LoadScenes()
 	AddLevel("Level2V", "Levels/Level2.json", "Level3V", Mode::Versus);
 	AddLevel("Level3V", "Levels/Level3.json", "MainMenu", Mode::Versus);
 	HighScore();
+
+	ServiceLocator::GetAudio().AddSound("Sound/Stage Theme.wav");
+	ServiceLocator::GetAudio().AddSound("Sound/Stage Clear.wav");
+	ServiceLocator::GetAudio().AddSound("Sound/Fygar Flame.wav");
+
+	ServiceLocator::GetAudio().PlaySound(0);
 }
 
 int main(int, char* []) {

@@ -5,6 +5,11 @@
 #include "ResourceManager.h"
 #include <future>
 
+#include <mutex>
+#include <condition_variable>
+#include <thread>
+
+
 //https://cpppatterns.com/patterns/pimpl.html
 class Audio::MixerAudio
 {
@@ -26,12 +31,19 @@ private:
 Audio::Audio()
 	:pimpl{ std::make_unique<MixerAudio>() }
 {
+	m_SoundThread = std::jthread(&Audio::RunThread, this);
+}
+
+Audio::~Audio()
+{
+	m_IsThreadRunning = false;
 }
 
 void Audio::PlaySound(int soundID)
 {
-	pimpl->PlaySound(soundID);
-
+	std::lock_guard<std::mutex> guardLock(m_Mutex);
+	m_SoundEventQueue.push(soundID);
+	m_QueueCondition.notify_all();
 }
 
 void Audio::StopSound(int soundID)
@@ -47,6 +59,30 @@ void Audio::StopAllSounds()
 int Audio::AddSound(const std::string& file)
 {
 	return pimpl->AddSound(file);
+}
+
+void Audio::RunThread()
+{
+	while (m_IsThreadRunning)
+	{
+		std::unique_lock<std::mutex> lock(m_Mutex);
+
+		m_QueueCondition.wait(lock, [&]()
+			{
+				if (!m_IsThreadRunning)	return true;
+
+				return !m_SoundEventQueue.empty();
+			});
+
+		if (m_SoundEventQueue.empty()) return;
+
+		int soundIndex = m_SoundEventQueue.front();
+		m_SoundEventQueue.pop();
+		
+		lock.unlock();
+
+		pimpl->PlaySound(soundIndex);
+	}
 }
 
 Audio::MixerAudio::MixerAudio()
@@ -87,11 +123,8 @@ void Audio::MixerAudio::PlaySound(int soundID)
 		Log::CoreWarning("Sound out of range.");
 		return;
 	}
-	std::thread tempThread{ [=]()
-	{
-		Mix_PlayChannel(-1, m_pSoundEffects[soundID], 0);
-	} };
-	tempThread.join();
+
+	Mix_PlayChannel(-1, m_pSoundEffects[soundID], 0);
 }
 
 void Audio::MixerAudio::StopSound(int soundID)
