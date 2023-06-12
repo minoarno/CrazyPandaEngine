@@ -27,6 +27,8 @@
 #include "JsonHelper.h"
 #include "PrefabFactoryClass.h"
 
+#include <deque>
+#include <string>
 #include "ScoreManager.h"
 #include "GameStateManager.h"
 
@@ -40,9 +42,10 @@ enum class Mode
 void MainMenu()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("MainMenu");
-	CreateButton(scene, {200,100}, { 200,60 }, "UISingle.png", new LoadSceneCommand{ "Level1" });
-	CreateButton(scene, {200,200}, { 200,60 }, "UICoop.png", new LoadSceneCommand{ "Level1C" });
-	CreateButton(scene, {200,300}, { 200,60 }, "UIVersus.png", new LoadSceneCommand{ "Level1V" });
+
+	CreateButton(scene, { 200,100 }, { 200,60 }, "UISingle.png", new StartGameCommand("Level1", { "Level2", "Level3" }));
+	CreateButton(scene, {200,200}, { 200,60 }, "UICoop.png", new StartGameCommand{ "Level1C", {"Level2C","Level3C"} });
+	CreateButton(scene, { 200,300 }, { 200,60 }, "UIVersus.png", new StartGameCommand{ "Level1V", { "Level2V","Level3V"} });
 }
 
 void AddLevel(const std::string& scenename, const std::string& levelFilename, const std::string& nextSceneName, Mode mode)

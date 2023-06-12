@@ -3,6 +3,9 @@
 #include "PlayerComponent.h"
 #include "DigDugComponent.h"
 #include "Scene.h"
+#include <vector>
+#include <string>
+#include "GameStateManager.h"
 
 class DieCommand final : public Command
 {
@@ -122,4 +125,32 @@ public:
 	}
 private:
 	DigDugComponent* m_pDigDugComponent;
+};
+
+class StartGameCommand final : public Command
+{
+public:
+	StartGameCommand(const std::string& startSceneName, std::vector<std::string> nextSceneNames)
+		: m_StartSceneName{ startSceneName }
+		, m_NextSceneNames{ nextSceneNames }
+	{
+	}
+	StartGameCommand(const StartGameCommand&) = delete;
+	StartGameCommand& operator=(const StartGameCommand&) = delete;
+	StartGameCommand(StartGameCommand&&) = delete;
+	StartGameCommand& operator=(StartGameCommand&&) = delete;
+	~StartGameCommand() override = default;
+
+	virtual void Execute()
+	{
+		dae::SceneManager::GetInstance().LoadScene(m_StartSceneName);
+		GameStateManager::GetInstance().AddLevelNames(m_NextSceneNames);
+	}
+
+	virtual void Undo()
+	{
+	}
+private:
+	std::string m_StartSceneName{};
+	std::vector<std::string> m_NextSceneNames{};
 };

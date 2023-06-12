@@ -35,5 +35,5 @@ void GameStateManager::CheckForNextScene()
 	}
 	
 	dae::SceneManager::GetInstance().LoadScene(m_NamesLevels[0]);
-	m_NamesLevels.pop_front();
+	m_NamesLevels.erase(m_NamesLevels.begin());
 }

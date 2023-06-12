@@ -7,6 +7,8 @@
 #include "ScoreManager.h"
 #include "GameStateManager.h"
 
+#include "PrefabFactoryClass.h"
+
 FygarComponent::FygarComponent()
 	: EnemyComponent{}
 {
@@ -76,5 +78,12 @@ void FygarComponent::AddScore()
 
 void FygarComponent::Fire()
 {
+	auto pos = m_pGameObject->GetTransform()->GetWorldPosition();
 
+	if (m_LooksRight)
+	{
+		pos.x += 16.f;
+	}
+
+	CreateFire(*m_pGameObject->GetScene(), { pos.x,pos.y }, { 32,32 })->GetComponent<dae::TextureComponent>()->SetIsFlipped(!m_LooksRight);
 }

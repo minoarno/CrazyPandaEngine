@@ -19,11 +19,11 @@ public:
 	void OnEnemyDead(); 
 
 	void GoToEndScene();
-	void AddLevelNames(const std::deque<std::string>& list) { m_NamesLevels = list; }
+	void AddLevelNames(const std::vector<std::string>& list) { m_NamesLevels = list; }
 
 private:
 	void CheckForNextScene();
 
 	int m_AmountOfEnemies = 0;
-	std::deque<std::string> m_NamesLevels{};
+	std::vector<std::string> m_NamesLevels{};
 };
