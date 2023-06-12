@@ -19,6 +19,7 @@ public:
 
 	void PlaySound(int soundID);
 	void StopSound(int soundID);
+	void MuteAllSounds();
 	void StopAllSounds();
 
 	int AddSound(const std::string& file);
@@ -37,6 +38,7 @@ Audio::Audio()
 Audio::~Audio()
 {
 	m_IsThreadRunning = false;
+	m_QueueCondition.notify_all();
 }
 
 void Audio::PlaySound(int soundID)
@@ -49,6 +51,11 @@ void Audio::PlaySound(int soundID)
 void Audio::StopSound(int soundID)
 {
 	pimpl->StopSound(soundID);
+}
+
+void Audio::MuteAllSounds()
+{
+	pimpl->MuteAllSounds();
 }
 
 void Audio::StopAllSounds()
@@ -74,7 +81,7 @@ void Audio::RunThread()
 				return !m_SoundEventQueue.empty();
 			});
 
-		if (m_SoundEventQueue.empty()) return;
+		if (m_SoundEventQueue.empty() || !m_IsThreadRunning) return;
 
 		int soundIndex = m_SoundEventQueue.front();
 		m_SoundEventQueue.pop();
@@ -145,6 +152,11 @@ void Audio::MixerAudio::StopSound(int soundID)
 	}
 
 	Log::CoreWarning("The sound is currently not being played.");
+}
+
+void Audio::MixerAudio::MuteAllSounds()
+{
+	Mix_Volume(-1, 0);
 }
 
 void Audio::MixerAudio::StopAllSounds()
