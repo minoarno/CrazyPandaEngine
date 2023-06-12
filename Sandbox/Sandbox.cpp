@@ -115,44 +115,12 @@ void AddLevel(const std::string& scenename, const std::string& levelFilename, co
 		});
 }
 
-/*
-void Level1()
-{
-	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level1");
-
-	auto pLevel = scene.Add(new dae::GameObject{});
-	JsonHelper::LoadSceneUsingJson("Levels/Level1.json", pLevel);
-
-	auto gameobject = CreatePlayer(scene, { 300,70 });
-	float speed{ 1000.f };
-	InputManager::GetInstance().AddOnHold(SDLK_F1, new LoadSceneCommand{ "Level2" });
-	
-	InputManager::GetInstance().AddOnHold(SDLK_q, new DigDugMoveCommand{ gameobject,glm::fvec3{-speed,0,0}, DigDugComponent::CharacterDirection::Left });
-	InputManager::GetInstance().AddOnHold(SDLK_d, new DigDugMoveCommand{ gameobject,glm::fvec3{speed,0,0}, DigDugComponent::CharacterDirection::Right });
-	InputManager::GetInstance().AddOnHold(SDLK_s, new DigDugMoveCommand{ gameobject,glm::fvec3{0,speed,0}, DigDugComponent::CharacterDirection::Down });
-	InputManager::GetInstance().AddOnHold(SDLK_z, new DigDugMoveCommand{ gameobject,glm::fvec3{0,-speed,0}, DigDugComponent::CharacterDirection::Up });
-	InputManager::GetInstance().AddOnHold(ControllerButton::DPadLeft, new DigDugMoveCommand{ gameobject,glm::fvec3{-speed,0,0}, DigDugComponent::CharacterDirection::Left }, 0);
-	InputManager::GetInstance().AddOnHold(ControllerButton::DPadRight, new DigDugMoveCommand{ gameobject,glm::fvec3{speed,0,0}, DigDugComponent::CharacterDirection::Right }, 0);
-	InputManager::GetInstance().AddOnHold(ControllerButton::DPadDown, new DigDugMoveCommand{ gameobject,glm::fvec3{0,speed,0}, DigDugComponent::CharacterDirection::Down }, 0);
-	InputManager::GetInstance().AddOnHold(ControllerButton::DPadUp, new DigDugMoveCommand{ gameobject,glm::fvec3{0,-speed,0}, DigDugComponent::CharacterDirection::Up }, 0);
-
-	DigDugComponent* pDigDug = gameobject->GetComponent<DigDugComponent>();
-	InputManager::GetInstance().AddOnPressDown(SDLK_e, new DigDugPumpCommand{ pDigDug });
-	InputManager::GetInstance().AddOnPressDown(ControllerButton::ButtonA, new DigDugPumpCommand{ pDigDug }, 0);
-
-	auto pScore = scene.Add(new dae::GameObject{});
-	pScore->AddComponent(new ScoreDisplay{});
-	pScore->SetPosition({ 10,450 });
-
-	auto pLives = scene.Add(new dae::GameObject{});
-	pLives->AddComponent(new LivesDisplay{ gameobject->GetComponent<Lives>() });
-	pLives->SetPosition({ 100,450 });
-}*/
-
 void HighScore()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("HighScore");
 	CreateButton(scene, { 200,300 }, { 200,60 }, "MainMenu.png", new LoadSceneCommand{ "MainMenu" });
+
+	CreateHighScore(scene, { 200,60 }, "Levels/HighScore.json");
 
 	InputManager::GetInstance().AddOnHold(scene.GetIndex(),SDLK_F1, new LoadSceneCommand{ "MainMenu" });
 }
@@ -163,14 +131,14 @@ void LoadScenes()
 
 	MainMenu();
 	AddLevel("Level1", "Levels/Level1.json", "Level2", Mode::Singleplayer);
-	//AddLevel("Level2", "Levels/Level2.json", "Level3", Mode::Singleplayer);
-	//AddLevel("Level3", "Levels/Level3.json", "MainMenu", Mode::Singleplayer);
-	//AddLevel("Level1C", "Levels/Level1.json", "Level2C", Mode::Coop);
-	//AddLevel("Level2C", "Levels/Level2.json", "Level3C", Mode::Coop);
-	//AddLevel("Level3C", "Levels/Level3.json", "MainMenu", Mode::Coop);
-	//AddLevel("Level1V", "Levels/Level1.json", "Level2V", Mode::Versus);
-	//AddLevel("Level2V", "Levels/Level2.json", "Level3V", Mode::Versus);
-	//AddLevel("Level3V", "Levels/Level3.json", "MainMenu", Mode::Versus);
+	AddLevel("Level2", "Levels/Level2.json", "Level3", Mode::Singleplayer);
+	AddLevel("Level3", "Levels/Level3.json", "MainMenu", Mode::Singleplayer);
+	AddLevel("Level1C", "Levels/Level1.json", "Level2C", Mode::Coop);
+	AddLevel("Level2C", "Levels/Level2.json", "Level3C", Mode::Coop);
+	AddLevel("Level3C", "Levels/Level3.json", "MainMenu", Mode::Coop);
+	AddLevel("Level1V", "Levels/Level1.json", "Level2V", Mode::Versus);
+	AddLevel("Level2V", "Levels/Level2.json", "Level3V", Mode::Versus);
+	AddLevel("Level3V", "Levels/Level3.json", "MainMenu", Mode::Versus);
 	HighScore();
 }
 

@@ -3,6 +3,7 @@
 #include "PrefabFactoryClass.h"
 #include "Scene.h"
 
+#include "TextComponent.h"
 #include "TextureComponent.h"
 #include "RigidBody.h"
 #include "BoxCollider.h"
@@ -13,8 +14,10 @@
 #include "RockComponent.h"
 #include "FireComponent.h"
 #include "PumpComponent.h"
+#include "ResourceManager.h"
 #include "Button.h"
 #include "Lives.h"
+#include "HighScoreComponent.h"
 
 using namespace dae;
 
@@ -159,6 +162,18 @@ dae::GameObject* CreateButton(dae::Scene& scene, const glm::vec2& pos, const glm
 	
 	gameobject->AddComponent(new Button{ dims,pCommand });
 	
+	gameobject->SetPosition(pos);
+	return gameobject;
+}
+
+dae::GameObject* CreateHighScore(dae::Scene& scene, const glm::vec2& pos, const std::string& filepath)
+{
+	auto gameobject = scene.Add(new dae::GameObject{});
+
+	const auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	gameobject->AddComponent(new TextComponent{font,""});
+	gameobject->AddComponent(new HighScoreComponent{ filepath });
+
 	gameobject->SetPosition(pos);
 	return gameobject;
 }

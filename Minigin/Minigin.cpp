@@ -16,6 +16,7 @@ using namespace std;
 using namespace std::chrono;
 
 SDL_Window* g_window{};
+bool g_drawBox2Ddebug{ false };
 
 void PrintSDLVersion()
 {
@@ -127,7 +128,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		sceneManager.Update();
 		sceneManager.LateUpdate();
 
-		renderer.Render(true);
+		renderer.Render(g_drawBox2Ddebug);
 
 		auto sleepTime = duration_cast<duration<double>>(currentTime + milliseconds(MsPerFrame) - high_resolution_clock::now());
 		this_thread::sleep_for(sleepTime);

@@ -104,6 +104,7 @@ void RockComponent::GivePointsForCrushingEnemies()
 
 	switch (m_AmountOfEnemiesCrushed)
 	{
+	default:
 	case 0:
 		addedScore = 0;
 		break;
@@ -129,7 +130,6 @@ void RockComponent::GivePointsForCrushingEnemies()
 		addedScore = 12000;
 		break;
 	case 8:
-	default:
 		addedScore = 15000;
 		break;
 	}

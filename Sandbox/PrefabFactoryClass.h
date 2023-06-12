@@ -14,3 +14,4 @@ dae::GameObject* CreateBlock(dae::GameObject* pLevel, const glm::vec2& pos, cons
 dae::GameObject* CreatePump(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims, int direction);
 dae::GameObject* CreateFire(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims);
 dae::GameObject* CreateButton(dae::Scene& scene, const glm::vec2& pos, const glm::vec2& dims, const std::string& texture, Command* pCommand);
+dae::GameObject* CreateHighScore(dae::Scene& scene, const glm::vec2& pos, const std::string& filepath);

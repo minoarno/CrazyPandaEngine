@@ -1,7 +1,11 @@
 #pragma once
 #include "BaseComponent.h"
+namespace dae
+{
+	class TextComponent;
+}
 
-class HighScoreComponent : public dae::BaseComponent
+class HighScoreComponent final : public dae::BaseComponent
 {
 public:
 	HighScoreComponent(const std::string& filepath);
@@ -9,13 +13,20 @@ public:
 	HighScoreComponent& operator=(const HighScoreComponent&) = delete;
 	HighScoreComponent(HighScoreComponent&&) = delete;
 	HighScoreComponent& operator=(HighScoreComponent&&) = delete;
-	~HighScoreComponent();
+	~HighScoreComponent() override;
 
 	void AddScore(int score);
 
 	void WriteHighScoreListToFile();
 	std::vector<int> GetHighScores()const { return m_HighScores; }
 protected:
+	void Initialize() override;
+	void Update() override;
+
+	void UpdateText();
+
 	std::vector<int> m_HighScores;
 	std::string m_Filepath;
+	dae::TextComponent* m_pText{ nullptr };
+	bool m_IsFirstFrame{ true };
 };
