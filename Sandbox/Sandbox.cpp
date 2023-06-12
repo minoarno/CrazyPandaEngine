@@ -46,6 +46,9 @@ void MainMenu()
 	CreateButton(scene, { 200,100 }, { 200,60 }, "UISingle.png", new StartGameCommand("Level1", { "Level2", "Level3" }));
 	CreateButton(scene, {200,200}, { 200,60 }, "UICoop.png", new StartGameCommand{ "Level1C", {"Level2C","Level3C"} });
 	CreateButton(scene, { 200,300 }, { 200,60 }, "UIVersus.png", new StartGameCommand{ "Level1V", { "Level2V","Level3V"} });
+
+	InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), SDLK_F1, new LoadSceneCommand{ "Level1" });
+	InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), SDLK_F2, new MuteCommand{ });
 }
 
 void AddLevel(const std::string& scenename, const std::string& levelFilename, const std::string& nextSceneName, Mode mode)
@@ -57,7 +60,8 @@ void AddLevel(const std::string& scenename, const std::string& levelFilename, co
 
 	auto gameobject = CreatePlayer(scene, { 300,70 });
 	float speed{ 1000.f };
-	InputManager::GetInstance().AddOnHold(scene.GetIndex(), SDLK_F1, new LoadSceneCommand{ nextSceneName });
+	InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), SDLK_F1, new LoadSceneCommand{ nextSceneName });
+	InputManager::GetInstance().AddOnPressDown(scene.GetIndex(), SDLK_F2, new MuteCommand{ });
 
 	int playerIndex = 0;
 	InputManager::GetInstance().AddOnHold(scene.GetIndex(), SDLK_q, new DigDugMoveCommand{gameobject,glm::fvec3{-speed,0,0}, DigDugComponent::CharacterDirection::Left});

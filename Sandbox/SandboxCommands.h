@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 #include "GameStateManager.h"
+#include "ServiceLocator.h"
+#include "AudioManager.h"
 
 class DieCommand final : public Command
 {
@@ -153,4 +155,24 @@ public:
 private:
 	std::string m_StartSceneName{};
 	std::vector<std::string> m_NextSceneNames{};
+};
+
+class MuteCommand final : public Command
+{
+public:
+	MuteCommand() = default;
+	MuteCommand(const MuteCommand&) = delete;
+	MuteCommand& operator=(const MuteCommand&) = delete;
+	MuteCommand(MuteCommand&&) = delete;
+	MuteCommand& operator=(MuteCommand&&) = delete;
+	~MuteCommand() override = default;
+
+	virtual void Execute()
+	{
+		ServiceLocator::GetAudio().MuteAllSounds();
+	}
+
+	virtual void Undo()
+	{
+	}
 };
