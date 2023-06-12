@@ -191,9 +191,7 @@ dae::GameObject* CreateHighScore(dae::Scene& scene, const glm::vec2& pos, const 
 {
 	auto gameobject = scene.Add(new dae::GameObject{});
 
-	const auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	dae::TextComponent* pText = gameobject->AddComponent(new dae::TextComponent{font,"x"});
-	gameobject->AddComponent(new HighScoreComponent{ filepath, pText });
+	gameobject->AddComponent(new HighScoreComponent{ filepath });
 
 	gameobject->SetPosition(pos);
 	return gameobject;

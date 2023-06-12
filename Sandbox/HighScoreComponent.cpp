@@ -5,13 +5,12 @@
 #include "TextComponent.h"
 
 #include "ScoreManager.h"
+#include "ResourceManager.h"
 
-HighScoreComponent::HighScoreComponent(const std::string& filepath, dae::TextComponent* pText)
+HighScoreComponent::HighScoreComponent(const std::string& filepath)
 	: BaseComponent{ }
 	, m_Filepath{ filepath }
-	, m_pText{ pText}
 {
-	JsonHelper::LoadHighScore(filepath, this);
 }
 
 HighScoreComponent::~HighScoreComponent()
@@ -34,24 +33,47 @@ void HighScoreComponent::WriteHighScoreListToFile()
 	JsonHelper::SaveHighScore(m_Filepath, this);
 }
 
+void HighScoreComponent::Initialize()
+{
+	const auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 16);
+	for (size_t i = 0; i < 10; i++)
+	{
+		auto pChild = m_pGameObject->AddChild(new dae::GameObject{});
+		pChild->SetPosition({ 0,32 * i });
+		m_pTexts.emplace_back(pChild->AddComponent(new dae::TextComponent{ font,"" }));
+	}
+
+	JsonHelper::LoadHighScore(m_Filepath, this);
+
+	UpdateText();
+}
+
 void HighScoreComponent::Update()
 {
 	if (m_IsFirstFrame)
 	{
 		AddScore(ScoreManager::GetInstance().GetScore());
 		ScoreManager::GetInstance().ResetScore();
+
 		m_IsFirstFrame = false;
 	}
+
+	UpdateText();
 }
 
 void HighScoreComponent::UpdateText()
 {
-	std::string text{""};
-
-	if (int(m_HighScores.size()) > 1)
+	int size = (int(m_HighScores.size()) < 10) ? int(m_HighScores.size()) : 10;
+	
+	for (int i = 0; i < size; i++)
 	{
-		text = "High Score: " + std::to_string(m_HighScores[0]);
-
-		m_pText->SetText(text);
+		if (i == 0)
+		{
+			m_pTexts[i]->SetText("HighScore: " + std::to_string(m_HighScores[i]));
+		}
+		else
+		{
+			m_pTexts[i]->SetText("Score: " + std::to_string(m_HighScores[i]));
+		}
 	}
 }

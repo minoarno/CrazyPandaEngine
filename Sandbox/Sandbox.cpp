@@ -144,9 +144,9 @@ void AddLevel(const std::string& scenename, const std::string& levelFilename, co
 void HighScore()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("HighScore");
-	CreateButton(scene, { 200,300 }, { 200,60 }, "MainMenu.png", new LoadSceneCommand{ "MainMenu" });
+	CreateButton(scene, { 200,400 }, { 200,60 }, "MainMenu.png", new LoadSceneCommand{ "MainMenu" });
 
-	CreateHighScore(scene, { 200,60 }, "Levels/HighScore.json");
+	CreateHighScore(scene, { 200,40 }, "Levels/HighScore.json");
 
 	InputManager::GetInstance().AddOnHold(scene.GetIndex(),SDLK_F1, new LoadSceneCommand{ "MainMenu" });
 }
