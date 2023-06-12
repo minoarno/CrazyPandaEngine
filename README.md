@@ -37,3 +37,4 @@ Some Constraints:
 - You need to know how to deal with your sprites early on and require the amount of Sprites to be filled in. (Because of the lack of a sprite slicer there is some need for magic numbers.)
 
 Built in Visual Studio 2022 using C++20.
+Link: https://github.com/minoarno/CrazyPandaEngine
